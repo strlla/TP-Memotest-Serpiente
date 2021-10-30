@@ -15,9 +15,24 @@ def ocultar_fichas(fichas):
     return fichas_ocultas
 
 
-def seleccionar_posiciones(fichas, fichas_ocultas):
+def jugada(fichas, fichas_ocultas):
     print("Fichas y posiciones:", *fichas_ocultas)
+    
+    while True:
+        resultado = seleccionar_posiciones(fichas, fichas_ocultas)
 
+        if resultado:
+            break 
+        else:        
+            print("Intenta nuevamente")
+
+            fichas = generador_fichas()
+
+            fichas_ocultas = ocultar_fichas(fichas)
+
+            print("Fichas y posiciones:", *fichas_ocultas)        
+
+def seleccionar_posiciones(fichas, fichas_ocultas):
     primer_posicion = int(input("1er posición: "))
 
     fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
@@ -27,32 +42,9 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
     fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
 
     resultado = comparar_fichas(primer_posicion, segunda_posicion, fichas)
-   
-    if resultado:
-        primer_posicion = int(input("1er posición: "))
 
-        fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
+    return resultado
 
-        segunda_posicion = int(input("2da posición: "))
-
-        fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
-
-        print(*fichas_ocultas)
-
-    else:
-        print("Intenta nuevamente")
-
-        fichas = generador_fichas()
-
-        nuevas_fichas_ocultas = ocultar_fichas(fichas)
-
-        primer_posicion = int(input("1er posición: "))
-
-        nuevas_fichas_ocultas = mostrar_ficha(primer_posicion, fichas, nuevas_fichas_ocultas)
-
-        segunda_posicion = int(input("2da posición: "))
-
-        nuevas_fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, nuevas_fichas_ocultas)
 
 def comparar_fichas(primera_posicion, segunda_posicion, fichas):
     # nos fijamos si el contenido en ambas posiciones es igual
@@ -68,7 +60,7 @@ def mostrar_ficha(posicion, fichas, fichas_ocultas):
 def main():
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
-    seleccionar_posiciones(fichas, fichas_ocultas)
+    jugada(fichas, fichas_ocultas)
 
 
 main()
