@@ -1,3 +1,5 @@
+from os import system
+
 def generador_fichas():
     # shuffle(fichas) Esto serviria para la aleatoriedad mas adelante
 
@@ -24,6 +26,8 @@ def jugada(fichas, fichas_ocultas):
         if resultado:
             break 
         else:        
+            system("cls")
+
             print("Intenta nuevamente")
 
             fichas = generador_fichas()
