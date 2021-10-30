@@ -20,26 +20,22 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
 
     primer_posicion = int(input("1er posición: "))
 
-    fichas_ocultas = [i.replace(str(primer_posicion), fichas[primer_posicion]) for i in fichas_ocultas]
-
-    print("Fichas y posiciones:", *fichas_ocultas)
+    fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
 
     segunda_posicion = int(input("2da posición: "))
 
-    fichas_ocultas = [i.replace(str(segunda_posicion), fichas[segunda_posicion]) for i in fichas_ocultas]
+    fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
 
-    if fichas_ocultas[primer_posicion] == fichas_ocultas[segunda_posicion]:
-        print("Fichas y posiciones:", *fichas_ocultas)
-
+    resultado = comparar_fichas(primer_posicion, segunda_posicion, fichas)
+   
+    if resultado:
         primer_posicion = int(input("1er posición: "))
 
-        fichas_ocultas = [i.replace(str(primer_posicion), fichas[primer_posicion]) for i in fichas_ocultas]
-
-        print("Fichas y posiciones:", *fichas_ocultas)
+        fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
 
         segunda_posicion = int(input("2da posición: "))
 
-        fichas_ocultas = [i.replace(str(segunda_posicion), fichas[segunda_posicion]) for i in fichas_ocultas]
+        fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
 
         print(*fichas_ocultas)
 
@@ -50,21 +46,24 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
 
         nuevas_fichas_ocultas = ocultar_fichas(fichas)
 
-        print("Fichas y posiciones:", *nuevas_fichas_ocultas)
-
         primer_posicion = int(input("1er posición: "))
 
-        nuevas_fichas_ocultas = [i.replace(str(primer_posicion), fichas[primer_posicion]) for i in
-                                 nuevas_fichas_ocultas]
-
-        print("Fichas y posiciones:", *nuevas_fichas_ocultas)
+        nuevas_fichas_ocultas = mostrar_ficha(primer_posicion, fichas, nuevas_fichas_ocultas)
 
         segunda_posicion = int(input("2da posición: "))
 
-        nuevas_fichas_ocultas = [i.replace(str(segunda_posicion), fichas[segunda_posicion]) for i in nuevas_fichas_ocultas]
+        nuevas_fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, nuevas_fichas_ocultas)
 
-        print("Fichas y posiciones:", *nuevas_fichas_ocultas)
+def comparar_fichas(primera_posicion, segunda_posicion, fichas):
+    # nos fijamos si el contenido en ambas posiciones es igual
+    return fichas[primera_posicion] == fichas[segunda_posicion]
 
+def mostrar_ficha(posicion, fichas, fichas_ocultas):
+    fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) for i in fichas_ocultas]
+
+    print("Fichas y posiciones:", *fichas_ocultas)
+
+    return fichas_ocultas
 
 def main():
     fichas = generador_fichas()
