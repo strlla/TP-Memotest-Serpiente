@@ -16,7 +16,6 @@ def ocultar_fichas(fichas):
 
     return fichas_ocultas
 
-
 def jugada(fichas, fichas_ocultas):
     print("Fichas y posiciones:", *fichas_ocultas)
     
@@ -37,6 +36,7 @@ def jugada(fichas, fichas_ocultas):
             print("Fichas y posiciones:", *fichas_ocultas)        
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
+    # funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean iguales, en caso contrario retorna False
     primer_posicion = int(input("1er posición: "))
 
     fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
@@ -51,10 +51,11 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
 
 
 def comparar_fichas(primera_posicion, segunda_posicion, fichas):
-    # nos fijamos si el contenido en ambas posiciones es igual
+    # compara el contenido de la ficha en las dos posiciones recibidas, retorna True si son iguales, en caso contrario retorna False
     return fichas[primera_posicion] == fichas[segunda_posicion]
 
 def mostrar_ficha(posicion, fichas, fichas_ocultas):
+    # printea las fichas ocultas y las descubiertas por el usuario
     fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) for i in fichas_ocultas]
 
     print("Fichas y posiciones:", *fichas_ocultas)
