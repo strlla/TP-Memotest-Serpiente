@@ -7,6 +7,10 @@ def generador_fichas():
 
     return fichas
 
+def revisar_fichas(fichas, fichas_ocultas): 
+    #funcion que revisa si todas las fichas estan descubiertas (si el jugador gano) y retorna True, en caso contrario retorna False
+    # Estrella Portocarrero 
+    return all(ficha == ficha_oculta[1] for ficha, ficha_oculta in zip(fichas, fichas_ocultas))
 
 def ocultar_fichas(fichas):
     fichas_ocultas = []
@@ -18,12 +22,11 @@ def ocultar_fichas(fichas):
 
 def jugada(fichas, fichas_ocultas):
     print("Fichas y posiciones:", *fichas_ocultas)
-    
-    while True:
-        resultado = seleccionar_posiciones(fichas, fichas_ocultas)
-
+    gano = False
+    while not gano:
+        resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
         if resultado:
-            break 
+            gano = revisar_fichas(fichas, fichas_ocultas)
         else:        
             system("cls")
 
@@ -35,6 +38,8 @@ def jugada(fichas, fichas_ocultas):
 
             print("Fichas y posiciones:", *fichas_ocultas)        
 
+    print("Ganaste!")
+    
 def seleccionar_posiciones(fichas, fichas_ocultas):
     # funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean iguales, en caso contrario retorna False
     primer_posicion = int(input("1er posición: "))
@@ -47,7 +52,7 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
 
     resultado = comparar_fichas(primer_posicion, segunda_posicion, fichas)
 
-    return resultado
+    return resultado, fichas_ocultas
 
 
 def comparar_fichas(primera_posicion, segunda_posicion, fichas):
