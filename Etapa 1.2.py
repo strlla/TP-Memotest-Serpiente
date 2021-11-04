@@ -22,6 +22,9 @@ def ocultar_fichas(fichas):
     return fichas_ocultas
 
 def jugada(fichas, fichas_ocultas):
+    #funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
+    #Estrella Portocarrero
+    
     print("Fichas y posiciones:", *fichas_ocultas)
     gano = False
     while not gano:
