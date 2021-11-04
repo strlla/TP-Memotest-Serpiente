@@ -13,9 +13,10 @@ def revisar_fichas(fichas, fichas_ocultas):
     return all(ficha == ficha_oculta[1] for ficha, ficha_oculta in zip(fichas, fichas_ocultas))
 
 def ocultar_fichas(fichas):
+    # Se itera segun la longitud de las fichas dadas para ocultarlas como numeros
     fichas_ocultas = []
 
-    for numeros in range(len(fichas)):  # ITERO SEGUN LA LONGITUD DE LAS FICHAS DADAS PARA OCULTARLAS COMO NUMEROS
+    for numeros in range(len(fichas)):  
         fichas_ocultas.append(str([numeros]))
 
     return fichas_ocultas
