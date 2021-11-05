@@ -96,7 +96,7 @@ def validar_ingreso(posicion, fichas_ocultas):
             print("Esta ficha ({}) no esta disponible".format(fichas_ocultas[int(posicion)][1]))
             return False
             
-    return True, ""
+    return True
 
 def main():
     fichas = generador_fichas()
