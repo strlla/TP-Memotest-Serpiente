@@ -48,21 +48,19 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
     # funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean iguales, en caso contrario retorna False
     
     primer_posicion = input("1er posición: ")
-    primer_es_valido, mensaje = validar_ingreso(primer_posicion, fichas_ocultas)
+    primer_es_valido = validar_ingreso(primer_posicion, fichas_ocultas)
     while not primer_es_valido:
-      print(mensaje)
       primer_posicion = input("1er posición: ")
-      primer_es_valido, mensaje = validar_ingreso(primer_posicion, fichas_ocultas)
+      primer_es_valido = validar_ingreso(primer_posicion, fichas_ocultas)
     primer_posicion = int(primer_posicion)
     
     fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
 
     segunda_posicion = input("2da posición: ")
-    segundo_es_valido, mensaje = validar_ingreso(segunda_posicion, fichas_ocultas)
+    segundo_es_valido = validar_ingreso(segunda_posicion, fichas_ocultas)
     while not segundo_es_valido:
-        print(mensaje)
         segunda_posicion = input("2da posición: ")
-        segundo_es_valido, mensaje = validar_ingreso(segunda_posicion, fichas_ocultas)
+        segundo_es_valido = validar_ingreso(segunda_posicion, fichas_ocultas)
     segunda_posicion = int(segunda_posicion)
 
     fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
@@ -88,12 +86,15 @@ def validar_ingreso(posicion, fichas_ocultas):
     #Funcion que chequea que la posicion ingresada sea numerica  y sea menor o igual a la cantidad de fichas, falta validar que este disponible
     #Estrella Portocarrero
     if not posicion.isnumeric():
-        return False, "Ingrese un valor numerico"
+        print("Ingrese un valor numerico")
+        return False
     else: 
         if int(posicion) > len(fichas_ocultas) - 1 or int(posicion) < 0:
-            return False, "Ingrese un numero menor o igual a {}".format(len(fichas_ocultas) - 1)
+            print("Ingrese un numero menor o igual a ",len(fichas_ocultas) - 1)
+            return False
         elif not fichas_ocultas[int(posicion)][1].isnumeric():
-            return False, "Esta ficha ({}) no esta disponible".format(fichas_ocultas[int(posicion)][1])
+            print("Esta ficha ({}) no esta disponible".format(fichas_ocultas[int(posicion)][1]))
+            return False
             
     return True, ""
 
