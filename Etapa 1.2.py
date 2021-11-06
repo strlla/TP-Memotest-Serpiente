@@ -1,12 +1,15 @@
 from os import system
 import time
+from random import shuffle
 
 
 def generador_fichas():
-    """Genera las fichas principales para dar inicio al juego"""
-    # shuffle(fichas) Esto serviria para la aleatoriedad mas adelante
+    """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente"""
 
-    fichas = ["D", "D", "s", "s"]
+    fichas = ["D", "D", "D", "D", "D", "D", "D", "D",
+              "s", "s", "s", "s", "s", "s", "s", "s"]
+
+    shuffle(fichas)
 
     return fichas
 
@@ -30,7 +33,6 @@ def jugada(fichas, fichas_ocultas):
     """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
-
 
     print("Fichas y posiciones:", *fichas_ocultas)
     intentos = 0
