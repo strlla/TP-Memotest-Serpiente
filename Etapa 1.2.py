@@ -1,6 +1,7 @@
 from os import system
-import time
 from random import shuffle
+import time
+import numpy as np
 
 
 def generador_fichas():
@@ -34,7 +35,9 @@ def jugada(fichas, fichas_ocultas):
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
 
-    print("Fichas y posiciones:", *fichas_ocultas)
+    tablero = np.array([fichas_ocultas])
+    tablero_formado = np.reshape(tablero, (4, 4))
+    print("Fichas y posiciones:\n", tablero_formado)
     intentos = 0
     tiempo_total = 0
     inicio_partida = time.time()
@@ -48,14 +51,14 @@ def jugada(fichas, fichas_ocultas):
         else:
             intentos += 1
             system("cls")
-            
+
             print("Intenta nuevamente")
 
             fichas = generador_fichas()
 
             fichas_ocultas = ocultar_fichas(fichas)
 
-            print("Fichas y posiciones:", *fichas_ocultas)
+            print("Fichas y posiciones:\n", tablero_formado)
 
     print(
         f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
@@ -93,9 +96,12 @@ def comparar_fichas(primera_posicion, segunda_posicion, fichas):
 
 def mostrar_ficha(posicion, fichas, fichas_ocultas):
     """Printea las fichas ocultas y las descubiertas por el usuario"""
-    fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) if fichas_ocultas.index(i) == posicion else i for i in fichas_ocultas]
+    fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) if fichas_ocultas.index(i) == posicion else i for i in
+                      fichas_ocultas]
 
-    print("Fichas y posiciones:", *fichas_ocultas)
+    tablero = np.array([fichas_ocultas])
+    tablero_formado = np.reshape(tablero, (4, 4))
+    print("Fichas y posiciones:\n", tablero_formado)
 
     return fichas_ocultas
 
