@@ -58,7 +58,7 @@ def jugada(fichas, fichas_ocultas):
             print("Fichas y posiciones:", *fichas_ocultas)
 
     print(
-        f"¡Felicitaciones! Lo lograste en {intentos * 2} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
+        f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
