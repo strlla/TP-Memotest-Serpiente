@@ -27,11 +27,14 @@ def ocultar_fichas(fichas):
 
 def jugada(fichas, fichas_ocultas):
     """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
+    Tambien contiene una variable que permite guardar la cantidad de intentos
     Estrella Portocarrero"""
 
     print("Fichas y posiciones:", *fichas_ocultas)
+    intentos = 0
     gano = False
     while not gano:
+        intentos += 1
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
         if resultado:
             gano = revisar_fichas(fichas, fichas_ocultas)
@@ -46,7 +49,8 @@ def jugada(fichas, fichas_ocultas):
 
             print("Fichas y posiciones:", *fichas_ocultas)
 
-    print(f"¡Felicitaciones!")
+    print(
+        f"¡Felicitaciones! Lo lograste en {intentos * 2} intentos")
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
