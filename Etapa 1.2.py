@@ -1,4 +1,5 @@
 from os import system
+import time
 
 
 def generador_fichas():
@@ -27,17 +28,22 @@ def ocultar_fichas(fichas):
 
 def jugada(fichas, fichas_ocultas):
     """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
-    Tambien contiene una variable que permite guardar la cantidad de intentos
+    Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
+
 
     print("Fichas y posiciones:", *fichas_ocultas)
     intentos = 0
+    tiempo_total = 0
+    inicio_partida = time.time()
     gano = False
     while not gano:
         intentos += 1
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
         if resultado:
             gano = revisar_fichas(fichas, fichas_ocultas)
+            final_partida = time.time()
+            tiempo_total = final_partida - inicio_partida
         else:
             system("cls")
 
@@ -50,7 +56,7 @@ def jugada(fichas, fichas_ocultas):
             print("Fichas y posiciones:", *fichas_ocultas)
 
     print(
-        f"¡Felicitaciones! Lo lograste en {intentos * 2} intentos")
+        f"¡Felicitaciones! Lo lograste en {intentos * 2} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
