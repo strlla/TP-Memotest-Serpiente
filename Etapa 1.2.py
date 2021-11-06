@@ -63,7 +63,6 @@ def jugada(fichas, fichas_ocultas):
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
     """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean iguales, en caso contrario retorna False"""
-    print(fichas)
     primer_posicion = input("1er posición: ")
     primer_es_valido = validar_ingreso(primer_posicion, fichas_ocultas)
     while not primer_es_valido:
