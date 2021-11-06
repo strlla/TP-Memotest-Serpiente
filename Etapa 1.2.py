@@ -40,15 +40,15 @@ def jugada(fichas, fichas_ocultas):
     inicio_partida = time.time()
     gano = False
     while not gano:
-        intentos += 1
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
         if resultado:
             gano = revisar_fichas(fichas, fichas_ocultas)
             final_partida = time.time()
             tiempo_total = final_partida - inicio_partida
         else:
+            intentos += 1
             system("cls")
-
+            
             print("Intenta nuevamente")
 
             fichas = generador_fichas()
