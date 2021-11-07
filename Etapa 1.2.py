@@ -2,6 +2,8 @@ from os import system
 from random import shuffle
 import time
 import numpy as np
+import pandas as pd
+
 
 
 def generador_fichas():
@@ -25,7 +27,7 @@ def revisar_fichas(fichas, fichas_ocultas):
 def ocultar_fichas(fichas):
     """ Se itera segun la longitud de las fichas dadas para ocultarlas como numeros"""
 
-    fichas_ocultas = [numeros for numeros in range(len(fichas))]
+    fichas_ocultas = [(str([numeros])) for numeros in range(len(fichas))]
 
     return fichas_ocultas
 
@@ -34,9 +36,10 @@ def jugada(fichas, fichas_ocultas):
     """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
-    tablero = [list([ficha]) for ficha in fichas_ocultas]
+
+    tablero = np.array([fichas_ocultas])
     tablero_formado = np.reshape(tablero, (4, 4))
-    print("Fichas y posiciones:\n", tablero_formado)
+    print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
     intentos = 0
     tiempo_total = 0
     inicio_partida = time.time()
@@ -57,7 +60,7 @@ def jugada(fichas, fichas_ocultas):
 
             fichas_ocultas = ocultar_fichas(fichas)
 
-            print("Fichas y posiciones:\n", tablero_formado)
+            print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     print(
         f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
@@ -99,8 +102,8 @@ def mostrar_ficha(posicion, fichas, fichas_ocultas):
                       fichas_ocultas]
 
     tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(tablero, (4, 4))
-    print("Fichas y posiciones:\n", tablero_formado)
+    tablero_formado = np.reshape(*tablero, (4, 4))
+    print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return fichas_ocultas
 
