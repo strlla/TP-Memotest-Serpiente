@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 
 
-
 def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente"""
 
@@ -32,18 +31,26 @@ def ocultar_fichas(fichas):
     return fichas_ocultas
 
 
+def imprimir_tablero(fichas, fichas_ocultas):
+    """Imprime el tablero utilizando numpy y pandas"""
+    tablero = np.array([fichas_ocultas])
+    tablero_formado = np.reshape(tablero, (4, 4))
+    print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
+
+    return
+
+
 def jugada(fichas, fichas_ocultas):
     """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
 
-    tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(tablero, (4, 4))
-    print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
     intentos = 0
     tiempo_total = 0
     inicio_partida = time.time()
     gano = False
+    imprimir_tablero(fichas, fichas_ocultas)
+
     while not gano:
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
         if resultado:
@@ -60,7 +67,7 @@ def jugada(fichas, fichas_ocultas):
 
             fichas_ocultas = ocultar_fichas(fichas)
 
-            print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
+            imprimir_tablero(fichas, fichas_ocultas)
 
     print(
         f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
@@ -101,9 +108,7 @@ def mostrar_ficha(posicion, fichas, fichas_ocultas):
     fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) if fichas_ocultas.index(i) == posicion else i for i in
                       fichas_ocultas]
 
-    tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(*tablero, (4, 4))
-    print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
+    imprimir_tablero(fichas, fichas_ocultas)
 
     return fichas_ocultas
 
