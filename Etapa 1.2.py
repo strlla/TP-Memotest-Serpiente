@@ -25,7 +25,7 @@ def revisar_fichas(fichas, fichas_ocultas):
 def ocultar_fichas(fichas):
     """ Se itera segun la longitud de las fichas dadas para ocultarlas como numeros"""
 
-    fichas_ocultas = [(str([numeros])) for numeros in range(len(fichas))]
+    fichas_ocultas = [numeros for numeros in range(len(fichas))]
 
     return fichas_ocultas
 
@@ -34,8 +34,7 @@ def jugada(fichas, fichas_ocultas):
     """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
-
-    tablero = np.array([fichas_ocultas])
+    tablero = [list([ficha]) for ficha in fichas_ocultas]
     tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", tablero_formado)
     intentos = 0
