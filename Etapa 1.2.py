@@ -40,6 +40,39 @@ def imprimir_tablero(fichas, fichas_ocultas):
     return
 
 
+def obtener_nombres_de_jugadores():
+    """Solicita que se ingrese los nombres de los
+    jugadores, y los guarda en una lista. Se indica que para finalizar la carga
+    hay que presionar ENTER."""
+
+    nombres_de_jugadores = []
+    cantidad_de_ingresos = 0
+    termino_ingreso = False
+    while cantidad_de_ingresos < 2 and not termino_ingreso:
+        nombre_ingresado = input("Ingrese el nombre de un jugador o presione ENTER para finalizar el ingreso: ")
+        if nombre_ingresado == "":
+            termino_ingreso = True
+        else:
+            nombres_de_jugadores.append(nombre_ingresado)
+        cantidad_de_ingresos = len(nombres_de_jugadores)
+
+    return nombres_de_jugadores
+
+
+def imprimir_asignacion_de_turnos(lista_de_nombres):
+    """Ordena aleatoriamente la lista de jugadores
+    para asignar el orden de los turnos al azar."""
+
+    shuffle(lista_de_nombres)
+
+    for i in range(len(lista_de_nombres)):
+        nro_turno = i + 1
+        nombre_jugador = lista_de_nombres[i]
+        print("El", nro_turno, "° turno es de ", nombre_jugador)
+
+    return lista_de_nombres
+
+
 def jugada(fichas, fichas_ocultas):
     """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
@@ -51,6 +84,7 @@ def jugada(fichas, fichas_ocultas):
     gano = False
     imprimir_tablero(fichas, fichas_ocultas)
 
+
     while not gano:
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
         if resultado:
@@ -59,11 +93,12 @@ def jugada(fichas, fichas_ocultas):
             tiempo_total = final_partida - inicio_partida
         else:
             intentos += 1
+
             system("cls")
 
             print("Intenta nuevamente")
 
-            fichas = generador_fichas()
+            fichas = generador_fichas()  # Llamando esta funcion creamos nuevas fichas lo cual el usuario siempre va a tener que volver a adivinar
 
             fichas_ocultas = ocultar_fichas(fichas)
 
@@ -133,6 +168,8 @@ def validar_ingreso(posicion, fichas_ocultas):
 def main():
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
+    lista_de_nombres = obtener_nombres_de_jugadores()
+    imprimir_asignacion_de_turnos(lista_de_nombres)
     jugada(fichas, fichas_ocultas)
 
 
