@@ -73,11 +73,28 @@ def imprimir_asignacion_de_turnos(lista_de_nombres):
     return lista_de_nombres
 
 
-def jugada(fichas, fichas_ocultas):
-    """Funcion principal que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
+def jugada(fichas, fichas_ocultas, lista_de_nombres):
+    """Funcion que permite jugar a cada jugador en su orden correspondiente
+    Estrella Portocarrero"""
+    while True:
+        for jugador in lista_de_nombres:
+            print(f"Turno del jugador {jugador}")
+            jugada_por_jugador(fichas, fichas_ocultas)
+    
+    # fichas = generador_fichas()  # Llamando esta funcion creamos nuevas fichas lo cual el usuario siempre va a tener que volver a adivinar
+    # fichas_ocultas = ocultar_fichas(fichas)
+    # imprimir_tablero(fichas, fichas_ocultas)        
+    
+    # while True:
+    #     perdio = jugada_por_jugador(fichas, fichas_ocultas)
+    #     if perdio:
+    #         break
+
+def jugada_por_jugador(fichas, fichas_ocultas):
+    """Funcion que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
-
+    
     intentos = 0
     tiempo_total = 0
     inicio_partida = time.time()
@@ -91,23 +108,15 @@ def jugada(fichas, fichas_ocultas):
             gano = revisar_fichas(fichas, fichas_ocultas)
             final_partida = time.time()
             tiempo_total = final_partida - inicio_partida
-        else:
-            intentos += 1
-
-            system("cls")
-
-            print("Intenta nuevamente")
-
-            fichas = generador_fichas()  # Llamando esta funcion creamos nuevas fichas lo cual el usuario siempre va a tener que volver a adivinar
-
-            fichas_ocultas = ocultar_fichas(fichas)
-
-            imprimir_tablero(fichas, fichas_ocultas)
-
-    print(
+            if gano:
+                print(
         f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
+        else:
+            # intentos += 1
+            # print("Intenta nuevamente")
+            break
 
-
+   
 def seleccionar_posiciones(fichas, fichas_ocultas):
     """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean iguales, en caso contrario retorna False"""
     primer_posicion = input("1er posición: ")
@@ -170,7 +179,7 @@ def main():
     fichas_ocultas = ocultar_fichas(fichas)
     lista_de_nombres = obtener_nombres_de_jugadores()
     imprimir_asignacion_de_turnos(lista_de_nombres)
-    jugada(fichas, fichas_ocultas)
+    jugada(fichas, fichas_ocultas, lista_de_nombres)
 
 
 main()
