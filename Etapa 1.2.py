@@ -118,6 +118,7 @@ def jugada_por_jugador(fichas, fichas_ocultas):
         else:
             # intentos += 1
             # print("Intenta nuevamente")
+            system("cls")
             break
 
 
