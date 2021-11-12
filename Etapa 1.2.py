@@ -24,7 +24,8 @@ def revisar_fichas(fichas, fichas_ocultas):
 
 
 def ocultar_fichas(fichas):
-    """ Se itera segun la longitud de las fichas dadas para ocultarlas como numeros"""
+    """ Se itera segun la longitud de las fichas dadas para ocultarlas como numeros
+    #Juan Tejada"""
 
     fichas_ocultas = [(str([numeros])) for numeros in range(len(fichas))]
 
@@ -32,7 +33,8 @@ def ocultar_fichas(fichas):
 
 
 def imprimir_tablero(fichas, fichas_ocultas):
-    """Imprime el tablero utilizando numpy y pandas"""
+    """Imprime el tablero utilizando numpy y pandas
+    #Juan Tejada"""
     tablero = np.array([fichas_ocultas])
     tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
@@ -40,11 +42,11 @@ def imprimir_tablero(fichas, fichas_ocultas):
     return
 
 
-
 def obtener_nombres_de_jugadores():
     """Solicita que se ingrese los nombres de los
     jugadores, y los guarda en una lista. Se indica que para finalizar la carga
-    hay que presionar ENTER."""
+    hay que presionar ENTER.
+    #Juan Tejada"""
 
     nombres_de_jugadores = []
     cantidad_de_ingresos = 0
@@ -62,7 +64,8 @@ def obtener_nombres_de_jugadores():
 
 def imprimir_asignacion_de_turnos(lista_de_nombres):
     """Ordena aleatoriamente la lista de jugadores
-    para asignar el orden de los turnos al azar."""
+    para asignar el orden de los turnos al azar.
+    #Juan Tejada"""
 
     shuffle(lista_de_nombres)
 
@@ -81,27 +84,27 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres):
         for jugador in lista_de_nombres:
             print(f"Turno del jugador {jugador}")
             jugada_por_jugador(fichas, fichas_ocultas)
-    
+
     # fichas = generador_fichas()  # Llamando esta funcion creamos nuevas fichas lo cual el usuario siempre va a tener que volver a adivinar
     # fichas_ocultas = ocultar_fichas(fichas)
     # imprimir_tablero(fichas, fichas_ocultas)        
-    
+
     # while True:
     #     perdio = jugada_por_jugador(fichas, fichas_ocultas)
     #     if perdio:
     #         break
 
+
 def jugada_por_jugador(fichas, fichas_ocultas):
     """Funcion que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
     Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida
     Estrella Portocarrero"""
-    
+
     intentos = 0
     tiempo_total = 0
     inicio_partida = time.time()
     gano = False
     imprimir_tablero(fichas, fichas_ocultas)
-
 
     while not gano:
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
@@ -111,15 +114,16 @@ def jugada_por_jugador(fichas, fichas_ocultas):
             tiempo_total = final_partida - inicio_partida
             if gano:
                 print(
-        f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
+                    f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
         else:
             # intentos += 1
             # print("Intenta nuevamente")
             break
 
-   
+
 def seleccionar_posiciones(fichas, fichas_ocultas):
-    """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean iguales, en caso contrario retorna False"""
+    """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean 
+    iguales, en caso contrario retorna False """
     primer_posicion = input("1er posición: ")
     primer_es_valido = validar_ingreso(primer_posicion, fichas_ocultas)
     while not primer_es_valido:
@@ -184,5 +188,3 @@ def main():
 
 
 main()
-
-
