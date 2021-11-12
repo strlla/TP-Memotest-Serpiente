@@ -40,6 +40,7 @@ def imprimir_tablero(fichas, fichas_ocultas):
     return
 
 
+
 def obtener_nombres_de_jugadores():
     """Solicita que se ingrese los nombres de los
     jugadores, y los guarda en una lista. Se indica que para finalizar la carga
@@ -183,3 +184,5 @@ def main():
 
 
 main()
+
+
