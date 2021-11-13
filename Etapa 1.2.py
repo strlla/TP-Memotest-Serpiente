@@ -3,8 +3,34 @@ from random import shuffle
 import time
 import numpy as np
 import pandas as pd
+from tkinter import *
+import tkinter as tk
 
-
+def generar_interfaz():
+    raiz = Tk()
+    raiz.title("TP1 - Memotest")
+    raiz.resizable(False, False)
+    raiz.geometry("300x200")
+    raiz.configure(bg='#FFF')
+    titulo = Label(raiz, text="Ingrese los jugadores:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+    titulo.place(x=10, y=10)
+    label_primer_jugador = Label(raiz, text="1º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+    label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")    
+    label_primer_jugador.place(x=10, y=50)
+    label_segundo_jugador.place(x=10, y=100)
+    primer_jugador_input = Entry(raiz, bd=0, bg="#edf2fb", font=("Ubuntu", 12))
+    primer_jugador_input.place(x=45, y=53, height=30)
+    segundo_jugador_input = Entry(raiz, bd=0, bg="#edf2fb", font=("Ubuntu", 12))
+    segundo_jugador_input.place(x=45, y=103, height=30)
+    boton_enviar = Button(raiz, command=lambda: obtener_nombres(primer_jugador_input, segundo_jugador_input), text="Jugar", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
+    boton_enviar.place(x=10, y=150, height=20, width=100)
+    raiz.mainloop()
+    
+def obtener_nombres(primer_input, segundo_input):
+    primer_nombre = primer_input.get()
+    segund_nombre = segundo_input.get()
+    print(primer_nombre)
+    
 def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente"""
 
@@ -173,10 +199,10 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 
 def main():
+    generar_interfaz()
     fichas = generador_fichas()
     lista_de_nombres = obtener_nombres_de_jugadores()
     imprimir_asignacion_de_turnos(lista_de_nombres)
     jugada(fichas, lista_de_nombres)
-
 
 main()
