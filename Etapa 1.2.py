@@ -77,45 +77,69 @@ def imprimir_asignacion_de_turnos(lista_de_nombres):
     return lista_de_nombres
 
 
-def jugada(fichas, lista_de_nombres):
-    """Funcion que permite jugar a cada jugador en su orden correspondiente
-    Estrella Portocarrero"""
-    fichas_ocultas = ocultar_fichas(fichas)
-    while True:
-        for jugador in lista_de_nombres:
-            print(f"Turno del jugador {jugador}")
-            fichas_ocultas = jugada_por_jugador(fichas, fichas_ocultas)
+def genera_dicc_jugadores(lista_de_nombres):
+    """genera_dicc_jugadores crea el diccionario que tiene como claves a los
+    nombres de los jugadores y como valores a las listas vacías que van a contener
+    a sus datos."""
 
-def jugada_por_jugador(fichas, fichas_ocultas):
-    """Funcion que permite al jugador seguir jugando mientras encuentre pares iguales, caso contrario se resetean las fichas.
-    Tambien contiene una variable que permite guardar la cantidad de intentos y el tiempo transcurrido hasta ganar la partida. 
-    Retorna las fichas del ultimo jugador. 
-    Estrella Portocarrero"""
+    dicc_jugadores = {}
+    for jugador in lista_de_nombres:
+        dicc_jugadores[jugador] = 0
 
-    intentos = 0
-    tiempo_total = 0
-    inicio_partida = time.time()
-    gano = False
+    return dicc_jugadores
+
+
+def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
+    nro_jugador = 0
     imprimir_tablero(fichas, fichas_ocultas)
-    while not gano:
+    finalizar_partida = False
+    inicio_partida = time.time()
+
+    while not finalizar_partida:
+
+        print(f"*-----------------------*"
+              f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
+
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
-        if resultado:
-            gano = revisar_fichas(fichas, fichas_ocultas)
-            final_partida = time.time()
-            tiempo_total = final_partida - inicio_partida
-            if gano:
-                print(
-                    f"¡Felicitaciones! Lo lograste en {intentos} intentos y en un tiempo total de {(round(tiempo_total, 2))} segundos")
-        else:
-            # intentos += 1
-            # print("Intenta nuevamente")
-            system("cls")
-            break
-    return fichas_ocultas
+
+        fichas_descubiertas_totalmente = revisar_fichas(fichas, fichas_ocultas)
+
+        if resultado is True:
+
+            print(f"¡Acertaste! {lista_de_nombres[nro_jugador]}")
+
+            nro_jugador = nro_jugador
+
+            dicc_jugadores[lista_de_nombres[nro_jugador]] += 1
+
+            if fichas_descubiertas_totalmente is True:
+                finalizar_partida = True
+
+        if resultado is False:
+
+            print(f"Fallaste {lista_de_nombres[nro_jugador]}")
+
+            if nro_jugador == len(lista_de_nombres) - 1:
+
+                nro_jugador = 0
+
+            else:
+
+                nro_jugador += 1
+
+                system("cls")
+
+            if fichas_descubiertas_totalmente:
+                finalizar_partida = True
+
+    final_partida = time.time()
+    tiempo_total = final_partida - inicio_partida
+
+    print(f"La partida duro un tiempo total de: {round(tiempo_total, 2)} segundos")
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
-    """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean 
+    """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean
     iguales, en caso contrario retorna False """
     primer_posicion = input("1er posición: ")
     primer_es_valido = validar_ingreso(primer_posicion, fichas_ocultas)
@@ -172,11 +196,35 @@ def validar_ingreso(posicion, fichas_ocultas):
     return True
 
 
+def resultados(lista_de_nombres, diccionario_aciertos):
+    PRIMER_JUGADOR = 0
+    SEGUNDO_JUGADOR = 1
+
+    if diccionario_aciertos[lista_de_nombres[PRIMER_JUGADOR]] == diccionario_aciertos[
+        lista_de_nombres[SEGUNDO_JUGADOR]]:
+
+        print(f"¡Hubo un empate!")
+
+    elif diccionario_aciertos[lista_de_nombres[PRIMER_JUGADOR]] > diccionario_aciertos[
+        lista_de_nombres[SEGUNDO_JUGADOR]]:
+
+        print(
+            f"El jugador {lista_de_nombres[PRIMER_JUGADOR]} gano con un total de {diccionario_aciertos[lista_de_nombres[PRIMER_JUGADOR]]} aciertos")
+
+    else:
+
+        print(
+            f"El jugador {lista_de_nombres[SEGUNDO_JUGADOR]} gano con un total de {diccionario_aciertos[lista_de_nombres[SEGUNDO_JUGADOR]]} aciertos")
+
+
 def main():
     fichas = generador_fichas()
+    fichas_ocultas = ocultar_fichas(fichas)
     lista_de_nombres = obtener_nombres_de_jugadores()
     imprimir_asignacion_de_turnos(lista_de_nombres)
-    jugada(fichas, lista_de_nombres)
+    dicc_jugadores = genera_dicc_jugadores(lista_de_nombres)
+    jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores)
+    resultados(lista_de_nombres, dicc_jugadores)
 
 
 main()
