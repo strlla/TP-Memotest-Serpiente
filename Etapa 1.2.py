@@ -45,7 +45,8 @@ def generador_fichas():
 def revisar_fichas(fichas, fichas_ocultas):
     """Funcion que revisa si todas las fichas estan descubiertas (si el jugador gano) y retorna True, en caso contrario retorna False
     # Estrella Portocarrero """
-
+    print(fichas)
+    print(fichas_ocultas)
     return all(ficha == ficha_oculta[1] for ficha, ficha_oculta in zip(fichas, fichas_ocultas))
 
 
@@ -125,7 +126,8 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
 
         print(f"*-----------------------*"
               f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
-
+        fichas_originales = fichas_ocultas
+        
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
 
         fichas_descubiertas_totalmente = revisar_fichas(fichas, fichas_ocultas)
@@ -144,7 +146,7 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
         if resultado is False:
 
             print(f"Fallaste {lista_de_nombres[nro_jugador]}")
-
+            fichas_ocultas = fichas_originales
             if nro_jugador == len(lista_de_nombres) - 1:
 
                 nro_jugador = 0
@@ -152,8 +154,6 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
             else:
 
                 nro_jugador += 1
-
-                system("cls")
 
             if fichas_descubiertas_totalmente:
                 finalizar_partida = True
@@ -186,7 +186,7 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
     fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
 
     resultado = comparar_fichas(primer_posicion, segunda_posicion, fichas)
-
+        
     return resultado, fichas_ocultas
 
 
