@@ -117,7 +117,6 @@ def genera_dicc_jugadores(lista_de_nombres):
 
 def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
     nro_jugador = 0
-    imprimir_tablero(fichas, fichas_ocultas)
     finalizar_partida = False
     inicio_partida = time.time()
 
@@ -174,16 +173,14 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
     primer_posicion = int(primer_posicion)
 
     fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
-    imprimir_tablero(fichas, fichas_ocultas)
-
+    
     segunda_posicion = input("2da posición: ")
     segundo_es_valido = validar_ingreso(segunda_posicion, fichas_ocultas)
     while not segundo_es_valido:
         segunda_posicion = input("2da posición: ")
         segundo_es_valido = validar_ingreso(segunda_posicion, fichas_ocultas)
     segunda_posicion = int(segunda_posicion)
-    imprimir_tablero(fichas, fichas_ocultas)
-
+    
     fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
 
     resultado = comparar_fichas(primer_posicion, segunda_posicion, fichas)
@@ -200,6 +197,7 @@ def mostrar_ficha(posicion, fichas, fichas_ocultas):
     """Printea las fichas ocultas y las descubiertas por el usuario"""
     fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) if fichas_ocultas.index(i) == posicion else i for i in
                       fichas_ocultas]
+    imprimir_tablero(fichas, fichas_ocultas)
     return fichas_ocultas
 
 
