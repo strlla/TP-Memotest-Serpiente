@@ -6,7 +6,7 @@ import pandas as pd
 from tkinter import *
 import tkinter as tk
 
-def generar_interfaz():
+def generar_interfaz(lista_de_nombres):
     raiz = Tk()
     raiz.title("TP1 - Memotest")
     raiz.resizable(False, False)
@@ -18,18 +18,18 @@ def generar_interfaz():
     label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")    
     label_primer_jugador.place(x=10, y=50)
     label_segundo_jugador.place(x=10, y=100)
-    primer_jugador_input = Entry(raiz, bd=0, bg="#edf2fb", font=("Ubuntu", 12))
+    primer_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     primer_jugador_input.place(x=45, y=53, height=30)
-    segundo_jugador_input = Entry(raiz, bd=0, bg="#edf2fb", font=("Ubuntu", 12))
+    segundo_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     segundo_jugador_input.place(x=45, y=103, height=30)
-    boton_enviar = Button(raiz, command=lambda: obtener_nombres(primer_jugador_input, segundo_jugador_input), text="Jugar", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
+    boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input, lista_de_nombres), text="Jugar", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
     boton_enviar.place(x=10, y=150, height=20, width=100)
     raiz.mainloop()
     
-def obtener_nombres(primer_input, segundo_input):
-    primer_nombre = primer_input.get()
-    segund_nombre = segundo_input.get()
-    print(primer_nombre)
+def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
+    lista_de_nombres.append(primer_input.get())
+    lista_de_nombres.append(segundo_input.get())
+    raiz.destroy()
     
 def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente"""
@@ -244,10 +244,10 @@ def resultados(lista_de_nombres, diccionario_aciertos):
 
 
 def main():
-    generar_interfaz()
+    lista_de_nombres = []
+    generar_interfaz(lista_de_nombres)
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
-    lista_de_nombres = obtener_nombres_de_jugadores()
     imprimir_asignacion_de_turnos(lista_de_nombres)
     dicc_jugadores = genera_dicc_jugadores(lista_de_nombres)
     jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores)
