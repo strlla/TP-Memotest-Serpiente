@@ -45,8 +45,7 @@ def generador_fichas():
 def revisar_fichas(fichas, fichas_ocultas):
     """Funcion que revisa si todas las fichas estan descubiertas (si el jugador gano) y retorna True, en caso contrario retorna False
     # Estrella Portocarrero """
-    print(fichas)
-    print(fichas_ocultas)
+    
     return all(ficha == ficha_oculta[1] for ficha, ficha_oculta in zip(fichas, fichas_ocultas))
 
 
