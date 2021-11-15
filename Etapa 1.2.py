@@ -6,7 +6,10 @@ import pandas as pd
 from tkinter import *
 import tkinter as tk
 
+
 def generar_interfaz(lista_de_nombres):
+    """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
+    Estrella Portocarrero"""
     raiz = Tk()
     raiz.title("TP1 - Memotest")
     raiz.resizable(False, False)
@@ -15,22 +18,30 @@ def generar_interfaz(lista_de_nombres):
     titulo = Label(raiz, text="Ingrese los jugadores:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
     titulo.place(x=10, y=10)
     label_primer_jugador = Label(raiz, text="1º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")    
+    label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
     label_primer_jugador.place(x=10, y=50)
     label_segundo_jugador.place(x=10, y=100)
     primer_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     primer_jugador_input.place(x=45, y=53, height=30)
     segundo_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     segundo_jugador_input.place(x=45, y=103, height=30)
-    boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input, lista_de_nombres), text="Jugar", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
+    boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input,
+                                                                lista_de_nombres), text="Jugar", bd=0, bg="#47126b",
+                          font=("Ubuntu", 12), fg="#FFF")
     boton_enviar.place(x=10, y=150, height=20, width=100)
     raiz.mainloop()
-    
+
+
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
+    """
+    Se encarga guardar los nombres y cerrar la interfaz
+    Estrella Portocarrero
+    """
     lista_de_nombres.append(primer_input.get())
     lista_de_nombres.append(segundo_input.get())
     raiz.destroy()
-    
+
+
 def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente"""
 
@@ -45,13 +56,13 @@ def generador_fichas():
 def revisar_fichas(fichas, fichas_ocultas):
     """Funcion que revisa si todas las fichas estan descubiertas (si el jugador gano) y retorna True, en caso contrario retorna False
     # Estrella Portocarrero """
-    
+
     return all(ficha == ficha_oculta[1] for ficha, ficha_oculta in zip(fichas, fichas_ocultas))
 
 
 def ocultar_fichas(fichas):
     """ Se itera segun la longitud de las fichas dadas para ocultarlas como numeros
-    #Juan Tejada"""
+    # Juan Tejada"""
 
     fichas_ocultas = [(str([numeros])) for numeros in range(len(fichas))]
 
@@ -60,7 +71,8 @@ def ocultar_fichas(fichas):
 
 def imprimir_tablero(fichas, fichas_ocultas):
     """Imprime el tablero utilizando numpy y pandas
-    #Juan Tejada"""
+    Estrella Portocarrero
+    Juan Tejada"""
     tablero = np.array([fichas_ocultas])
     tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
@@ -72,7 +84,8 @@ def obtener_nombres_de_jugadores():
     """Solicita que se ingrese los nombres de los
     jugadores, y los guarda en una lista. Se indica que para finalizar la carga
     hay que presionar ENTER.
-    #Juan Tejada"""
+    Estrella Portocarrero
+    Juan Tejada"""
 
     nombres_de_jugadores = []
     cantidad_de_ingresos = 0
@@ -91,7 +104,8 @@ def obtener_nombres_de_jugadores():
 def imprimir_asignacion_de_turnos(lista_de_nombres):
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
-    #Juan Tejada"""
+    Estrella Portocarrero
+    Juan Tejada"""
 
     shuffle(lista_de_nombres)
 
@@ -105,8 +119,9 @@ def imprimir_asignacion_de_turnos(lista_de_nombres):
 
 def genera_dicc_jugadores(lista_de_nombres):
     """genera_dicc_jugadores crea el diccionario que tiene como claves a los
-    nombres de los jugadores y como valores a las listas vacías que van a contener
-    a sus datos."""
+    nombres de los jugadores y como valores los aciertos de cada jugador.
+    Estrella Portocarrero
+    Juan Tejada"""
 
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
@@ -116,8 +131,15 @@ def genera_dicc_jugadores(lista_de_nombres):
 
 
 def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
+    """La funcion jugada es la funcion principal en la que se lleva a cabo todo el juego. Tiene la variable 'nro_jugador'
+    que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
+    de la partida.
+    Estrella Portocarrero
+    Juan Tejada
+
+    """
+
     nro_jugador = 0
-    imprimir_tablero(fichas, fichas_ocultas)
     finalizar_partida = False
     inicio_partida = time.time()
 
@@ -126,7 +148,7 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
         print(f"*-----------------------*"
               f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
         fichas_originales = fichas_ocultas
-        
+
         imprimir_tablero(fichas, fichas_ocultas)
 
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
@@ -143,7 +165,7 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
 
             if fichas_descubiertas_totalmente is True:
                 finalizar_partida = True
-        else: 
+        else:
             print(f"Fallaste {lista_de_nombres[nro_jugador]}")
             fichas_ocultas = fichas_originales
             if nro_jugador == len(lista_de_nombres) - 1:
@@ -165,7 +187,9 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
     """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean
-    iguales, en caso contrario retorna False """
+    iguales, en caso contrario retorna False
+    Estrella Portocarrero
+    Juan Tejada"""
     primer_posicion = input("1er posición: ")
     primer_es_valido = validar_ingreso(primer_posicion, fichas_ocultas)
     while not primer_es_valido:
@@ -187,7 +211,7 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
     fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
 
     resultado = comparar_fichas(primer_posicion, segunda_posicion, fichas)
-        
+
     return resultado, fichas_ocultas
 
 
@@ -221,6 +245,8 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 
 def resultados(lista_de_nombres, diccionario_aciertos):
+    """Funcion que imprime los aciertos por cada jugador y determina el ganador.
+    Juan Tejada"""
     PRIMER_JUGADOR = 0
     SEGUNDO_JUGADOR = 1
 
@@ -250,5 +276,6 @@ def main():
     dicc_jugadores = genera_dicc_jugadores(lista_de_nombres)
     jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores)
     resultados(lista_de_nombres, dicc_jugadores)
+
 
 main()
