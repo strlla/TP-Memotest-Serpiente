@@ -43,7 +43,8 @@ def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
 
 
 def generador_fichas():
-    """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente"""
+    """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
+    Juan Tejada"""
 
     fichas = ["D", "D", "D", "D", "D", "D", "D", "D",
               "s", "s", "s", "s", "s", "s", "s", "s"]
@@ -69,7 +70,7 @@ def ocultar_fichas(fichas):
     return fichas_ocultas
 
 
-def imprimir_tablero(fichas, fichas_ocultas):
+def imprimir_tablero(fichas_ocultas):
     """Imprime el tablero utilizando numpy y pandas
     Estrella Portocarrero
     Juan Tejada"""
@@ -214,12 +215,14 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
 
 
 def comparar_fichas(primera_posicion, segunda_posicion, fichas):
-    """Compara el contenido de la ficha en las dos posiciones recibidas, retorna True si son iguales, en caso contrario retorna False"""
+    """Compara el contenido de la ficha en las dos posiciones recibidas, retorna True si son iguales, en caso contrario retorna False
+    Juan Tejada"""
     return fichas[primera_posicion] == fichas[segunda_posicion]
 
 
 def mostrar_ficha(posicion, fichas, fichas_ocultas):
-    """Printea las fichas ocultas y las descubiertas por el usuario"""
+    """Printea las fichas ocultas y las descubiertas por el usuario
+    Juan Tejada"""
     fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) if fichas_ocultas.index(i) == posicion else i for i in
                       fichas_ocultas]
     imprimir_tablero(fichas, fichas_ocultas)
