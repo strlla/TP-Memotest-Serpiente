@@ -127,6 +127,8 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
               f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
         fichas_originales = fichas_ocultas
         
+        imprimir_tablero(fichas, fichas_ocultas)
+
         resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
 
         fichas_descubiertas_totalmente = revisar_fichas(fichas, fichas_ocultas)
@@ -141,9 +143,7 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
 
             if fichas_descubiertas_totalmente is True:
                 finalizar_partida = True
-
-        if resultado is False:
-
+        else: 
             print(f"Fallaste {lista_de_nombres[nro_jugador]}")
             fichas_ocultas = fichas_originales
             if nro_jugador == len(lista_de_nombres) - 1:
@@ -174,6 +174,7 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
     primer_posicion = int(primer_posicion)
 
     fichas_ocultas = mostrar_ficha(primer_posicion, fichas, fichas_ocultas)
+    imprimir_tablero(fichas, fichas_ocultas)
 
     segunda_posicion = input("2da posición: ")
     segundo_es_valido = validar_ingreso(segunda_posicion, fichas_ocultas)
@@ -181,6 +182,7 @@ def seleccionar_posiciones(fichas, fichas_ocultas):
         segunda_posicion = input("2da posición: ")
         segundo_es_valido = validar_ingreso(segunda_posicion, fichas_ocultas)
     segunda_posicion = int(segunda_posicion)
+    imprimir_tablero(fichas, fichas_ocultas)
 
     fichas_ocultas = mostrar_ficha(segunda_posicion, fichas, fichas_ocultas)
 
@@ -198,9 +200,6 @@ def mostrar_ficha(posicion, fichas, fichas_ocultas):
     """Printea las fichas ocultas y las descubiertas por el usuario"""
     fichas_ocultas = [i.replace(str(posicion), fichas[posicion]) if fichas_ocultas.index(i) == posicion else i for i in
                       fichas_ocultas]
-
-    imprimir_tablero(fichas, fichas_ocultas)
-
     return fichas_ocultas
 
 
