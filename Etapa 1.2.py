@@ -1,3 +1,4 @@
+from os import system
 from random import shuffle
 import time
 import numpy as np
@@ -144,7 +145,6 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
     inicio_partida = time.time()
 
     while not finalizar_partida:
-        print(fichas)
 
         print(f"*-----------------------*"
               f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
@@ -248,7 +248,7 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 
 def resultados(lista_de_nombres, diccionario_aciertos):
-    """Funcion que imprime los aciertos por cada jugador y determina el ganador.
+    """Funcion que imprime los aciertos/intentos por cada jugador y determina el ganador.
     Juan Tejada"""
     PRIMER_JUGADOR = 0
     SEGUNDO_JUGADOR = 1
