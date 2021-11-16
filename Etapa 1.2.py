@@ -126,7 +126,7 @@ def genera_dicc_jugadores(lista_de_nombres):
 
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
-        dicc_jugadores[jugador] = 0
+        dicc_jugadores[jugador] = [0, 0]
 
     return dicc_jugadores
 
@@ -145,6 +145,7 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
     inicio_partida = time.time()
 
     while not finalizar_partida:
+        print(fichas)
 
         print(f"*-----------------------*"
               f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
@@ -162,11 +163,12 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
 
             nro_jugador = nro_jugador
 
-            dicc_jugadores[lista_de_nombres[nro_jugador]] += 1
+            dicc_jugadores[lista_de_nombres[nro_jugador]][0] += 1
 
             if fichas_descubiertas_totalmente is True:
                 finalizar_partida = True
         else:
+            dicc_jugadores[lista_de_nombres[nro_jugador]][1] += 1
             print(f"Fallaste {lista_de_nombres[nro_jugador]}")
             fichas_ocultas = fichas_originales
             if nro_jugador == len(lista_de_nombres) - 1:
@@ -247,26 +249,32 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 
 def resultados(lista_de_nombres, diccionario_aciertos):
-    """Funcion que imprime los aciertos por cada jugador y determina el ganador.
+    """Funcion que imprime los aciertos/intentos por cada jugador y determina el ganador.
     Juan Tejada"""
     PRIMER_JUGADOR = 0
     SEGUNDO_JUGADOR = 1
 
-    if diccionario_aciertos[lista_de_nombres[PRIMER_JUGADOR]] == diccionario_aciertos[
-        lista_de_nombres[SEGUNDO_JUGADOR]]:
+    datos = diccionario_aciertos.values()
 
-        print(f"¡Hubo un empate!")
+    if list(datos)[PRIMER_JUGADOR][0] == list(datos)[SEGUNDO_JUGADOR][0]:
 
-    elif diccionario_aciertos[lista_de_nombres[PRIMER_JUGADOR]] > diccionario_aciertos[
-        lista_de_nombres[SEGUNDO_JUGADOR]]:
+        if list(datos)[PRIMER_JUGADOR][1] <= list(datos)[SEGUNDO_JUGADOR][1]:
+            print(
+                f"¡HUBO UN EMPATE! Gano el jugador: '{lista_de_nombres[PRIMER_JUGADOR]}' al tener la menor cantidad de intentos: {list(datos)[PRIMER_JUGADOR][1]} ")
+        else:
+            print(
+                f"¡HUBO UN EMPATE! Gano el jugador: '{lista_de_nombres[SEGUNDO_JUGADOR]}' al tener la menor cantidad de intentos: {list(datos)[SEGUNDO_JUGADOR][1]} ")
+
+
+    elif list(datos)[PRIMER_JUGADOR][0] > list(datos)[SEGUNDO_JUGADOR][0]:
 
         print(
-            f"El jugador {lista_de_nombres[PRIMER_JUGADOR]} gano con un total de {diccionario_aciertos[lista_de_nombres[PRIMER_JUGADOR]]} aciertos")
+            f"El jugador {lista_de_nombres[PRIMER_JUGADOR]} gano con un total de {list(datos)[PRIMER_JUGADOR][0]} aciertos y {list(datos)[PRIMER_JUGADOR][1]} intentos ")
 
     else:
 
         print(
-            f"El jugador {lista_de_nombres[SEGUNDO_JUGADOR]} gano con un total de {diccionario_aciertos[lista_de_nombres[SEGUNDO_JUGADOR]]} aciertos")
+            f"El jugador {lista_de_nombres[SEGUNDO_JUGADOR]} gano con un total de {list(datos)[SEGUNDO_JUGADOR][0]} aciertos y {list(datos)[SEGUNDO_JUGADOR][1]} intentos")
 
 
 def main():
