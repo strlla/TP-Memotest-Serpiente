@@ -1,4 +1,3 @@
-from os import system
 from random import shuffle
 import time
 import numpy as np
@@ -249,7 +248,7 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 
 def resultados(lista_de_nombres, diccionario_aciertos):
-    """Funcion que imprime los aciertos/intentos por cada jugador y determina el ganador.
+    """Funcion que imprime los aciertos por cada jugador y determina el ganador.
     Juan Tejada"""
     PRIMER_JUGADOR = 0
     SEGUNDO_JUGADOR = 1
