@@ -80,28 +80,6 @@ def imprimir_tablero(fichas_ocultas):
 
     return
 
-
-def obtener_nombres_de_jugadores():
-    """Solicita que se ingrese los nombres de los
-    jugadores, y los guarda en una lista. Se indica que para finalizar la carga
-    hay que presionar ENTER.
-    Estrella Portocarrero
-    Juan Tejada"""
-
-    nombres_de_jugadores = []
-    cantidad_de_ingresos = 0
-    termino_ingreso = False
-    while cantidad_de_ingresos < 2 and not termino_ingreso:
-        nombre_ingresado = input("Ingrese el nombre de un jugador o presione ENTER para finalizar el ingreso: ")
-        if nombre_ingresado == "":
-            termino_ingreso = True
-        else:
-            nombres_de_jugadores.append(nombre_ingresado)
-        cantidad_de_ingresos = len(nombres_de_jugadores)
-
-    return nombres_de_jugadores
-
-
 def imprimir_asignacion_de_turnos(lista_de_nombres):
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
