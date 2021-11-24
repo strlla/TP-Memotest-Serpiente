@@ -1,10 +1,8 @@
-from os import system
 from random import shuffle
 import time
 import numpy as np
 import pandas as pd
 from tkinter import *
-import tkinter as tk
 
 
 def generar_interfaz(lista_de_nombres):
