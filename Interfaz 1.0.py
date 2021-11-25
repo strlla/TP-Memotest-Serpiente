@@ -3,42 +3,41 @@ from tkinter import *
 datos = {}
 
 
-def interfaz_registro(datos):
-    raiz = Tk()
-    frame = Frame(raiz)
-    frame.pack(side="top", expand=True, fill="both")
+def interfaz_registro(datos, raiz):
+    frameRegistro = Frame(raiz)
+    frameRegistro.pack(side="top", expand=True, fill="both")
 
     raiz.title("TP1 - Memotest - Registro")
     raiz.resizable(False, False)
-    raiz.geometry("400x500")
+    raiz.geometry("400x400")
     raiz.configure(bg='#FFF')
     titulo = Label(raiz, text="Ingrese sus datos para registrarse", bg="#FFF", font=("Ubuntu", 14, "bold"),
                    fg="#47126b")
     titulo.place(x=40, y=30)
     label_usuario = Label(raiz, text="Usuario:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
     label_primer_contrasena = Label(raiz, text="Contraseña:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_segunda_contrasena = Label(raiz, text="Ingrese su contraseña nuevamente:", bg="#FFF",
+    label_segunda_contrasena = Label(raiz, text="Repita la contraseña:", bg="#FFF",
                                      font=("Ubuntu", 14, "bold"), fg="#47126b")
     label_usuario.place(x=10, y=100)
-    label_primer_contrasena.place(x=10, y=200)
-    label_segunda_contrasena.place(x=10, y=300)
+    label_primer_contrasena.place(x=10, y=150)
+    label_segunda_contrasena.place(x=10, y=200)
     usuario_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-    usuario_input.place(x=100, y=140, height=30)
+    usuario_input.place(x=220, y=100, height=30, width=170)
     primer_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
-    primer_contrasena_input.place(x=100, y=240, height=30)
+    primer_contrasena_input.place(x=220, y=150, height=30, width=170)
     segunda_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
-    segunda_contrasena_input.place(x=100, y=340, height=30)
-    boton_registrado = Button(raiz, command=lambda: interfaz_login(datos, raiz, frame),
+    segunda_contrasena_input.place(x=220, y=200, height=30, width=170)
+    boton_registrado = Button(raiz, command=lambda: [frameRegistro.pack_forget(), interfaz_login(datos, raiz)],
                               text="Ya estoy registrado",
                               bd=0,
                               bg="#47126b",
                               font=("Ubuntu", 12), fg="#FFF")
-    boton_registrado.place(x=125, y=400, height=30, width=150)
+    boton_registrado.place(x=125, y=330, height=30, width=150)
     boton_registrarse = Button(raiz, command=lambda: guardar_datos(usuario_input, primer_contrasena_input,
                                                                    segunda_contrasena_input), text="Registrarse",
                                bd=0, bg="#47126b",
                                font=("Ubuntu", 12), fg="#FFF")
-    boton_registrarse.place(x=150, y=450, height=30, width=100)
+    boton_registrarse.place(x=150, y=280, height=30, width=100)
     raiz.mainloop()
 
 
@@ -77,28 +76,32 @@ def interfaz_registro_erroneo(datos):
     boton_registrarse.place(x=150, y=500, height=30, width=100)
     raiz.mainloop()
 
-
-def interfaz_login(datos, raiz, frame):
-    frame.pack_forget()
-    frame.grid_forget()
+def interfaz_login(datos, raiz):
     frameLogin = Frame(raiz)
     frameLogin.pack(side="top", expand=True, fill="both")
     raiz.title("TP1 - Memotest - Ingreso")
     raiz.resizable(False, False)
     raiz.geometry("400x350")
     raiz.configure(bg='#FFF')
-    titulo = Label(raiz, text="Ingrese sus datos para iniciar sesion", bg="#FFF", font=("Ubuntu", 13, "bold"),
+    titulo = Label(raiz, text="Ingrese sus datos para iniciar sesion", bg="#FFF", font=("Ubuntu", 15, "bold"),
                    fg="#47126b")
-    titulo.place(x=50, y=30)
+    titulo.place(x=30, y=30)
     label_usuario = Label(raiz, text="Usuario:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
     label_primer_contrasena = Label(raiz, text="Contraseña:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
 
     label_usuario.place(x=10, y=100)
-    label_primer_contrasena.place(x=10, y=200)
+    label_primer_contrasena.place(x=10, y=150)
     usuario_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-    usuario_input.place(x=100, y=140, height=30)
+    usuario_input.place(x=140, y=100, height=30)
     primer_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
-    primer_contrasena_input.place(x=100, y=240, height=30)
+    primer_contrasena_input.place(x=140, y=150, height=30)
+    boton_registrado = Button(raiz, command=lambda: [frameLogin.pack_forget(), interfaz_registro(datos, raiz)],
+                            text="Registrarme",
+                            bd=0,
+                            bg="#47126b",
+                            font=("Ubuntu", 12), fg="#FFF")
+    boton_registrado.place(x=125, y=250, height=30, width=150)
+
     boton_iniciar_sesion = Button(raiz, command=lambda: obtener_nombres(raiz, usuario_input, primer_contrasena_input,
                                                                         ), text="Iniciar sesion",
                                   bd=0,
@@ -184,5 +187,5 @@ def guardar_datos(usuario_input, primer_contrasena_input, segunda_contrasena_inp
     datos[usuario] = primer_clave
 
 
-
-interfaz_registro(datos)
+raiz = Tk()
+interfaz_registro(datos,raiz)
