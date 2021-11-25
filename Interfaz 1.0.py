@@ -5,6 +5,9 @@ datos = {}
 
 def interfaz_registro(datos):
     raiz = Tk()
+    frame = Frame(raiz)
+    frame.pack(side="top", expand=True, fill="both")
+
     raiz.title("TP1 - Memotest - Registro")
     raiz.resizable(False, False)
     raiz.geometry("400x500")
@@ -25,7 +28,7 @@ def interfaz_registro(datos):
     primer_contrasena_input.place(x=100, y=240, height=30)
     segunda_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
     segunda_contrasena_input.place(x=100, y=340, height=30)
-    boton_registrado = Button(raiz, command=lambda: interfaz_login(datos),
+    boton_registrado = Button(raiz, command=lambda: interfaz_login(datos, raiz, frame),
                               text="Ya estoy registrado",
                               bd=0,
                               bg="#47126b",
@@ -75,8 +78,11 @@ def interfaz_registro_erroneo(datos):
     raiz.mainloop()
 
 
-def interfaz_login(datos):
-    raiz = Tk()
+def interfaz_login(datos, raiz, frame):
+    frame.pack_forget()
+    frame.grid_forget()
+    frameLogin = Frame(raiz)
+    frameLogin.pack(side="top", expand=True, fill="both")
     raiz.title("TP1 - Memotest - Ingreso")
     raiz.resizable(False, False)
     raiz.geometry("400x350")
@@ -179,3 +185,4 @@ def guardar_datos(usuario_input, primer_contrasena_input, segunda_contrasena_inp
 
 
 
+interfaz_registro(datos)
