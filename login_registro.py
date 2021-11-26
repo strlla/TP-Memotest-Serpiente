@@ -20,9 +20,9 @@ def obtener_usuarios():
 
 def iniciar_sesion(usuario, contrasenia):
     usuarios = obtener_usuarios()
-    existe = next((x for x in usuarios if x["usuario"] == usuario), None)
-    if(not existe): 
+    usuarioEncontrado = next((x for x in usuarios if x["usuario"] == usuario), None)
+    if (not usuarioEncontrado): 
         print("el usuario no existe")
     else: 
-        print("si existe")
-    # print(usuarios)
+        if (usuarioEncontrado['clave'] == contrasenia):
+            print("logueado!") 
