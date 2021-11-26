@@ -1,15 +1,16 @@
 from tkinter import *
+from tkinter import messagebox
 
 datos = {}
 
 
 def interfaz_registro(datos, raiz):
-    frameRegistro = Frame(raiz, bg="#FFF")
+    frameRegistro = Frame(raiz)
     frameRegistro.pack(side="top", expand=True, fill="both")
 
     raiz.title("TP1 - Memotest - Registro")
     raiz.resizable(False, False)
-    raiz.geometry("400x400")
+    raiz.geometry("400x430")
     raiz.configure(bg='#FFF')
     titulo = Label(raiz, text="Ingrese sus datos para registrarse", bg="#FFF", font=("Ubuntu", 14, "bold"),
                    fg="#47126b")
@@ -27,58 +28,24 @@ def interfaz_registro(datos, raiz):
     primer_contrasena_input.place(x=220, y=150, height=30, width=170)
     segunda_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     segunda_contrasena_input.place(x=220, y=200, height=30, width=170)
+    boton_registrarse = Button(raiz, command=lambda: guardar_datos(usuario_input, primer_contrasena_input,
+                                                                   segunda_contrasena_input), text="Registrarse",
+                               bd=0, bg="#47126b",
+                               font=("Ubuntu", 12), fg="#FFF")
+    boton_registrarse.place(x=150, y=280, height=30, width=100)
     boton_registrado = Button(raiz, command=lambda: [frameRegistro.pack_forget(), interfaz_login(datos, raiz)],
                               text="Ya estoy registrado",
                               bd=0,
                               bg="#47126b",
                               font=("Ubuntu", 12), fg="#FFF")
     boton_registrado.place(x=125, y=330, height=30, width=150)
-    boton_registrarse = Button(raiz, command=lambda: guardar_datos(usuario_input, primer_contrasena_input,
-                                                                   segunda_contrasena_input), text="Registrarse",
-                               bd=0, bg="#47126b",
-                               font=("Ubuntu", 12), fg="#FFF")
-    boton_registrarse.place(x=150, y=280, height=30, width=100)
-    raiz.mainloop()
-
-
-def interfaz_registro_erroneo(datos):
-    raiz = Tk()
-    raiz.title("TP1 - Memotest - Registro")
-    raiz.resizable(False, False)
-    raiz.geometry("400x550")
-    raiz.configure(bg='#FFF')
-    titulo = Label(raiz, text="Ingrese sus datos para registrarse", bg="#FFF", font=("Ubuntu", 14, "bold"),
-                   fg="#47126b")
-    titulo.place(x=40, y=30)
-    label_usuario = Label(raiz, text="Usuario:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_primer_contrasena = Label(raiz, text="Contraseña:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_segunda_contrasena = Label(raiz, text="Ingrese su contraseña nuevamente:", bg="#FFF",
-                                     font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_error = Label(raiz, text="Por favor, ingrese de nuevo su contraseña.\n "
-                                   "Debe tener entre 8 y 12 caracteres alfanumericos \n 1 letra mayuscula, 1 minuscula"
-                                   "\n y algunos de los siguientes caracteres '-' '_'", bg="#FFF",
-                        font=("Ubuntu", 8, "bold"), fg="#47126b")
-    label_usuario.place(x=10, y=100)
-    label_primer_contrasena.place(x=10, y=200)
-    label_segunda_contrasena.place(x=10, y=300)
-    label_error.place(x=60, y=400)
-    usuario_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-    usuario_input.place(x=100, y=140, height=30)
-    primer_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
-    primer_contrasena_input.place(x=100, y=240, height=30)
-    segunda_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
-    segunda_contrasena_input.place(x=100, y=340, height=30)
-
-    boton_registrarse = Button(raiz, command=lambda: guardar_datos(usuario_input, primer_contrasena_input,
-                                                                   segunda_contrasena_input), text="Registrarse",
-                               bd=0, bg="#47126b",
-                               font=("Ubuntu", 12), fg="#FFF")
-    boton_registrarse.place(x=150, y=500, height=30, width=100)
+    boton_condicion_registro = Button(raiz, command=lambda: info_usuario_clave(), text="Condiciones de registro", bd=0, bg="#47126b", font=("Ubuntu", 12), fg='#FFF')
+    boton_condicion_registro.place(x=110, y=380, height=30, width=180)
     raiz.mainloop()
 
 
 def interfaz_login(datos, raiz):
-    frameLogin = Frame(raiz, bg="#FFF")
+    frameLogin = Frame(raiz)
     frameLogin.pack(side="top", expand=True, fill="both")
     raiz.title("TP1 - Memotest - Ingreso")
     raiz.resizable(False, False)
@@ -174,6 +141,17 @@ def validar_clave(clave):
     return clave_valida
 
 
+def datos_erroneos():
+    return messagebox.askretrycancel(message="Por favor, lea las condiciones de registro de usuario y clave "
+                                             "¿Desea reintentar?", title="Error")
+
+
+def info_usuario_clave():
+    messagebox.showinfo(message="Su usuario debe tener una longitud entre 4 y 15 caracteres y estar formado sólo por letras, números y el bajo guion ' _ '"
+                                "\nSu clave debe tener una longitud de 8 y 12 caraceteres, debe contener una letra mayus, una letra minus, un numero y los siguientes"
+                                "caracteres: ' _ ' ' - '", title="¿Como obtengo un registro valido?")
+
+
 def guardar_datos(usuario_input, primer_contrasena_input, segunda_contrasena_input):
     usuario = usuario_input.get()
     clave = primer_contrasena_input.get()
@@ -192,7 +170,8 @@ def guardar_datos(usuario_input, primer_contrasena_input, segunda_contrasena_inp
 
     else:
 
-        interfaz_registro_erroneo(datos)
+        if datos_erroneos() is True:
+            interfaz_registro(datos, raiz)
 
 
 raiz = Tk()
