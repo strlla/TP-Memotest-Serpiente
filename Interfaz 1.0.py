@@ -184,11 +184,17 @@ def guardar_datos(usuario_input, primer_contrasena_input, segunda_contrasena_inp
         if usuario not in datos and clave == segunda_clave:
             datos[usuario] = clave
 
+            usuario_input.delete(0, END)
+
+            primer_contrasena_input.delete(0, END)
+
+            segunda_contrasena_input.delete(0, END)
+
     else:
 
         interfaz_registro_erroneo(datos)
 
-    
+
 raiz = Tk()
 interfaz_registro(datos, raiz)
 print(datos)
