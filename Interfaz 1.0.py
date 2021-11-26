@@ -4,7 +4,7 @@ datos = {}
 
 
 def interfaz_registro(datos, raiz):
-    frameRegistro = Frame(raiz)
+    frameRegistro = Frame(raiz, bg="#FFF")
     frameRegistro.pack(side="top", expand=True, fill="both")
 
     raiz.title("TP1 - Memotest - Registro")
@@ -78,7 +78,7 @@ def interfaz_registro_erroneo(datos):
 
 
 def interfaz_login(datos, raiz):
-    frameLogin = Frame(raiz)
+    frameLogin = Frame(raiz, bg="#FFF")
     frameLogin.pack(side="top", expand=True, fill="both")
     raiz.title("TP1 - Memotest - Ingreso")
     raiz.resizable(False, False)
