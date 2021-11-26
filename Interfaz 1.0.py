@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
-
 datos = {}
 
+def iniciar_sesion(usuario, contrasenia):
+    print(usuario, contrasenia)
 
 def interfaz_registro(datos, raiz):
     frameRegistro = Frame(raiz, bg="#FFF")
@@ -70,11 +71,7 @@ def interfaz_login(datos, raiz):
                               font=("Ubuntu", 12), fg="#FFF")
     boton_registrado.place(x=125, y=250, height=30, width=150)
 
-    boton_iniciar_sesion = Button(raiz, command=lambda: obtener_nombres(raiz, usuario_input, primer_contrasena_input,
-                                                                        ), text="Iniciar sesion",
-                                  bd=0,
-                                  bg="#47126b",
-                                  font=("Ubuntu", 12), fg="#FFF")
+    boton_iniciar_sesion = Button(raiz, command=lambda: iniciar_sesion(usuario_input.get(), primer_contrasena_input.get()), text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
     boton_iniciar_sesion.place(x=125, y=300, height=30, width=150)
 
     raiz.mainloop()

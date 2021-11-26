@@ -3,48 +3,31 @@ import time
 import numpy as np
 import pandas as pd
 from tkinter import *
-import csv
+from interfaz import generar_interfaz
 
-def guardar_nuevo_usuario(usuario):    
-    with open('usuarios.csv', 'a') as csvfile:
-        fieldnames = ['usuario', 'clave']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writerow(usuario)
-        csvfile.close()
-
-def leer_archivo():
-    usuarios = []
-    with open('usuarios.csv', newline='') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=',', quotechar=',')
-        for fila in spamreader:
-            if fila:
-                usuarios.append({"usuario": fila[0], "clave": fila[1] })
-    
-    return usuarios[1:len(usuarios)]        
-    
-def generar_interfaz(lista_de_nombres):
-    """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
-    Estrella Portocarrero"""
-    raiz = Tk()
-    raiz.title("TP1 - Memotest")
-    raiz.resizable(False, False)
-    raiz.geometry("300x200")
-    raiz.configure(bg='#FFF')
-    titulo = Label(raiz, text="Ingrese los jugadores:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    titulo.place(x=10, y=10)
-    label_primer_jugador = Label(raiz, text="1º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_primer_jugador.place(x=10, y=50)
-    label_segundo_jugador.place(x=10, y=100)
-    primer_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-    primer_jugador_input.place(x=45, y=53, height=30)
-    segundo_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-    segundo_jugador_input.place(x=45, y=103, height=30)
-    boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input,
-                                                                lista_de_nombres), text="Jugar", bd=0, bg="#47126b",
-                          font=("Ubuntu", 12), fg="#FFF")
-    boton_enviar.place(x=10, y=150, height=20, width=100)
-    raiz.mainloop()
+# def generar_interfaz(lista_de_nombres):
+#     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
+#     Estrella Portocarrero"""
+#     raiz = Tk()
+#     raiz.title("TP1 - Memotest")
+#     raiz.resizable(False, False)
+#     raiz.geometry("300x200")
+#     raiz.configure(bg='#FFF')
+#     titulo = Label(raiz, text="Ingrese los jugadores:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+#     titulo.place(x=10, y=10)
+#     label_primer_jugador = Label(raiz, text="1º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+#     label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+#     label_primer_jugador.place(x=10, y=50)
+#     label_segundo_jugador.place(x=10, y=100)
+#     primer_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
+#     primer_jugador_input.place(x=45, y=53, height=30)
+#     segundo_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
+#     segundo_jugador_input.place(x=45, y=103, height=30)
+#     boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input,
+#                                                                 lista_de_nombres), text="Jugar", bd=0, bg="#47126b",
+#                           font=("Ubuntu", 12), fg="#FFF")
+#     boton_enviar.place(x=10, y=150, height=20, width=100)
+#     raiz.mainloop()
 
 
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
@@ -270,10 +253,10 @@ def resultados(lista_de_nombres, diccionario_aciertos):
 
 
 def main():
-    usuarios = leer_archivo()
     # guardar_nuevo_usuario(usuario)
     lista_de_nombres = []
-    generar_interfaz(lista_de_nombres)
+    # generar_interfaz(lista_de_nombres)
+    generar_interfaz()
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
     imprimir_asignacion_de_turnos(lista_de_nombres)
