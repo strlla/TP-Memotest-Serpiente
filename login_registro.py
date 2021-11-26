@@ -19,6 +19,10 @@ def obtener_usuarios():
     
 
 def iniciar_sesion(usuario, contrasenia):
-    print(usuario, contrasenia)
     usuarios = obtener_usuarios()
-    print(usuarios)
+    existe = next((x for x in usuarios if x["usuario"] == usuario), None)
+    if(not existe): 
+        print("el usuario no existe")
+    else: 
+        print("si existe")
+    # print(usuarios)
