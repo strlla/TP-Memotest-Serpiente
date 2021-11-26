@@ -23,9 +23,9 @@ def interfaz_registro(datos, raiz):
     label_segunda_contrasena.place(x=10, y=200)
     usuario_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     usuario_input.place(x=220, y=100, height=30, width=170)
-    primer_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
+    primer_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     primer_contrasena_input.place(x=220, y=150, height=30, width=170)
-    segunda_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
+    segunda_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
     segunda_contrasena_input.place(x=220, y=200, height=30, width=170)
     boton_registrado = Button(raiz, command=lambda: [frameRegistro.pack_forget(), interfaz_login(datos, raiz)],
                               text="Ya estoy registrado",
@@ -76,6 +76,7 @@ def interfaz_registro_erroneo(datos):
     boton_registrarse.place(x=150, y=500, height=30, width=100)
     raiz.mainloop()
 
+
 def interfaz_login(datos, raiz):
     frameLogin = Frame(raiz)
     frameLogin.pack(side="top", expand=True, fill="both")
@@ -96,10 +97,10 @@ def interfaz_login(datos, raiz):
     primer_contrasena_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
     primer_contrasena_input.place(x=140, y=150, height=30)
     boton_registrado = Button(raiz, command=lambda: [frameLogin.pack_forget(), interfaz_registro(datos, raiz)],
-                            text="Registrarme",
-                            bd=0,
-                            bg="#47126b",
-                            font=("Ubuntu", 12), fg="#FFF")
+                              text="Registrarme",
+                              bd=0,
+                              bg="#47126b",
+                              font=("Ubuntu", 12), fg="#FFF")
     boton_registrado.place(x=125, y=250, height=30, width=150)
 
     boton_iniciar_sesion = Button(raiz, command=lambda: obtener_nombres(raiz, usuario_input, primer_contrasena_input,
@@ -113,67 +114,61 @@ def interfaz_login(datos, raiz):
 
 
 def validar_usuario(usuario):
-    """Valida el usuario segun las condiciones dadas en el enunciado"""
-    usuario_valido = False
+    """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
 
-    guion = 0
-    numero = 0
-    letra = 0
+    caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    letras_y_numeros = 0
+
+    usuario_valido = False
 
     if 4 <= len(usuario) <= 15:
 
-        for caracter in usuario:
+        if '_' in usuario:
 
-            if caracter == '_':
+            for caracter in usuario:
 
-                guion += 1
+                if caracter in caracteres_permitidos:
+                    letras_y_numeros += 1
 
-            elif caracter.isnumeric() is True:
-
-                numero += 1
-
-            elif caracter.isalpha() is True:
-
-                letra += 1
-
-    if guion >= 1 and numero >= 1 and letra >= 1:
+    if (letras_y_numeros + 1) == len(usuario):
         usuario_valido = True
 
     return usuario_valido
 
 
 def validar_clave(clave):
-    """Valida la clave segun las condiciones dadas en el enunciado"""
-
-    guiones = 0
-    numeros = 0
-    mayu_minu = 0
-    acentos = 0
-    tildes = ['ÁÉÍÓÚáéíóú']
-
+    """Valida la clave segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
+    caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-'
+    mayus = 0
+    minus = 0
+    numer = 0
+    nopermit = 0
     clave_valida = False
 
-    if 8 < len(clave) < 12:
+    if 8 <= len(clave) <= 12:
 
-        for letra in clave:
+        if '-' in clave or '_' in clave:
 
-            if letra == '-' or letra == '_':
+            for caracter in clave:
 
-                guiones += 1
+                if caracter.isupper():
 
-            elif letra.isnumeric():
+                    mayus += 1
 
-                numeros += 1
+                elif caracter.islower():
 
-            elif letra.isupper() or letra.islower():
+                    minus += 1
 
-                mayu_minu += 1
+                elif caracter.isnumeric():
 
-            elif letra in tildes:
+                    numer += 1
 
-                acentos += 1
+                elif caracter not in caracteres_permitidos:
 
-    if guiones >= 1 and numeros >= 1 and mayu_minu >= 2 and acentos == 0:
+                    nopermit += 1
+
+    if mayus >= 1 and minus >= 1 and numer >= 1 and nopermit == 0:
         clave_valida = True
 
     return clave_valida
@@ -181,11 +176,19 @@ def validar_clave(clave):
 
 def guardar_datos(usuario_input, primer_contrasena_input, segunda_contrasena_input):
     usuario = usuario_input.get()
-    primer_clave = primer_contrasena_input.get()
+    clave = primer_contrasena_input.get()
     segunda_clave = segunda_contrasena_input.get()
 
-    datos[usuario] = primer_clave
+    if validar_usuario(usuario) is True and validar_clave(clave) is True:
 
+        if usuario not in datos and clave == segunda_clave:
+            datos[usuario] = clave
 
+    else:
+
+        interfaz_registro_erroneo(datos)
+
+    
 raiz = Tk()
-interfaz_registro(datos,raiz)
+interfaz_registro(datos, raiz)
+print(datos)
