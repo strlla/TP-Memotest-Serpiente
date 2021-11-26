@@ -3,8 +3,25 @@ import time
 import numpy as np
 import pandas as pd
 from tkinter import *
+import csv
 
+def guardar_nuevo_usuario(usuario):    
+    with open('usuarios.csv', 'a') as csvfile:
+        fieldnames = ['usuario', 'clave']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writerow(usuario)
+        csvfile.close()
 
+def leer_archivo():
+    usuarios = []
+    with open('usuarios.csv', newline='') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',', quotechar=',')
+        for fila in spamreader:
+            if fila:
+                usuarios.append({"usuario": fila[0], "clave": fila[1] })
+    
+    return usuarios[1:len(usuarios)]        
+    
 def generar_interfaz(lista_de_nombres):
     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
     Estrella Portocarrero"""
@@ -253,6 +270,8 @@ def resultados(lista_de_nombres, diccionario_aciertos):
 
 
 def main():
+    usuarios = leer_archivo()
+    # guardar_nuevo_usuario(usuario)
     lista_de_nombres = []
     generar_interfaz(lista_de_nombres)
     fichas = generador_fichas()
