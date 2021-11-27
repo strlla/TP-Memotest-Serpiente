@@ -37,7 +37,7 @@ class Interfaz:
         segunda_contrasena_input = Entry(self.registroFrame, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
         segunda_contrasena_input.place(x=220, y=200, height=30, width=170)
         boton_registrarse = Button(self.registroFrame,
-                                   command=lambda: self.guardar_datos(datos, self.raiz, usuario_input,
+                                   command=lambda: self.guardar_datos(datos, usuario_input,
                                                                       primer_contrasena_input,
                                                                       segunda_contrasena_input), text="Registrarse",
                                    bd=0, bg="#47126b",
@@ -90,7 +90,7 @@ class Interfaz:
                                       text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
         boton_iniciar_sesion.place(x=125, y=300, height=30, width=150)
 
-    def guardar_datos(self, raiz, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
+    def guardar_datos(self, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
         usuario = usuario_input.get()
         clave = primer_contrasena_input.get()
         segunda_clave = segunda_contrasena_input.get()
@@ -193,5 +193,6 @@ def generar_interfaz():
     interfaz = Interfaz()
     datos = {}
     interfaz.interfaz_registro(datos)
+
 
 generar_interfaz()
