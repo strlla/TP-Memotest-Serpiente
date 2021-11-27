@@ -71,10 +71,10 @@ class Interfaz:
                                 bd=0,
                                 bg="#47126b",
                                 font=("Ubuntu", 12), fg="#FFF")
-        boton_registrado.place(x=125, y=250, height=30, width=150)
+        boton_registrado.place(x=125, y=300, height=30, width=150)
 
         boton_iniciar_sesion = Button(self.loginFrame, command=lambda: Registro().iniciar_sesion(usuario_input.get(), primer_contrasena_input.get(), self.mostrar_mensaje_login), text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
-        boton_iniciar_sesion.place(x=125, y=300, height=30, width=150)
+        boton_iniciar_sesion.place(x=125, y=250, height=30, width=150)
     
     def guardar_datos(self, raiz, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
         usuario = usuario_input.get()
