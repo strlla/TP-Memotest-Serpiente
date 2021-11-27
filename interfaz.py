@@ -1,7 +1,7 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
-from login_registro import iniciar_sesion
+from registro import Registro
 
 class Interfaz:
     def __init__(self) -> None:
@@ -9,7 +9,6 @@ class Interfaz:
         self.loginFrame = Frame(self.raiz, bg="#FFF")
         self.registroFrame = Frame(self.raiz, bg="#FFF")
         self.label_login = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
-
 
     def interfaz_registro(self, datos):
         self.registroFrame.pack(side="top", expand=True, fill="both")
@@ -74,7 +73,7 @@ class Interfaz:
                                 font=("Ubuntu", 12), fg="#FFF")
         boton_registrado.place(x=125, y=250, height=30, width=150)
 
-        boton_iniciar_sesion = Button(self.loginFrame, command=lambda: iniciar_sesion(usuario_input.get(), primer_contrasena_input.get(), self.mostrar_mensaje_login,), text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
+        boton_iniciar_sesion = Button(self.loginFrame, command=lambda: Registro().iniciar_sesion(usuario_input.get(), primer_contrasena_input.get(), self.mostrar_mensaje_login), text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
         boton_iniciar_sesion.place(x=125, y=300, height=30, width=150)
     
     def guardar_datos(self, raiz, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
