@@ -163,12 +163,12 @@ class Interfaz:
         return clave_valida
 
 
-    def datos_erroneos():
+    def datos_erroneos(self):
         return messagebox.askretrycancel(message="Por favor, lea las condiciones de registro de usuario y clave "
                                                 "¿Desea reintentar?", title="Error")
 
 
-    def info_usuario_clave():
+    def info_usuario_clave(self):
         messagebox.showinfo(message="Su usuario debe tener una longitud entre 4 y 15 caracteres y estar formado sólo por letras, números y el bajo guion ' _ '"
                                     "\nSu clave debe tener una longitud de 8 y 12 caraceteres, debe contener una letra mayus, una letra minus, un numero y los siguientes"
                                     "caracteres: ' _ ' ' - '", title="¿Como obtengo un registro valido?")
