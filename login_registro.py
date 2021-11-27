@@ -22,11 +22,12 @@ def obtener_usuarios():
 def iniciar_sesion(usuario, contrasenia, mostrar_mensaje):
     usuarios = obtener_usuarios()
     if not usuario or not contrasenia:
-        mostrar_mensaje("Por favor, complete los dos campos")
+        mostrar_mensaje("Por favor, complete los dos campos", False)
         return
     usuarioEncontrado = next((x for x in usuarios if x["usuario"] == usuario), None)
     if not usuarioEncontrado: 
-        mostrar_mensaje("No esta registrado")
+        mostrar_mensaje("No esta registrado", False)
     elif (usuarioEncontrado['clave'] == contrasenia):
         print("logueado!") 
-    else: mostrar_mensaje("Contraseña incorrecta")
+        mostrar_mensaje("Usuario logueado!", True)
+    else: mostrar_mensaje("Contraseña incorrecta", False)

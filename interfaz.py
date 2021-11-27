@@ -8,7 +8,7 @@ class Interfaz:
         self.raiz = tk.Tk()
         self.loginFrame = Frame(self.raiz, bg="#FFF")
         self.registroFrame = Frame(self.raiz, bg="#FFF")
-        self.label_login = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12), fg="#e64040")
+        self.label_login = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
 
 
     def interfaz_registro(self, datos):
@@ -98,8 +98,11 @@ class Interfaz:
             if self.datos_erroneos() is True:
                 self.interfaz_registro(datos, self.raiz)
 
-    def mostrar_mensaje_login(self, mensaje):
+    def mostrar_mensaje_login(self, mensaje, seLogueo):
         self.label_login['text'] = mensaje      
+        if seLogueo:
+            self.label_login['fg'] = "green"
+        else: self.label_login['fg'] = "#e64040"
         self.label_login.place(x=10, y=200)
         
     def validar_usuario(self, usuario):
