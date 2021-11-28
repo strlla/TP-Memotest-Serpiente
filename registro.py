@@ -13,11 +13,12 @@ class Registro:
     def agregar_jugador_logueado(self, jugador):
         self.jugadores_logueados.append(jugador)
 
-    def guardar_nuevo_usuario(usuario):
+    def guardar_nuevo_usuario(self, datos):
+
         with open('usuarios.csv', 'a') as csvfile:
             fieldnames = ['usuario', 'clave']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writerow(usuario)
+            writer.writerow(datos)
             csvfile.close()
 
     def obtener_usuarios(self):
@@ -49,28 +50,6 @@ class Registro:
                     mostrar_empezar_juego()
         else:
             mostrar_mensaje("Contraseña incorrecta", False)
-
-    def guardar_datos(self, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
-        usuario = usuario_input.get()
-        clave = primer_contrasena_input.get()
-        segunda_clave = segunda_contrasena_input.get()
-
-        if self.validar_usuario(usuario) is True and self.validar_clave(clave) is True:
-
-            if usuario not in datos and clave == segunda_clave:
-                datos[usuario] = clave
-
-                usuario_input.delete(0, END)
-
-                primer_contrasena_input.delete(0, END)
-
-                segunda_contrasena_input.delete(0, END)
-
-        else:
-
-            if self.datos_erroneos() is True:
-                self.interfaz_registro(datos)
-
 
     def validar_usuario(self, usuario):
         """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
