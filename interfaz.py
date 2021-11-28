@@ -1,8 +1,7 @@
 from tkinter import *
-import tkinter as tk
 from tkinter import messagebox
 from registro import Registro
-
+import tkinter as tk
 
 class Interfaz:
     def __init__(self) -> None:
@@ -10,16 +9,19 @@ class Interfaz:
         self.loginFrame = Frame(self.raiz, bg="#FFF")
         self.registroFrame = Frame(self.raiz, bg="#FFF")
         self.labelLogin = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
-        self.empezarJuegoBotonLogin = Button(self.loginFrame, command=self.cerrar_interfaz, text="Empezar a jugar", bd=0, bg="#06bf78", font=("Ubuntu", 12), fg="#FFF")
-        self.empezarJuegoBotonRegistro = Button(self.registroFrame, command=self.cerrar_interfaz, text="Empezar a jugar", bd=0, bg="#06bf78", font=("Ubuntu", 12), fg="#FFF")
-        
+        self.empezarJuegoBotonLogin = Button(self.loginFrame, command=self.cerrar_interfaz, text="Empezar a jugar",
+                                             bd=0, bg="#06bf78", font=("Ubuntu", 12), fg="#FFF")
+        self.empezarJuegoBotonRegistro = Button(self.registroFrame, command=self.cerrar_interfaz,
+                                                text="Empezar a jugar", bd=0, bg="#06bf78", font=("Ubuntu", 12),
+                                                fg="#FFF")
+
     def cerrar_interfaz(self):
         self.raiz.destroy()
-        
+
     def mostrar_empezar_juego(self):
         self.empezarJuegoBotonLogin.place(x=120, y=340, height=30, width=150)
         self.empezarJuegoBotonRegistro.place(x=140, y=380, height=30, width=150)
-                            
+
     def interfaz_registro(self, datos):
         self.registroFrame.pack(side="top", expand=True, fill="both")
 
@@ -105,10 +107,10 @@ class Interfaz:
         clave = primer_contrasena_input.get()
         segunda_clave = segunda_contrasena_input.get()
 
-        if self.validar_usuario(usuario) is True and self.validar_clave(clave) is True:
+        if Registro().validar_usuario(usuario) is True and Registro().validar_clave(clave) is True:
 
             if usuario not in datos and clave == segunda_clave:
-                datos[usuario] = clave
+                datos |= {'usuario': usuario, 'clave': clave}
 
                 usuario_input.delete(0, END)
 
@@ -129,64 +131,6 @@ class Interfaz:
             self.labelLogin['fg'] = "#e64040"
         self.labelLogin.place(x=10, y=200)
 
-    def validar_usuario(self, usuario):
-        """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
-
-        caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-        letras_y_numeros = 0
-
-        usuario_valido = False
-
-        if 4 <= len(usuario) <= 15:
-
-            if '_' in usuario:
-
-                for caracter in usuario:
-
-                    if caracter in caracteres_permitidos:
-                        letras_y_numeros += 1
-
-        if (letras_y_numeros + 1) == len(usuario):
-            usuario_valido = True
-
-        return usuario_valido
-
-    def validar_clave(self, clave):
-        """Valida la clave segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
-        caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-'
-        mayus = 0
-        minus = 0
-        numer = 0
-        nopermit = 0
-        clave_valida = False
-
-        if 8 <= len(clave) <= 12:
-
-            if '-' in clave or '_' in clave:
-
-                for caracter in clave:
-
-                    if caracter.isupper():
-
-                        mayus += 1
-
-                    elif caracter.islower():
-
-                        minus += 1
-
-                    elif caracter.isnumeric():
-
-                        numer += 1
-
-                    elif caracter not in caracteres_permitidos:
-
-                        nopermit += 1
-
-        if mayus >= 1 and minus >= 1 and numer >= 1 and nopermit == 0:
-            clave_valida = True
-
-        return clave_valida
 
     def datos_erroneos(self):
         return messagebox.askretrycancel(message="Por favor, lea las condiciones de registro de usuario y clave "
@@ -203,6 +147,7 @@ def generar_interfaz():
     interfaz = Interfaz()
     datos = {}
     interfaz.interfaz_registro(datos)
+    Registro().guardar_nuevo_usuario(datos)
 
 
 generar_interfaz()
