@@ -19,8 +19,8 @@ class Interfaz:
         self.raiz.destroy()
 
     def mostrar_empezar_juego(self):
-        self.empezarJuegoBotonLogin.place(x=120, y=340, height=30, width=150)
-        self.empezarJuegoBotonRegistro.place(x=140, y=380, height=30, width=150)
+        self.empezarJuegoBotonLogin.place(x=125, y=340, height=30, width=150)
+        self.empezarJuegoBotonRegistro.place(x=130, y=390, height=30, width=150)
 
     def interfaz_registro(self, datos):
         self.registroFrame.pack(side="top", expand=True, fill="both")
@@ -93,31 +93,33 @@ class Interfaz:
                                   bd=0,
                                   bg="#47126b",
                                   font=("Ubuntu", 12), fg="#FFF")
-        boton_registrado.place(x=125, y=250, height=30, width=150)
+        boton_registrado.place(x=125, y=300, height=30, width=150)
 
         boton_iniciar_sesion = Button(self.loginFrame, command=lambda: Registro().iniciar_sesion(usuario_input.get(),
                                                                                                  primer_contrasena_input.get(),
                                                                                                  self.mostrar_mensaje_login,
                                                                                                  self.mostrar_empezar_juego),
                                       text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
-        boton_iniciar_sesion.place(x=125, y=300, height=30, width=150)
+        boton_iniciar_sesion.place(x=125, y=250, height=30, width=150)
 
     def guardar_datos(self, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
         usuario = usuario_input.get()
         clave = primer_contrasena_input.get()
         segunda_clave = segunda_contrasena_input.get()
-
+        jugadores_logueados = Registro().jugadores_logueados
+        jugadores_registrados = [usuario['usuario'] for usuario in Registro().obtener_usuarios()]
+        
         if Registro().validar_usuario(usuario) is True and Registro().validar_clave(clave) is True:
-
-            if usuario not in datos and clave == segunda_clave:
-                datos |= {'usuario': usuario, 'clave': clave}
+            if usuario not in jugadores_registrados and clave == segunda_clave:
+                Registro().guardar_nuevo_usuario({'usuario': usuario, 'clave': clave})
 
                 usuario_input.delete(0, END)
 
                 primer_contrasena_input.delete(0, END)
 
                 segunda_contrasena_input.delete(0, END)
-
+            else:
+                print("ya estas registrado")
         else:
 
             if self.datos_erroneos() is True:
@@ -147,7 +149,7 @@ def generar_interfaz():
     interfaz = Interfaz()
     datos = {}
     interfaz.interfaz_registro(datos)
-    Registro().guardar_nuevo_usuario(datos)
+    # Registro().guardar_nuevo_usuario(datos)
 
 
-generar_interfaz()
+# generar_interfaz()

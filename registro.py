@@ -9,7 +9,7 @@ class Registro:
 
     def obtener_listado_de_nombres(self):
         """Retorna un listado con los nombres de todos los jugadores registrados
-        # Estrella Portocarero"""
+        # Estrella Portocarrero"""
         return [jugador['usuario'] for jugador in self.jugadores_logueados]
 
     def agregar_jugador_logueado(self, jugador):
