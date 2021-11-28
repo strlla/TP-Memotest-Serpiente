@@ -7,6 +7,9 @@ class Registro:
     def __init__(self) -> None:
         pass
 
+    def obtener_listado_de_nombres(self):
+        return [jugador['usuario'] for jugador in self.jugadores_logueados]
+
     def agregar_jugador_logueado(self, jugador):
         self.jugadores_logueados.append(jugador)
 
@@ -44,7 +47,6 @@ class Registro:
                 self.agregar_jugador_logueado(usuarioEncontrado)
                 if len(self.jugadores_logueados) >= 2:
                     mostrar_empezar_juego()
-            print(Registro.jugadores_logueados)
         else:
             mostrar_mensaje("Contraseña incorrecta", False)
 

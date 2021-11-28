@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from tkinter import *
 from interfaz import generar_interfaz
+from registro import Registro
 
 # def generar_interfaz(lista_de_nombres):
 #     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
@@ -78,12 +79,12 @@ def imprimir_tablero(fichas_ocultas):
 
     return
 
-def imprimir_asignacion_de_turnos(lista_de_nombres):
+def imprimir_asignacion_de_turnos():
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
     Estrella Portocarrero
     Juan Tejada"""
-
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
     shuffle(lista_de_nombres)
 
     for i in range(len(lista_de_nombres)):
@@ -94,12 +95,12 @@ def imprimir_asignacion_de_turnos(lista_de_nombres):
     return lista_de_nombres
 
 
-def genera_dicc_jugadores(lista_de_nombres):
+def genera_dicc_jugadores():
     """genera_dicc_jugadores crea el diccionario que tiene como claves a los
     nombres de los jugadores y como valores los aciertos de cada jugador.
     Estrella Portocarrero
     Juan Tejada"""
-
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
         dicc_jugadores[jugador] = [0, 0]
@@ -107,7 +108,7 @@ def genera_dicc_jugadores(lista_de_nombres):
     return dicc_jugadores
 
 
-def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
+def jugada(fichas, fichas_ocultas, dicc_jugadores):
     """La funcion jugada es la funcion principal en la que se lleva a cabo todo el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
@@ -119,6 +120,7 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
     nro_jugador = 0
     finalizar_partida = False
     inicio_partida = time.time()
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
 
     while not finalizar_partida:
 
@@ -223,12 +225,12 @@ def validar_ingreso(posicion, fichas_ocultas):
     return True
 
 
-def resultados(lista_de_nombres, diccionario_aciertos):
+def resultados(diccionario_aciertos):
     """Funcion que imprime los aciertos/intentos por cada jugador y determina el ganador.
     Juan Tejada"""
     PRIMER_JUGADOR = 0
     SEGUNDO_JUGADOR = 1
-
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
     datos = diccionario_aciertos.values()
 
     if list(datos)[PRIMER_JUGADOR][0] == list(datos)[SEGUNDO_JUGADOR][0]:
@@ -253,16 +255,14 @@ def resultados(lista_de_nombres, diccionario_aciertos):
 
 
 def main():
-    # guardar_nuevo_usuario(usuario)
-    lista_de_nombres = []
     # generar_interfaz(lista_de_nombres)
     generar_interfaz()
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
-    imprimir_asignacion_de_turnos(lista_de_nombres)
-    dicc_jugadores = genera_dicc_jugadores(lista_de_nombres)
-    jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores)
-    resultados(lista_de_nombres, dicc_jugadores)
+    imprimir_asignacion_de_turnos()
+    dicc_jugadores = genera_dicc_jugadores()
+    jugada(fichas, fichas_ocultas, dicc_jugadores)
+    resultados( dicc_jugadores)
 
 
 main()
