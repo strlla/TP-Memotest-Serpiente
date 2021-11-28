@@ -8,20 +8,31 @@ class Registro:
         pass
 
     def obtener_listado_de_nombres(self):
+        """Retorna un listado con los nombres de todos los jugadores registrados
+        # Estrella Portocarero"""
         return [jugador['usuario'] for jugador in self.jugadores_logueados]
 
     def agregar_jugador_logueado(self, jugador):
+        """Recibe un jugador y lo agrega al listado de jugadores registrados para jugar
+        # Estrella Portocarrero"""
         self.jugadores_logueados.append(jugador)
 
-    def guardar_nuevo_usuario(self, datos):
-
+    def guardar_nuevo_usuario(self, usuario):
+        """Recibe un usuario y lo agrega al final del archivo
+        # Estrella Portocarrero
+        """
         with open('usuarios.csv', 'a') as csvfile:
             fieldnames = ['usuario', 'clave']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writerow(datos)
+            writer.writerow(usuario)
             csvfile.close()
 
     def obtener_usuarios(self):
+        """Retorna un listado con todos los usuarios y sus correspondientes claves del archivo usuarios.csv
+        ## Estrella Portocarrero
+        ## Juan Tejada
+        """
+
         usuarios = []
         with open('usuarios.csv', newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',', quotechar=',')
@@ -35,6 +46,9 @@ class Registro:
         return usuarios[1:len(usuarios)]
 
     def iniciar_sesion(self, usuario, contrasenia, mostrar_mensaje, mostrar_empezar_juego):
+        """Valida que se haya ingresado un usuario y contraseña, si ya está logueado o registrado. En caso de que su contraseña sea correcta se agrega al usuario al listado de usuarios logueados
+        #Estrella Portocarrero
+        """
         usuarios = self.obtener_usuarios()
         if not usuario or not contrasenia:
             mostrar_mensaje("Por favor, complete los dos campos", False)

@@ -43,7 +43,7 @@ def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
 
 def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
-    Juan Tejada"""
+    # Juan Tejada"""
 
     fichas = ["D", "D", "D", "D", "D", "D", "D", "D",
               "s", "s", "s", "s", "s", "s", "s", "s"]
@@ -71,8 +71,8 @@ def ocultar_fichas(fichas):
 
 def imprimir_tablero(fichas_ocultas):
     """Imprime el tablero utilizando numpy y pandas
-    Estrella Portocarrero
-    Juan Tejada"""
+    ## Estrella Portocarrero
+    ## Juan Tejada"""
     tablero = np.array([fichas_ocultas])
     tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
@@ -82,8 +82,8 @@ def imprimir_tablero(fichas_ocultas):
 def imprimir_asignacion_de_turnos():
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
-    Estrella Portocarrero
-    Juan Tejada"""
+    ## Estrella Portocarrero
+    ## Juan Tejada"""
     lista_de_nombres = Registro().obtener_listado_de_nombres()
     shuffle(lista_de_nombres)
 
@@ -98,8 +98,8 @@ def imprimir_asignacion_de_turnos():
 def genera_dicc_jugadores():
     """genera_dicc_jugadores crea el diccionario que tiene como claves a los
     nombres de los jugadores y como valores los aciertos de cada jugador.
-    Estrella Portocarrero
-    Juan Tejada"""
+    ## Estrella Portocarrero
+    ## Juan Tejada"""
     lista_de_nombres = Registro().obtener_listado_de_nombres()
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
