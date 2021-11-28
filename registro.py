@@ -27,7 +27,7 @@ class Registro:
 
         return usuarios[1:len(usuarios)]
 
-    def iniciar_sesion(self, usuario, contrasenia, mostrar_mensaje):
+    def iniciar_sesion(self, usuario, contrasenia, mostrar_mensaje, mostrar_empezar_juego):
         usuarios = self.obtener_usuarios()
         if not usuario or not contrasenia:
             mostrar_mensaje("Por favor, complete los dos campos", False)
@@ -42,6 +42,8 @@ class Registro:
             else:
                 mostrar_mensaje("Se logueo correctamente", True)
                 self.agregar_jugador_logueado(usuarioEncontrado)
+                if len(self.jugadores_logueados) >= 2:
+                    mostrar_empezar_juego()
             print(Registro.jugadores_logueados)
         else:
             mostrar_mensaje("Contraseña incorrecta", False)

@@ -9,8 +9,17 @@ class Interfaz:
         self.raiz = tk.Tk()
         self.loginFrame = Frame(self.raiz, bg="#FFF")
         self.registroFrame = Frame(self.raiz, bg="#FFF")
-        self.label_login = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
-
+        self.labelLogin = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
+        self.empezarJuegoBotonLogin = Button(self.loginFrame, command=self.cerrar_interfaz, text="Empezar a jugar", bd=0, bg="#06bf78", font=("Ubuntu", 12), fg="#FFF")
+        self.empezarJuegoBotonRegistro = Button(self.registroFrame, command=self.cerrar_interfaz, text="Empezar a jugar", bd=0, bg="#06bf78", font=("Ubuntu", 12), fg="#FFF")
+        
+    def cerrar_interfaz(self):
+        self.raiz.destroy()
+        
+    def mostrar_empezar_juego(self):
+        self.empezarJuegoBotonLogin.place(x=120, y=340, height=30, width=150)
+        self.empezarJuegoBotonRegistro.place(x=140, y=380, height=30, width=150)
+                            
     def interfaz_registro(self, datos):
         self.registroFrame.pack(side="top", expand=True, fill="both")
 
@@ -42,25 +51,25 @@ class Interfaz:
                                                                       segunda_contrasena_input), text="Registrarse",
                                    bd=0, bg="#47126b",
                                    font=("Ubuntu", 12), fg="#FFF")
-        boton_registrarse.place(x=150, y=280, height=30, width=100)
+        boton_registrarse.place(x=150, y=270, height=30, width=100)
         boton_registrado = Button(self.registroFrame,
                                   command=lambda: [self.registroFrame.pack_forget(), self.interfaz_login(datos)],
                                   text="Ya estoy registrado",
                                   bd=0,
                                   bg="#47126b",
                                   font=("Ubuntu", 12), fg="#FFF")
-        boton_registrado.place(x=125, y=330, height=30, width=150)
+        boton_registrado.place(x=125, y=310, height=30, width=150)
         boton_condicion_registro = Button(self.registroFrame, command=lambda: self.info_usuario_clave(),
                                           text="Condiciones de registro", bd=0, bg="#47126b", font=("Ubuntu", 12),
                                           fg='#FFF')
-        boton_condicion_registro.place(x=110, y=380, height=30, width=180)
+        boton_condicion_registro.place(x=110, y=350, height=30, width=180)
         self.raiz.mainloop()
 
     def interfaz_login(self, datos):
         self.loginFrame.pack(side="top", expand=True, fill="both")
         self.raiz.title("TP1 - Memotest - Ingreso")
         self.raiz.resizable(False, False)
-        self.raiz.geometry("400x350")
+        self.raiz.geometry("400x430")
         self.raiz.configure(bg='#FFF')
         titulo = Label(self.loginFrame, text="Ingrese sus datos para iniciar sesion", bg="#FFF",
                        font=("Ubuntu", 15, "bold"),
@@ -86,7 +95,8 @@ class Interfaz:
 
         boton_iniciar_sesion = Button(self.loginFrame, command=lambda: Registro().iniciar_sesion(usuario_input.get(),
                                                                                                  primer_contrasena_input.get(),
-                                                                                                 self.mostrar_mensaje_login),
+                                                                                                 self.mostrar_mensaje_login,
+                                                                                                 self.mostrar_empezar_juego),
                                       text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
         boton_iniciar_sesion.place(x=125, y=300, height=30, width=150)
 
@@ -112,12 +122,12 @@ class Interfaz:
                 self.interfaz_registro(datos)
 
     def mostrar_mensaje_login(self, mensaje, seLogueo):
-        self.label_login['text'] = mensaje
+        self.labelLogin['text'] = mensaje
         if seLogueo:
-            self.label_login['fg'] = "green"
+            self.labelLogin['fg'] = "green"
         else:
-            self.label_login['fg'] = "#e64040"
-        self.label_login.place(x=10, y=200)
+            self.labelLogin['fg'] = "#e64040"
+        self.labelLogin.place(x=10, y=200)
 
     def validar_usuario(self, usuario):
         """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
