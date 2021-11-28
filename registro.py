@@ -26,8 +26,11 @@ class Registro:
         with open('usuarios.csv', newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',', quotechar=',')
             for fila in spamreader:
-                if fila:
-                    usuarios.append({"usuario": fila[0], "clave": fila[1]})
+                try:
+                    if fila:
+                        usuarios.append({"usuario": fila[0], "clave": fila[1]})
+                except IndexError:
+                    pass
 
         return usuarios[1:len(usuarios)]
 
