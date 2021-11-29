@@ -3,12 +3,14 @@ from tkinter import messagebox
 from registro import Registro
 import tkinter as tk
 
+
 class Interfaz:
     def __init__(self) -> None:
         self.raiz = tk.Tk()
         self.loginFrame = Frame(self.raiz, bg="#FFF")
         self.registroFrame = Frame(self.raiz, bg="#FFF")
         self.labelLogin = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
+        self.labelRegistro = Label(self.registroFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
         self.empezarJuegoBotonLogin = Button(self.loginFrame, command=self.cerrar_interfaz, text="Empezar a jugar",
                                              bd=0, bg="#06bf78", font=("Ubuntu", 12), fg="#FFF")
         self.empezarJuegoBotonRegistro = Button(self.registroFrame, command=self.cerrar_interfaz,
@@ -53,18 +55,18 @@ class Interfaz:
                                                                       segunda_contrasena_input), text="Registrarse",
                                    bd=0, bg="#47126b",
                                    font=("Ubuntu", 12), fg="#FFF")
-        boton_registrarse.place(x=150, y=270, height=30, width=100)
+        boton_registrarse.place(x=150, y=300, height=30, width=100)
         boton_registrado = Button(self.registroFrame,
                                   command=lambda: [self.registroFrame.pack_forget(), self.interfaz_login(datos)],
                                   text="Ya estoy registrado",
                                   bd=0,
                                   bg="#47126b",
                                   font=("Ubuntu", 12), fg="#FFF")
-        boton_registrado.place(x=125, y=310, height=30, width=150)
+        boton_registrado.place(x=125, y=340, height=30, width=150)
         boton_condicion_registro = Button(self.registroFrame, command=lambda: self.info_usuario_clave(),
                                           text="Condiciones de registro", bd=0, bg="#47126b", font=("Ubuntu", 12),
                                           fg='#FFF')
-        boton_condicion_registro.place(x=110, y=350, height=30, width=180)
+        boton_condicion_registro.place(x=110, y=380, height=30, width=180)
         self.raiz.mainloop()
 
     def interfaz_login(self, datos):
@@ -108,8 +110,9 @@ class Interfaz:
         segunda_clave = segunda_contrasena_input.get()
         jugadores_logueados = Registro().jugadores_logueados
         jugadores_registrados = [usuario['usuario'] for usuario in Registro().obtener_usuarios()]
-        
+
         if Registro().validar_usuario(usuario) is True and Registro().validar_clave(clave) is True:
+
             if usuario not in jugadores_registrados and clave == segunda_clave:
                 Registro().guardar_nuevo_usuario({'usuario': usuario, 'clave': clave})
 
@@ -118,12 +121,26 @@ class Interfaz:
                 primer_contrasena_input.delete(0, END)
 
                 segunda_contrasena_input.delete(0, END)
+
+                self.mostrar_mensaje_registro("Usuario registrado correctamente", True)
             else:
-                print("ya estas registrado")
+                if usuario in jugadores_registrados:
+                    self.mostrar_mensaje_registro("Ya está registrado", False)
+
+                elif usuario in jugadores_logueados:
+                    self.mostrar_mensaje_registro("El jugador que intenta registrar ya esta logueado", False)
+
+                usuario_input.delete(0, END)
+
+                primer_contrasena_input.delete(0, END)
+
+                segunda_contrasena_input.delete(0, END)
+
         else:
 
-            if self.datos_erroneos() is True:
-                self.interfaz_registro(datos)
+            self.mostrar_mensaje_registro("Por favor lea las condiciones de registro.", False)
+
+            self.interfaz_registro(datos)
 
     def mostrar_mensaje_login(self, mensaje, seLogueo):
         self.labelLogin['text'] = mensaje
@@ -133,10 +150,14 @@ class Interfaz:
             self.labelLogin['fg'] = "#e64040"
         self.labelLogin.place(x=10, y=200)
 
+    def mostrar_mensaje_registro(self, mensaje, seRegistro):
+        self.labelRegistro['text'] = mensaje
+        if seRegistro:
+            self.labelRegistro['fg'] = "green"
+        else:
+            self.labelRegistro['fg'] = "#e64040"
+        self.labelRegistro.place(x=60, y=260)
 
-    def datos_erroneos(self):
-        return messagebox.askretrycancel(message="Por favor, lea las condiciones de registro de usuario y clave "
-                                                 "¿Desea reintentar?", title="Error")
 
     def info_usuario_clave(self):
         messagebox.showinfo(
@@ -150,6 +171,5 @@ def generar_interfaz():
     datos = {}
     interfaz.interfaz_registro(datos)
     # Registro().guardar_nuevo_usuario(datos)
-
 
 # generar_interfaz()
