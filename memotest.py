@@ -3,31 +3,32 @@ import time
 import numpy as np
 import pandas as pd
 from tkinter import *
+from interfaz import generar_interfaz
+from registro import Registro
 
-
-def generar_interfaz(lista_de_nombres):
-    """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
-    Estrella Portocarrero"""
-    raiz = Tk()
-    raiz.title("TP1 - Memotest")
-    raiz.resizable(False, False)
-    raiz.geometry("300x200")
-    raiz.configure(bg='#FFF')
-    titulo = Label(raiz, text="Ingrese los jugadores:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    titulo.place(x=10, y=10)
-    label_primer_jugador = Label(raiz, text="1º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-    label_primer_jugador.place(x=10, y=50)
-    label_segundo_jugador.place(x=10, y=100)
-    primer_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-    primer_jugador_input.place(x=45, y=53, height=30)
-    segundo_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-    segundo_jugador_input.place(x=45, y=103, height=30)
-    boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input,
-                                                                lista_de_nombres), text="Jugar", bd=0, bg="#47126b",
-                          font=("Ubuntu", 12), fg="#FFF")
-    boton_enviar.place(x=10, y=150, height=20, width=100)
-    raiz.mainloop()
+# def generar_interfaz(lista_de_nombres):
+#     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
+#     Estrella Portocarrero"""
+#     raiz = Tk()
+#     raiz.title("TP1 - Memotest")
+#     raiz.resizable(False, False)
+#     raiz.geometry("300x200")
+#     raiz.configure(bg='#FFF')
+#     titulo = Label(raiz, text="Ingrese los jugadores:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+#     titulo.place(x=10, y=10)
+#     label_primer_jugador = Label(raiz, text="1º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+#     label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
+#     label_primer_jugador.place(x=10, y=50)
+#     label_segundo_jugador.place(x=10, y=100)
+#     primer_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
+#     primer_jugador_input.place(x=45, y=53, height=30)
+#     segundo_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
+#     segundo_jugador_input.place(x=45, y=103, height=30)
+#     boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input,
+#                                                                 lista_de_nombres), text="Jugar", bd=0, bg="#47126b",
+#                           font=("Ubuntu", 12), fg="#FFF")
+#     boton_enviar.place(x=10, y=150, height=20, width=100)
+#     raiz.mainloop()
 
 
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
@@ -42,7 +43,7 @@ def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
 
 def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
-    Juan Tejada"""
+    # Juan Tejada"""
 
     fichas = ["D", "D", "D", "D", "D", "D", "D", "D",
               "s", "s", "s", "s", "s", "s", "s", "s"]
@@ -70,20 +71,20 @@ def ocultar_fichas(fichas):
 
 def imprimir_tablero(fichas_ocultas):
     """Imprime el tablero utilizando numpy y pandas
-    Estrella Portocarrero
-    Juan Tejada"""
+    ## Estrella Portocarrero
+    ## Juan Tejada"""
     tablero = np.array([fichas_ocultas])
     tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return
 
-def imprimir_asignacion_de_turnos(lista_de_nombres):
+def imprimir_asignacion_de_turnos():
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
-    Estrella Portocarrero
-    Juan Tejada"""
-
+    ## Estrella Portocarrero
+    ## Juan Tejada"""
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
     shuffle(lista_de_nombres)
 
     for i in range(len(lista_de_nombres)):
@@ -94,12 +95,12 @@ def imprimir_asignacion_de_turnos(lista_de_nombres):
     return lista_de_nombres
 
 
-def genera_dicc_jugadores(lista_de_nombres):
+def genera_dicc_jugadores():
     """genera_dicc_jugadores crea el diccionario que tiene como claves a los
     nombres de los jugadores y como valores los aciertos de cada jugador.
-    Estrella Portocarrero
-    Juan Tejada"""
-
+    ## Estrella Portocarrero
+    ## Juan Tejada"""
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
         dicc_jugadores[jugador] = [0, 0]
@@ -107,7 +108,7 @@ def genera_dicc_jugadores(lista_de_nombres):
     return dicc_jugadores
 
 
-def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
+def jugada(fichas, fichas_ocultas, dicc_jugadores):
     """La funcion jugada es la funcion principal en la que se lleva a cabo todo el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
@@ -119,6 +120,7 @@ def jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores):
     nro_jugador = 0
     finalizar_partida = False
     inicio_partida = time.time()
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
 
     while not finalizar_partida:
 
@@ -223,12 +225,12 @@ def validar_ingreso(posicion, fichas_ocultas):
     return True
 
 
-def resultados(lista_de_nombres, diccionario_aciertos):
+def resultados(diccionario_aciertos):
     """Funcion que imprime los aciertos/intentos por cada jugador y determina el ganador.
     Juan Tejada"""
     PRIMER_JUGADOR = 0
     SEGUNDO_JUGADOR = 1
-
+    lista_de_nombres = Registro().obtener_listado_de_nombres()
     datos = diccionario_aciertos.values()
 
     if list(datos)[PRIMER_JUGADOR][0] == list(datos)[SEGUNDO_JUGADOR][0]:
@@ -253,14 +255,14 @@ def resultados(lista_de_nombres, diccionario_aciertos):
 
 
 def main():
-    lista_de_nombres = []
-    generar_interfaz(lista_de_nombres)
+    # generar_interfaz(lista_de_nombres)
+    generar_interfaz()
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
-    imprimir_asignacion_de_turnos(lista_de_nombres)
-    dicc_jugadores = genera_dicc_jugadores(lista_de_nombres)
-    jugada(fichas, fichas_ocultas, lista_de_nombres, dicc_jugadores)
-    resultados(lista_de_nombres, dicc_jugadores)
+    imprimir_asignacion_de_turnos()
+    dicc_jugadores = genera_dicc_jugadores()
+    jugada(fichas, fichas_ocultas, dicc_jugadores)
+    resultados( dicc_jugadores)
 
 
 main()
