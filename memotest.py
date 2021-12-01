@@ -5,7 +5,7 @@ import pandas as pd
 from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
-
+from ranking import Ranking
 # def generar_interfaz(lista_de_nombres):
 #     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
 #     Estrella Portocarrero"""
@@ -256,13 +256,14 @@ def resultados(diccionario_aciertos):
 
 def main():
     # generar_interfaz(lista_de_nombres)
-    generar_interfaz()
-    fichas = generador_fichas()
-    fichas_ocultas = ocultar_fichas(fichas)
-    imprimir_asignacion_de_turnos()
-    dicc_jugadores = genera_dicc_jugadores()
-    jugada(fichas, fichas_ocultas, dicc_jugadores)
-    resultados( dicc_jugadores)
-
+    # generar_interfaz()
+    # fichas = generador_fichas()
+    # fichas_ocultas = ocultar_fichas(fichas)
+    # imprimir_asignacion_de_turnos()
+    # dicc_jugadores = genera_dicc_jugadores()
+    # jugada(fichas, fichas_ocultas, dicc_jugadores)
+    # resultados( dicc_jugadores)
+    ranking = Ranking()
+    ranking.generar_ranking()
 
 main()
