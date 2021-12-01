@@ -26,6 +26,7 @@ class Registro:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(usuario)
             csvfile.close()
+        self.agregar_jugador_logueado(usuario)
 
     def obtener_usuarios(self):
         """Retorna un listado con todos los usuarios y sus correspondientes claves del archivo usuarios.csv
