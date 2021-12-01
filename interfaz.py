@@ -108,43 +108,46 @@ class Interfaz:
         usuario = usuario_input.get()
         clave = primer_contrasena_input.get()
         segunda_clave = segunda_contrasena_input.get()
-        jugadores_logueados = Registro().jugadores_logueados
-        jugadores_registrados = [usuario['usuario'] for usuario in Registro().obtener_usuarios()]
+        if clave == segunda_clave:
+            jugadores_logueados = Registro().jugadores_logueados
+            jugadores_registrados = [usuario['usuario'] for usuario in Registro().obtener_usuarios()]
 
-        if Registro().validar_usuario(usuario) is True and Registro().validar_clave(clave) is True:
+            if Registro().validar_usuario(usuario) is True and Registro().validar_clave(clave) is True:
 
-            if usuario not in jugadores_registrados and clave == segunda_clave:
-                Registro().guardar_nuevo_usuario({'usuario': usuario, 'clave': clave})
+                if usuario not in jugadores_registrados and clave == segunda_clave:
+                    Registro().guardar_nuevo_usuario({'usuario': usuario, 'clave': clave})
 
-                usuario_input.delete(0, END)
+                    usuario_input.delete(0, END)
 
-                primer_contrasena_input.delete(0, END)
+                    primer_contrasena_input.delete(0, END)
 
-                segunda_contrasena_input.delete(0, END)
+                    segunda_contrasena_input.delete(0, END)
 
-                self.mostrar_mensaje_registro("Usuario registrado correctamente", True)
+                    self.mostrar_mensaje_registro("Usuario registrado correctamente", True)
+                else:
+                    if usuario in jugadores_registrados:
+                        self.mostrar_mensaje_registro("Ya está registrado", False)
+
+                    elif usuario in jugadores_logueados:
+                        self.mostrar_mensaje_registro("El jugador que intenta registrar ya esta logueado", False)
+
+                    usuario_input.delete(0, END)
+
+                    primer_contrasena_input.delete(0, END)
+
+                    segunda_contrasena_input.delete(0, END)
             else:
-                if usuario in jugadores_registrados:
-                    self.mostrar_mensaje_registro("Ya está registrado", False)
 
-                elif usuario in jugadores_logueados:
-                    self.mostrar_mensaje_registro("El jugador que intenta registrar ya esta logueado", False)
+                self.mostrar_mensaje_registro("Por favor lea las condiciones de registro.", False)
 
-                usuario_input.delete(0, END)
+                self.interfaz_registro(datos)
+        else: 
+            self.mostrar_mensaje_registro("Las contraseñas no coinciden", False)
 
-                primer_contrasena_input.delete(0, END)
 
-                segunda_contrasena_input.delete(0, END)
-
-        else:
-
-            self.mostrar_mensaje_registro("Por favor lea las condiciones de registro.", False)
-
-            self.interfaz_registro(datos)
-
-    def mostrar_mensaje_login(self, mensaje, seLogueo):
+    def mostrar_mensaje_login(self, mensaje, correcto):
         self.labelLogin['text'] = mensaje
-        if seLogueo:
+        if correcto:
             self.labelLogin['fg'] = "green"
         else:
             self.labelLogin['fg'] = "#e64040"
