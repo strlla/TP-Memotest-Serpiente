@@ -224,36 +224,6 @@ def validar_ingreso(posicion, fichas_ocultas):
 
     return True
 
-
-def resultados(diccionario_aciertos):
-    """Funcion que imprime los aciertos/intentos por cada jugador y determina el ganador.
-    Juan Tejada"""
-    PRIMER_JUGADOR = 0
-    SEGUNDO_JUGADOR = 1
-    lista_de_nombres = Registro().obtener_listado_de_nombres()
-    datos = diccionario_aciertos.values()
-
-    if list(datos)[PRIMER_JUGADOR][0] == list(datos)[SEGUNDO_JUGADOR][0]:
-
-        if list(datos)[PRIMER_JUGADOR][1] <= list(datos)[SEGUNDO_JUGADOR][1]:
-            print(
-                f"¡HUBO UN EMPATE! Gano el jugador: '{lista_de_nombres[PRIMER_JUGADOR]}' al tener la menor cantidad de intentos: {list(datos)[PRIMER_JUGADOR][1]} ")
-        else:
-            print(
-                f"¡HUBO UN EMPATE! Gano el jugador: '{lista_de_nombres[SEGUNDO_JUGADOR]}' al tener la menor cantidad de intentos: {list(datos)[SEGUNDO_JUGADOR][1]} ")
-
-
-    elif list(datos)[PRIMER_JUGADOR][0] > list(datos)[SEGUNDO_JUGADOR][0]:
-
-        print(
-            f"El jugador {lista_de_nombres[PRIMER_JUGADOR]} gano con un total de {list(datos)[PRIMER_JUGADOR][0]} aciertos y {list(datos)[PRIMER_JUGADOR][1]} intentos ")
-
-    else:
-
-        print(
-            f"El jugador {lista_de_nombres[SEGUNDO_JUGADOR]} gano con un total de {list(datos)[SEGUNDO_JUGADOR][0]} aciertos y {list(datos)[SEGUNDO_JUGADOR][1]} intentos")
-
-
 def main():
     # generar_interfaz(lista_de_nombres)
     # generar_interfaz()
