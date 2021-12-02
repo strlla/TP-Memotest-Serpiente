@@ -7,6 +7,7 @@ from interfaz import generar_interfaz
 from registro import Registro
 from ranking import Ranking
 
+
 # def generar_interfaz(lista_de_nombres):
 #     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
 #     Estrella Portocarrero"""
@@ -46,8 +47,9 @@ def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
     Juan Tejada"""
 
-    fichas = ["🩹", "🩹", "🩹", "🩹", "💉", "💉", "💉", "💉",
-              "💊", "💊", "💊", "💊", "🩺", "🩺", "🩺", "🩺"]
+    CANTIDAD_FICHAS = 16
+
+    fichas = ["D", "s"] * (CANTIDAD_FICHAS // 2)
 
     shuffle(fichas)
 
@@ -164,7 +166,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
 
                 if fichas_descubiertas_totalmente:
                     finalizar_partida = True
-                    
+
         ranking.agregar_partida_terminada(dicc_jugadores)
         ranking.generar_ranking()
         prueba = input("Desea finalizar la partida?: ")
@@ -185,9 +187,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
 
         nro_partida += 1
 
-
     print(f'SE JUGARON {nro_partida} PARTIDAS')
-
 
     final_partida = time.time()
     tiempo_total = final_partida - inicio_partida
@@ -254,6 +254,7 @@ def validar_ingreso(posicion, fichas_ocultas):
 
     return True
 
+
 def main():
     # generar_interfaz(lista_de_nombres)
     ranking = Ranking()
@@ -263,7 +264,6 @@ def main():
     imprimir_asignacion_de_turnos()
     dicc_jugadores = genera_dicc_jugadores()
     jugada(fichas, fichas_ocultas, dicc_jugadores, ranking)
-    resultados(dicc_jugadores)
 
 
 main()
