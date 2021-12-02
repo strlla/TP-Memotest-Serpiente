@@ -4,17 +4,23 @@ import tkinter as tk
 class Ranking:
     def __init__(self) -> None:
         self.raiz = tk.Tk()
+        self.partida = [{"usuario": "Estrella"}, {"usuario": "Juan"}, {"usuario": "Matias"}]
         
     def generar_ranking(self):  
         self.raiz.title("TP2 - Memotest - Ranking")
-        n_rows = 6
-        n_columns = 3
-        t_columns = ['Jugadores','Cantidad de aciertos', 'Total de intentos', 'Promedio de intentos']
-        for i in range(n_rows):
-            self.raiz.grid_rowconfigure(i,  weight=1)
-        for column in t_columns:
-            index = t_columns.index(column)
-            self.raiz.grid_columnconfigure(index,  weight=1, pad=50)
-            Label(self.raiz, text=column).grid(row=1, column=index, sticky=NSEW)
-
+        columnas = ['Jugadores', 'Cantidad de aciertos', 'Total de intentos', 'Promedio de intentos']
+        for column in columnas:
+            index = columnas.index(column)
+            self.raiz.grid_columnconfigure(index,  weight=1, pad=20)
+            Label(self.raiz, text=column).grid(row=0, column=index, sticky=NSEW)
+            
+        for jugador in self.partida:    
+            indexJugador = self.partida.index(jugador)
+            for campo in jugador:
+                indexCampo = list(jugador.keys()).index(campo)
+                self.raiz.grid_columnconfigure(indexCampo, weight=1, pad=20)
+                Label(self.raiz, text=jugador['usuario']).grid(row=indexJugador + 1, column=indexCampo, sticky=NSEW)
+    
+  
+            
         self.raiz.mainloop()
