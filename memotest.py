@@ -5,7 +5,8 @@ import pandas as pd
 from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
-from ranking import Ranking
+
+
 # def generar_interfaz(lista_de_nombres):
 #     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
 #     Estrella Portocarrero"""
@@ -43,7 +44,7 @@ def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
 
 def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
-    # Juan Tejada"""
+    Juan Tejada"""
 
     fichas = ["D", "D", "D", "D", "D", "D", "D", "D",
               "s", "s", "s", "s", "s", "s", "s", "s"]
@@ -71,19 +72,20 @@ def ocultar_fichas(fichas):
 
 def imprimir_tablero(fichas_ocultas):
     """Imprime el tablero utilizando numpy y pandas
-    ## Estrella Portocarrero
-    ## Juan Tejada"""
+    Estrella Portocarrero
+    Juan Tejada"""
     tablero = np.array([fichas_ocultas])
     tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return
 
+
 def imprimir_asignacion_de_turnos():
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
-    ## Estrella Portocarrero
-    ## Juan Tejada"""
+    Estrella Portocarrero
+    Juan Tejada"""
     lista_de_nombres = Registro().obtener_listado_de_nombres()
     shuffle(lista_de_nombres)
 
@@ -98,18 +100,18 @@ def imprimir_asignacion_de_turnos():
 def genera_dicc_jugadores():
     """genera_dicc_jugadores crea el diccionario que tiene como claves a los
     nombres de los jugadores y como valores los aciertos de cada jugador.
-    ## Estrella Portocarrero
-    ## Juan Tejada"""
+    Estrella Portocarrero
+    Juan Tejada"""
     lista_de_nombres = Registro().obtener_listado_de_nombres()
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
-        dicc_jugadores[jugador] = [0, 0]
+        dicc_jugadores[jugador] = [0, 0, 0]  # ACIERTOS - INTENTOS - PROMEDIO INTENTOS
 
     return dicc_jugadores
 
 
 def jugada(fichas, fichas_ocultas, dicc_jugadores):
-    """La funcion jugada es la funcion principal en la que se lleva a cabo todo el juego. Tiene la variable 'nro_jugador'
+    """La funcion jugada es la funcion principal en la que se lleva a cabo tod el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
     Estrella Portocarrero
@@ -118,46 +120,72 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores):
     """
 
     nro_jugador = 0
+    nro_partida = 0
+    finalizar_juego = False
     finalizar_partida = False
     inicio_partida = time.time()
     lista_de_nombres = Registro().obtener_listado_de_nombres()
 
-    while not finalizar_partida:
+    while not finalizar_juego:
 
-        print(f"*-----------------------*"
-              f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
-        fichas_originales = fichas_ocultas
+        while not finalizar_partida:
 
-        imprimir_tablero(fichas_ocultas)
+            print(f"*-----------------------*"
+                  f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
+            fichas_originales = fichas_ocultas
 
-        resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
+            imprimir_tablero(fichas_ocultas)
 
-        fichas_descubiertas_totalmente = revisar_fichas(fichas, fichas_ocultas)
+            resultado, fichas_ocultas = seleccionar_posiciones(fichas, fichas_ocultas)
 
-        if resultado is True:
+            fichas_descubiertas_totalmente = revisar_fichas(fichas, fichas_ocultas)
 
-            print(f"¡Acertaste! {lista_de_nombres[nro_jugador]}")
+            if resultado is True:
 
-            nro_jugador = nro_jugador
+                print(f"¡Acertaste! {lista_de_nombres[nro_jugador]}")
 
-            dicc_jugadores[lista_de_nombres[nro_jugador]][0] += 1
+                nro_jugador = nro_jugador
 
-            if fichas_descubiertas_totalmente is True:
-                finalizar_partida = True
-        else:
-            dicc_jugadores[lista_de_nombres[nro_jugador]][1] += 1
-            print(f"Fallaste {lista_de_nombres[nro_jugador]}")
-            fichas_ocultas = fichas_originales
-            if nro_jugador == len(lista_de_nombres) - 1:
+                dicc_jugadores[lista_de_nombres[nro_jugador]][0] += 1
 
-                nro_jugador = 0
-
+                if fichas_descubiertas_totalmente is True:
+                    finalizar_partida = True
             else:
+                dicc_jugadores[lista_de_nombres[nro_jugador]][1] += 1
+                print(f"Fallaste {lista_de_nombres[nro_jugador]}")
+                fichas_ocultas = fichas_originales
+                if nro_jugador == len(lista_de_nombres) - 1:
 
-                nro_jugador += 1
+                    nro_jugador = 0
 
-            if fichas_descubiertas_totalmente:
-                finalizar_partida = True
+                else:
+
+                    nro_jugador += 1
+
+                if fichas_descubiertas_totalmente:
+                    finalizar_partida = True
+
+        prueba = input("Desea finalizar partida?: ")
+
+        MAX_PARTIDAS = 5
+
+        if prueba == 'si' or prueba == 'SI' or nro_partida == MAX_PARTIDAS:
+
+            finalizar_juego = True
+
+        else:
+
+            finalizar_partida = False
+
+            fichas = generador_fichas()
+
+            fichas_ocultas = ocultar_fichas(fichas)
+
+        nro_partida += 1
+
+
+    print(f'SE JUGARON {nro_partida} PARTIDAS')
+
 
     final_partida = time.time()
     tiempo_total = final_partida - inicio_partida
@@ -226,14 +254,13 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 def main():
     # generar_interfaz(lista_de_nombres)
-    # generar_interfaz()
-    # fichas = generador_fichas()
-    # fichas_ocultas = ocultar_fichas(fichas)
-    # imprimir_asignacion_de_turnos()
-    # dicc_jugadores = genera_dicc_jugadores()
-    # jugada(fichas, fichas_ocultas, dicc_jugadores)
-    # resultados( dicc_jugadores)
-    ranking = Ranking()
-    ranking.generar_ranking()
+    generar_interfaz()
+    fichas = generador_fichas()
+    fichas_ocultas = ocultar_fichas(fichas)
+    imprimir_asignacion_de_turnos()
+    dicc_jugadores = genera_dicc_jugadores()
+    jugada(fichas, fichas_ocultas, dicc_jugadores)
+    resultados(dicc_jugadores)
+
 
 main()
