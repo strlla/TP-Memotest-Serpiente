@@ -46,8 +46,8 @@ def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
     Juan Tejada"""
 
-    fichas = ["D", "D", "D", "D", "D", "D", "D", "D",
-              "s", "s", "s", "s", "s", "s", "s", "s"]
+    fichas = ["🩹", "🩹", "🩹", "🩹", "💉", "💉", "💉", "💉",
+              "💊", "💊", "💊", "💊", "🩺", "🩺", "🩺", "🩺"]
 
     shuffle(fichas)
 
