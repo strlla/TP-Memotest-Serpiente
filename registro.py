@@ -1,4 +1,6 @@
 import csv
+import pandas as pd
+import os
 
 
 class Registro:
@@ -62,10 +64,13 @@ class Registro:
             if usuarioLogueado:
                 mostrar_mensaje("Ya está logueado", False)
             else:
+                os.system("cls")
                 mostrar_mensaje("Se logueo correctamente", True)
                 self.agregar_jugador_logueado(usuarioEncontrado)
                 if len(self.jugadores_logueados) >= 2:
                     mostrar_empezar_juego()
+                print(pd.DataFrame(Registro().obtener_listado_de_nombres(), columns=['Usuario']))
+
         else:
             mostrar_mensaje("Contraseña incorrecta", False)
 
