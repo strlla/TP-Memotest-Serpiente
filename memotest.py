@@ -5,7 +5,7 @@ import pandas as pd
 from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
-
+from ranking import Ranking
 
 # def generar_interfaz(lista_de_nombres):
 #     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
@@ -105,12 +105,12 @@ def genera_dicc_jugadores():
     lista_de_nombres = Registro().obtener_listado_de_nombres()
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
-        dicc_jugadores[jugador] = [0, 0, 0]  # ACIERTOS - INTENTOS - PROMEDIO INTENTOS
+        dicc_jugadores[jugador] = {"aciertos": 0, "intentos": 0}  # ACIERTOS - INTENTOS - PROMEDIO INTENTOS
 
     return dicc_jugadores
 
 
-def jugada(fichas, fichas_ocultas, dicc_jugadores):
+def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
     """La funcion jugada es la funcion principal en la que se lleva a cabo tod el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
@@ -146,12 +146,12 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores):
 
                 nro_jugador = nro_jugador
 
-                dicc_jugadores[lista_de_nombres[nro_jugador]][0] += 1
+                dicc_jugadores[lista_de_nombres[nro_jugador]]['aciertos'] += 1
 
                 if fichas_descubiertas_totalmente is True:
                     finalizar_partida = True
             else:
-                dicc_jugadores[lista_de_nombres[nro_jugador]][1] += 1
+                dicc_jugadores[lista_de_nombres[nro_jugador]]['intentos'] += 1
                 print(f"Fallaste {lista_de_nombres[nro_jugador]}")
                 fichas_ocultas = fichas_originales
                 if nro_jugador == len(lista_de_nombres) - 1:
@@ -164,8 +164,10 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores):
 
                 if fichas_descubiertas_totalmente:
                     finalizar_partida = True
-
-        prueba = input("Desea finalizar partida?: ")
+                    
+        ranking.agregar_partida_terminada(dicc_jugadores)
+        ranking.generar_ranking()
+        prueba = input("Desea finalizar la partida?: ")
 
         MAX_PARTIDAS = 5
 
@@ -254,12 +256,13 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 def main():
     # generar_interfaz(lista_de_nombres)
+    ranking = Ranking()
     generar_interfaz()
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
     imprimir_asignacion_de_turnos()
     dicc_jugadores = genera_dicc_jugadores()
-    jugada(fichas, fichas_ocultas, dicc_jugadores)
+    jugada(fichas, fichas_ocultas, dicc_jugadores, ranking)
     resultados(dicc_jugadores)
 
 
