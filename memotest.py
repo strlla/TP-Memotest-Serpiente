@@ -32,6 +32,18 @@ from ranking import Ranking
 #     boton_enviar.place(x=10, y=150, height=20, width=100)
 #     raiz.mainloop()
 
+def leer_archivo_configuracion():
+    """Abre el archivo csv de configuracion, lee linea
+    por linea y modifica los datos del archivo en el diccionario de datos por
+    defecto, indicando con un 0 si es el valor por defecto (no se modifico) y con
+    un 1 si el valor fue modificado por el archivo."""
+
+    archivo = open("configuracion.csv", "r")
+    datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
+             "REINICIAR_ARCHIV0_PARTIDAS": [False, 0]}
+
+    # En revision y proceso
+
 
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
     """
