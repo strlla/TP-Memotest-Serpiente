@@ -107,7 +107,7 @@ def genera_dicc_jugadores():
     lista_de_nombres = Registro().obtener_listado_de_nombres()
     dicc_jugadores = {}
     for jugador in lista_de_nombres:
-        dicc_jugadores[jugador] = {"aciertos": 0, "intentos": 0}  # ACIERTOS - INTENTOS - PROMEDIO INTENTOS
+        dicc_jugadores |= {jugador: {"aciertos": 0, "intentos": 0}}  # ACIERTOS - INTENTOS - PROMEDIO INTENTOS
 
     return dicc_jugadores
 
@@ -148,12 +148,12 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
 
                 nro_jugador = nro_jugador
 
-                dicc_jugadores[lista_de_nombres[nro_jugador]]['aciertos'] += 1
+                dicc_jugadores[lista_de_nombres[nro_jugador]]["aciertos"] += 1
 
                 if fichas_descubiertas_totalmente is True:
                     finalizar_partida = True
             else:
-                dicc_jugadores[lista_de_nombres[nro_jugador]]['intentos'] += 1
+                dicc_jugadores[lista_de_nombres[nro_jugador]]["intentos"] += 1
                 print(f"Fallaste {lista_de_nombres[nro_jugador]}")
                 fichas_ocultas = fichas_originales
                 if nro_jugador == len(lista_de_nombres) - 1:
@@ -169,6 +169,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
 
         ranking.agregar_partida_terminada(dicc_jugadores)
         ranking.generar_ranking()
+
         prueba = input("Desea finalizar la partida?: ")
 
         MAX_PARTIDAS = 5
@@ -192,7 +193,9 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
     final_partida = time.time()
     tiempo_total = final_partida - inicio_partida
 
-    print(f"La partida duro un tiempo total de: {round(tiempo_total, 2)} segundos")
+
+def archivar_partidas(fecha, hora, jugador, aciertos, intentos):
+    pass
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
