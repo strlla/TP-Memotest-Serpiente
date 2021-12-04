@@ -182,19 +182,42 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
         ranking.agregar_partida_terminada(dicc_jugadores)
         ranking.generar_ranking()
 
-        if ranking.terminar_juego() is True:
+        #if ranking.terminar_juego() is True:
+
+            #finalizar_juego = True
+
+        #elif ranking.nueva_partida() is True:
+
+            #nro_partida += 1
+
+            #finalizar_partida = False
+
+            #fichas = generador_fichas()
+
+            #fichas_ocultas = ocultar_fichas(fichas)
+        
+        prueba = input("Desea finalizar la partida?: ")
+
+        MAX_PARTIDAS = 5
+
+        if prueba == 'si' or prueba == 'SI' or nro_partida == MAX_PARTIDAS:
 
             finalizar_juego = True
 
-        elif ranking.nueva_partida() is True:
-
-            nro_partida += 1
+        else:
 
             finalizar_partida = False
 
             fichas = generador_fichas()
 
             fichas_ocultas = ocultar_fichas(fichas)
+
+        nro_partida += 1
+
+    print(f'SE JUGARON {nro_partida} PARTIDAS')
+
+    final_partida = time.time()
+    tiempo_total = final_partida - inicio_partida
 
 
     final_partida = time.time()
