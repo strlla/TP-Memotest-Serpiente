@@ -89,7 +89,7 @@ def imprimir_tablero(fichas_ocultas):
     Estrella Portocarrero
     Juan Tejada"""
     tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(tablero, (4, 4))
+    tablero_formado = np.reshape(tablero, (4,4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return
@@ -132,7 +132,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
     Juan Tejada
 
     """
-
+    MAX_PARTIDAS = 5
     nro_jugador = 0
     nro_partida = 0
     finalizar_juego = False
@@ -182,15 +182,13 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
         ranking.agregar_partida_terminada(dicc_jugadores)
         ranking.generar_ranking()
 
-        prueba = input("Desea finalizar la partida?: ")
-
-        MAX_PARTIDAS = 5
-
-        if prueba == 'si' or prueba == 'SI' or nro_partida == MAX_PARTIDAS:
+        if ranking.terminar_juego() is True:
 
             finalizar_juego = True
 
-        else:
+        elif ranking.nueva_partida() is True:
+
+            nro_partida += 1
 
             finalizar_partida = False
 
@@ -198,9 +196,6 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
 
             fichas_ocultas = ocultar_fichas(fichas)
 
-        nro_partida += 1
-
-    print(f'SE JUGARON {nro_partida} PARTIDAS')
 
     final_partida = time.time()
     tiempo_total = final_partida - inicio_partida
