@@ -2,19 +2,21 @@ import tkinter
 from tkinter import *
 import tkinter as tk
 import csv
+from tkinter import messagebox
+
 
 class Juego:
     def __init__(self) -> None:
         self.partidas = []
         self.resumen = []
-        
-    def guardar_hora_finalización(self, hora_finalizacion):
+
+    def guardar_hora_finalizacion(self, hora_finalizacion):
         self.hora_finalizacion = hora_finalizacion
-    
+
     def guardar_fecha_partida(self, fecha_partida):
         self.fecha_partida = fecha_partida
-    
-    def generar_resumen_juego(self):        
+
+    def generar_resumen_juego(self):
         nombres = set(list(self.partidas[0].keys()))
 
         for nombre in nombres:
@@ -28,17 +30,17 @@ class Juego:
                 "intentos": intentos
             }
             self.resumen.append(resumen_juego)
-            
+
         self.resumen = sorted(self.resumen, key=lambda x: x['aciertos'], reverse=True)
-    
+
     def guardar_partida(self):
         self.generar_resumen_juego()
         for jugador in self.resumen:
             with open('partidas.csv', 'a') as csvfile:
-                fieldnames = ["fecha_partida","hora_finalizacion","nombre_jugador","aciertos","intentos"]
+                fieldnames = ["fecha_partida", "hora_finalizacion", "nombre_jugador", "aciertos", "intentos"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writerow(jugador)
-                csvfile.close()        
+                csvfile.close()
 
     def agregar_partida_terminada(self, partida):
         self.partidas.append(partida)
@@ -49,6 +51,9 @@ class Juego:
             for jugador in list(partida.keys()):
                 lista_cantidad_de_intentos = [partida[jugador]['intentos'] for partida in self.partidas]
                 partida[jugador]['promedio'] = sum(lista_cantidad_de_intentos) / len(lista_cantidad_de_intentos)
+
+    def continuar_partida(self):
+        return messagebox.askyesno(message="¿Desea jugar otra partida?", title="Memotest")
 
     def generar_ranking(self):
         self.raiz = tk.Tk()
@@ -66,14 +71,9 @@ class Juego:
             fila = valores_tabla[indexFila]
             for indexCol in range(len(fila)):
                 Label(self.raiz, text=fila[indexCol]).grid(row=indexFila, column=indexCol, sticky=NSEW)
-        Ranking.terminar_juego(self)
-        Ranking.nueva_partida(self)
+        partida = self.continuar_partida()
+
         self.raiz.mainloop()
 
-    def terminar_juego(self):
-        Terminar_Juego = tkinter.Button(self.raiz, text="Terminar juego", command=True)
-        Terminar_Juego.grid(row=4, column=0)
+        return partida
 
-    def nueva_partida(self):
-        Nueva_Partida = tkinter.Button(self.raiz, text="Juegar nueva partida", command=True)
-        Nueva_Partida.grid(row=4, column=3)
