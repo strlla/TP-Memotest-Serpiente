@@ -36,7 +36,7 @@ def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
     Juan Tejada"""
 
-    CANTIDAD_FICHAS = 4
+    CANTIDAD_FICHAS = 16
 
     fichas = ["D", "s"] * (CANTIDAD_FICHAS // 2)
 
@@ -66,7 +66,7 @@ def imprimir_tablero(fichas_ocultas):
     Estrella Portocarrero
     Juan Tejada"""
     tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(tablero, (2, 2))
+    tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return
@@ -114,7 +114,6 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
     nro_partida = 0
     finalizar_juego = False
     finalizar_partida = False
-    inicio_partida = time.time()
     lista_de_nombres = Registro().obtener_listado_de_nombres()
 
     while not finalizar_juego:
@@ -163,6 +162,8 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
 
             finalizar_juego = True
 
+            print("El juego ha finalizado")
+
             if nro_partida == MAX_PARTIDAS:
                 print("Se supero el maximo de partidas.")
 
@@ -177,15 +178,10 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
             fichas_ocultas = ocultar_fichas(fichas)
 
 
-    final_partida = time.time()
     juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
     juego.guardar_fecha_partida(datetime.date(datetime.now()))
-    tiempo_total = final_partida - inicio_partida
     juego.guardar_partida()
 
-
-def archivar_partidas(fecha, hora, jugador, aciertos, intentos):
-    pass
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
