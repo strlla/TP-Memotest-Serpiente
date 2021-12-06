@@ -8,6 +8,7 @@ from interfaz import generar_interfaz
 from registro import Registro
 from juego import Juego
 
+
 def leer_archivo_configuracion():
     """Abre el archivo csv de configuracion, lee linea
     por linea y modifica los datos del archivo en el diccionario de datos por
@@ -35,7 +36,7 @@ def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
     Juan Tejada"""
 
-    CANTIDAD_FICHAS = 16
+    CANTIDAD_FICHAS = 4
 
     fichas = ["D", "s"] * (CANTIDAD_FICHAS // 2)
 
@@ -65,7 +66,7 @@ def imprimir_tablero(fichas_ocultas):
     Estrella Portocarrero
     Juan Tejada"""
     tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(tablero, (4,4))
+    tablero_formado = np.reshape(tablero, (2, 2))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return
@@ -115,7 +116,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
     finalizar_partida = False
     inicio_partida = time.time()
     lista_de_nombres = Registro().obtener_listado_de_nombres()
-    
+
     while not finalizar_juego:
 
         while not finalizar_partida:
@@ -156,31 +157,18 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
                     finalizar_partida = True
 
         juego.agregar_partida_terminada(dicc_jugadores)
-        juego.generar_ranking()
+        partida = juego.generar_ranking()
 
-        #if ranking.terminar_juego() is True:
-
-            #finalizar_juego = True
-
-        #elif ranking.nueva_partida() is True:
-
-            #nro_partida += 1
-
-            #finalizar_partida = False
-
-            #fichas = generador_fichas()
-
-            #fichas_ocultas = ocultar_fichas(fichas)
-        
-        prueba = input("Desea finalizar el juego?: ")
-
-        MAX_PARTIDAS = 1
-
-        if prueba == 'si' or prueba == 'SI' or nro_partida == MAX_PARTIDAS:
+        if partida is False or nro_partida == MAX_PARTIDAS:
 
             finalizar_juego = True
 
+            if nro_partida == MAX_PARTIDAS:
+                print("Se supero el maximo de partidas.")
+
         else:
+
+            nro_partida += 1
 
             finalizar_partida = False
 
@@ -188,15 +176,13 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
 
             fichas_ocultas = ocultar_fichas(fichas)
 
-        nro_partida += 1
-
-    print(f'SE JUGARON {nro_partida} PARTIDAS')
 
     final_partida = time.time()
-    juego.guardar_hora_finalización(datetime.time(datetime.now()))    
-    juego.guardar_fecha_partida(datetime.date(datetime.now()))    
+    juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
+    juego.guardar_fecha_partida(datetime.date(datetime.now()))
     tiempo_total = final_partida - inicio_partida
     juego.guardar_partida()
+
 
 def archivar_partidas(fecha, hora, jugador, aciertos, intentos):
     pass
