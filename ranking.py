@@ -14,8 +14,7 @@ class Ranking:
     def guardar_fecha_partida(self, fecha_partida):
         self.fecha_partida = fecha_partida
     
-    def generar_resumen_juego(self):
-        
+    def generar_resumen_juego(self):        
         nombres = set(list(self.partidas[0].keys()))
 
         for nombre in nombres:
@@ -30,6 +29,8 @@ class Ranking:
             }
             self.resumen.append(resumen_juego)
             
+        self.resumen = sorted(self.resumen, key=lambda x: x['aciertos'], reverse=True)
+    
     def guardar_partida(self):
         self.generar_resumen_juego()
         for jugador in self.resumen:
