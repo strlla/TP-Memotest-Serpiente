@@ -6,7 +6,7 @@ import pandas as pd
 from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
-from ranking import Ranking
+from juego import Juego
 
 def leer_archivo_configuracion():
     """Abre el archivo csv de configuracion, lee linea
@@ -100,7 +100,7 @@ def genera_dicc_jugadores():
     return dicc_jugadores
 
 
-def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
+def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
     """La funcion jugada es la funcion principal en la que se lleva a cabo tod el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
@@ -155,8 +155,8 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
                 if fichas_descubiertas_totalmente:
                     finalizar_partida = True
 
-        ranking.agregar_partida_terminada(dicc_jugadores)
-        ranking.generar_ranking()
+        juego.agregar_partida_terminada(dicc_jugadores)
+        juego.generar_ranking()
 
         #if ranking.terminar_juego() is True:
 
@@ -174,7 +174,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
         
         prueba = input("Desea finalizar el juego?: ")
 
-        MAX_PARTIDAS = 5
+        MAX_PARTIDAS = 1
 
         if prueba == 'si' or prueba == 'SI' or nro_partida == MAX_PARTIDAS:
 
@@ -193,10 +193,10 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
     print(f'SE JUGARON {nro_partida} PARTIDAS')
 
     final_partida = time.time()
-    ranking.guardar_hora_finalización(datetime.time(datetime.now()))    
-    ranking.guardar_fecha_partida(datetime.date(datetime.now()))    
+    juego.guardar_hora_finalización(datetime.time(datetime.now()))    
+    juego.guardar_fecha_partida(datetime.date(datetime.now()))    
     tiempo_total = final_partida - inicio_partida
-    ranking.guardar_partida()
+    juego.guardar_partida()
 
 def archivar_partidas(fecha, hora, jugador, aciertos, intentos):
     pass
@@ -264,13 +264,13 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 def main():
     # generar_interfaz(lista_de_nombres)
-    ranking = Ranking()
+    juego = Juego()
     generar_interfaz()
     fichas = generador_fichas()
     fichas_ocultas = ocultar_fichas(fichas)
     imprimir_asignacion_de_turnos()
     dicc_jugadores = genera_dicc_jugadores()
-    jugada(fichas, fichas_ocultas, dicc_jugadores, ranking)
+    jugada(fichas, fichas_ocultas, dicc_jugadores, juego)
 
 
 main()

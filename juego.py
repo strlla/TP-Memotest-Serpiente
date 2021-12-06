@@ -3,7 +3,7 @@ from tkinter import *
 import tkinter as tk
 import csv
 
-class Ranking:
+class Juego:
     def __init__(self) -> None:
         self.partidas = []
         self.resumen = []
