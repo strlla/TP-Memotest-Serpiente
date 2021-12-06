@@ -21,7 +21,6 @@ class Ranking:
         for nombre in nombres:
             aciertos = sum([partida[nombre]['aciertos'] for partida in self.partidas])
             intentos = sum([partida[nombre]['intentos'] for partida in self.partidas])
-            print(aciertos)
             resumen_juego = {
                 "fecha_partida": self.fecha_partida,
                 "hora_finalizacion": self.hora_finalizacion,
@@ -29,11 +28,8 @@ class Ranking:
                 "aciertos": aciertos,
                 "intentos": intentos
             }
-            print(resumen_juego)
             self.resumen.append(resumen_juego)
-        
-        print(self.resumen)
-    
+            
     def guardar_partida(self):
         self.generar_resumen_juego()
         for jugador in self.resumen:
