@@ -1,11 +1,47 @@
 import tkinter
 from tkinter import *
 import tkinter as tk
-
+import csv
 
 class Ranking:
     def __init__(self) -> None:
         self.partidas = []
+        self.resumen = []
+        
+    def guardar_hora_finalización(self, hora_finalizacion):
+        self.hora_finalizacion = hora_finalizacion
+    
+    def guardar_fecha_partida(self, fecha_partida):
+        self.fecha_partida = fecha_partida
+    
+    def generar_resumen_juego(self):
+        
+        nombres = set(list(self.partidas[0].keys()))
+
+        for nombre in nombres:
+            aciertos = sum([partida[nombre]['aciertos'] for partida in self.partidas])
+            intentos = sum([partida[nombre]['intentos'] for partida in self.partidas])
+            print(aciertos)
+            resumen_juego = {
+                "fecha_partida": self.fecha_partida,
+                "hora_finalizacion": self.hora_finalizacion,
+                "nombre_jugador": nombre,
+                "aciertos": aciertos,
+                "intentos": intentos
+            }
+            print(resumen_juego)
+            self.resumen.append(resumen_juego)
+        
+        print(self.resumen)
+    
+    def guardar_partida(self):
+        self.generar_resumen_juego()
+        for jugador in self.resumen:
+            with open('partidas.csv', 'a') as csvfile:
+                fieldnames = ["fecha_partida","hora_finalizacion","nombre_jugador","aciertos","intentos"]
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writerow(jugador)
+                csvfile.close()        
 
     def agregar_partida_terminada(self, partida):
         self.partidas.append(partida)
@@ -21,8 +57,6 @@ class Ranking:
         self.raiz = tk.Tk()
         self.raiz.title("TP2 - Memotest - Ranking")
 
-        # self.raiz.configure(bg="#fff")
-
         valores_tabla = [['Jugadores', 'Cantidad de aciertos', 'Total de intentos', 'Promedio de intentos']]
         ultima_partida = self.partidas[-1]
         for jugador in ultima_partida:
@@ -37,14 +71,12 @@ class Ranking:
                 Label(self.raiz, text=fila[indexCol]).grid(row=indexFila, column=indexCol, sticky=NSEW)
         Ranking.terminar_juego(self)
         Ranking.nueva_partida(self)
+        self.raiz.mainloop()
 
     def terminar_juego(self):
-
-        Terminar_Juego = tkinter.Button(self.raiz, text="Juegar nueva partida", command=True)
+        Terminar_Juego = tkinter.Button(self.raiz, text="Terminar juego", command=True)
         Terminar_Juego.grid(row=4, column=0)
 
     def nueva_partida(self):
         Nueva_Partida = tkinter.Button(self.raiz, text="Juegar nueva partida", command=True)
         Nueva_Partida.grid(row=4, column=3)
-
-        self.raiz.mainloop()

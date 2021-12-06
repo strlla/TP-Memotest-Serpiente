@@ -1,36 +1,12 @@
 from random import shuffle
 import time
+from datetime import date, datetime
 import numpy as np
 import pandas as pd
 from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
 from ranking import Ranking
-
-
-# def generar_interfaz(lista_de_nombres):
-#     """Se encarga de crear la interfaz visual para ingresar los nombres de los jugadores
-#     Estrella Portocarrero"""
-#     raiz = Tk()
-#     raiz.title("TP1 - Memotest")
-#     raiz.resizable(False, False)
-#     raiz.geometry("300x200")
-#     raiz.configure(bg='#FFF')
-#     titulo = Label(raiz, text="Ingrese los jugadores:", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-#     titulo.place(x=10, y=10)
-#     label_primer_jugador = Label(raiz, text="1º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-#     label_segundo_jugador = Label(raiz, text="2º", bg="#FFF", font=("Ubuntu", 14, "bold"), fg="#47126b")
-#     label_primer_jugador.place(x=10, y=50)
-#     label_segundo_jugador.place(x=10, y=100)
-#     primer_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-#     primer_jugador_input.place(x=45, y=53, height=30)
-#     segundo_jugador_input = Entry(raiz, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
-#     segundo_jugador_input.place(x=45, y=103, height=30)
-#     boton_enviar = Button(raiz, command=lambda: obtener_nombres(raiz, primer_jugador_input, segundo_jugador_input,
-#                                                                 lista_de_nombres), text="Jugar", bd=0, bg="#47126b",
-#                           font=("Ubuntu", 12), fg="#FFF")
-#     boton_enviar.place(x=10, y=150, height=20, width=100)
-#     raiz.mainloop()
 
 def leer_archivo_configuracion():
     """Abre el archivo csv de configuracion, lee linea
@@ -139,7 +115,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
     finalizar_partida = False
     inicio_partida = time.time()
     lista_de_nombres = Registro().obtener_listado_de_nombres()
-
+    
     while not finalizar_juego:
 
         while not finalizar_partida:
@@ -196,7 +172,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
 
             #fichas_ocultas = ocultar_fichas(fichas)
         
-        prueba = input("Desea finalizar la partida?: ")
+        prueba = input("Desea finalizar el juego?: ")
 
         MAX_PARTIDAS = 5
 
@@ -217,12 +193,10 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, ranking):
     print(f'SE JUGARON {nro_partida} PARTIDAS')
 
     final_partida = time.time()
+    ranking.guardar_hora_finalización(datetime.time(datetime.now()))    
+    ranking.guardar_fecha_partida(datetime.date(datetime.now()))    
     tiempo_total = final_partida - inicio_partida
-
-
-    final_partida = time.time()
-    tiempo_total = final_partida - inicio_partida
-
+    ranking.guardar_partida()
 
 def archivar_partidas(fecha, hora, jugador, aciertos, intentos):
     pass
