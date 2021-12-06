@@ -36,7 +36,7 @@ def generador_fichas():
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
     Juan Tejada"""
 
-    CANTIDAD_FICHAS = 4
+    CANTIDAD_FICHAS = 16
 
     fichas = ["D", "s"] * (CANTIDAD_FICHAS // 2)
 
@@ -66,7 +66,7 @@ def imprimir_tablero(fichas_ocultas):
     Estrella Portocarrero
     Juan Tejada"""
     tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(tablero, (2, 2))
+    tablero_formado = np.reshape(tablero, (4, 4))
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return
