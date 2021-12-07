@@ -18,10 +18,37 @@ def leer_archivo_configuracion():
     archivo = open("configuracion.csv", "r")
     datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
              "REINICIAR_ARCHIV0_PARTIDAS": [False, 0]}
-
+    linea = " "
+    while linea:
+        linea = archivo.readline()
+        lista_de_palabras = lista_de_palabras_por_linea(linea)
+        if len(lista_de_palabras) == 2:
+            clave = lista_de_palabras[0]
+            valor = lista_de_palabras[1]
+            datos[clave][0] = valor
+            datos[clave][1] = 1
     archivo.close()
 
     return datos
+
+
+def lista_de_palabras_por_linea(linea):
+    """Toma una linea pasada como parametro y la
+    procesa para devolver una lista con las palabras que hay en esa linea."""
+
+    lista_de_palabras = []
+    palabra = ""
+    for caracter in linea:
+        if caracter == ",":
+            palabra = palabra.replace("\n", "")
+            lista_de_palabras.append(palabra)
+            palabra = ""
+        else:
+            palabra += caracter
+    palabra = palabra.replace("\n", "")
+    lista_de_palabras.append(palabra)
+
+    return lista_de_palabras
 
 
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
@@ -38,7 +65,7 @@ def generador_fichas(config):
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
     Juan Tejada"""
 
-    fichas = ["D", "s"] * (config["CANTIDAD_FICHAS"][0] // 2)
+    fichas = ["D", "s"] * ((int(config["CANTIDAD_FICHAS"][0])) // 2)
 
     shuffle(fichas)
 
@@ -109,8 +136,8 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
     Juan Tejada
 
     """
-    MAX_PARTIDAS = config["MAXIMO_PARTIDAS"][0]
-    REINICIAR_ARCHIVO = config["REINICIAR_ARCHIV0_PARTIDAS"][0]
+    MAX_PARTIDAS = int(config["MAXIMO_PARTIDAS"][0])
+    REINICIAR_ARCHIVO = bool(config["REINICIAR_ARCHIV0_PARTIDAS"][0])
     NRO_JUGADOR = 0
     NRO_PARTIDA = 0
     FINALIZAR_JUEGO = False
