@@ -19,7 +19,9 @@ def leer_archivo_configuracion():
     datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
              "REINICIAR_ARCHIV0_PARTIDAS": [False, 0]}
 
-    # En revision y proceso
+    archivo.close()
+
+    return datos
 
 
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
@@ -32,13 +34,11 @@ def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
     raiz.destroy()
 
 
-def generador_fichas():
+def generador_fichas(config):
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
     Juan Tejada"""
 
-    CANTIDAD_FICHAS = 16
-
-    fichas = ["D", "s"] * (CANTIDAD_FICHAS // 2)
+    fichas = ["D", "s"] * (config["CANTIDAD_FICHAS"][0] // 2)
 
     shuffle(fichas)
 
@@ -101,7 +101,7 @@ def genera_dicc_jugadores():
     return dicc_jugadores
 
 
-def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
+def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
     """La funcion jugada es la funcion principal en la que se lleva a cabo tod el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
@@ -109,19 +109,20 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
     Juan Tejada
 
     """
-    MAX_PARTIDAS = 5
-    nro_jugador = 0
-    nro_partida = 0
-    finalizar_juego = False
-    finalizar_partida = False
-    lista_de_nombres = Registro().obtener_listado_de_nombres()
+    MAX_PARTIDAS = config["MAXIMO_PARTIDAS"][0]
+    REINICIAR_ARCHIVO = config["REINICIAR_ARCHIV0_PARTIDAS"][0]
+    NRO_JUGADOR = 0
+    NRO_PARTIDA = 0
+    FINALIZAR_JUEGO = False
+    FINALIZAR_PARTIDA = False
+    LISTA_DE_NOMBRES = Registro().obtener_listado_de_nombres()
 
-    while not finalizar_juego:
+    while not FINALIZAR_JUEGO:
 
-        while not finalizar_partida:
+        while not FINALIZAR_PARTIDA:
 
             print(f"*-----------------------*"
-                  f"\nTurno del jugador {lista_de_nombres[nro_jugador]}")
+                  f"\nTurno del jugador {LISTA_DE_NOMBRES[NRO_JUGADOR]}")
             fichas_originales = fichas_ocultas
 
             imprimir_tablero(fichas_ocultas)
@@ -132,50 +133,53 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, juego):
 
             if resultado is True:
 
-                print(f"¡Acertaste! {lista_de_nombres[nro_jugador]}")
+                print(f"¡Acertaste! {LISTA_DE_NOMBRES[NRO_JUGADOR]}")
 
-                nro_jugador = nro_jugador
+                NRO_JUGADOR = NRO_JUGADOR
 
-                dicc_jugadores[lista_de_nombres[nro_jugador]]["aciertos"] += 1
+                dicc_jugadores[LISTA_DE_NOMBRES[NRO_JUGADOR]]["aciertos"] += 1
 
                 if fichas_descubiertas_totalmente is True:
-                    finalizar_partida = True
+                    FINALIZAR_PARTIDA = True
             else:
-                dicc_jugadores[lista_de_nombres[nro_jugador]]["intentos"] += 1
-                print(f"Fallaste {lista_de_nombres[nro_jugador]}")
+                dicc_jugadores[LISTA_DE_NOMBRES[NRO_JUGADOR]]["intentos"] += 1
+                print(f"Fallaste {LISTA_DE_NOMBRES[NRO_JUGADOR]}")
                 fichas_ocultas = fichas_originales
-                if nro_jugador == len(lista_de_nombres) - 1:
+                if NRO_JUGADOR == len(LISTA_DE_NOMBRES) - 1:
 
-                    nro_jugador = 0
+                    NRO_JUGADOR = 0
 
                 else:
 
-                    nro_jugador += 1
+                    NRO_JUGADOR += 1
 
                 if fichas_descubiertas_totalmente:
-                    finalizar_partida = True
+                    FINALIZAR_PARTIDA = True
 
+        # if REINICIAR_ARCHIVO is False:
         juego.agregar_partida_terminada(dicc_jugadores)
-        partida = juego.generar_ranking()
+        # else:
+        # Reiniciar CSV
 
+        partida = juego.generar_ranking()
         dicc_jugadores = genera_dicc_jugadores()
 
-        if partida is False or nro_partida == MAX_PARTIDAS:
+        if partida is False or NRO_PARTIDA == MAX_PARTIDAS:
 
-            finalizar_juego = True
+            FINALIZAR_JUEGO = True
 
             print("El juego ha finalizado")
 
-            if nro_partida == MAX_PARTIDAS:
+            if NRO_PARTIDA == MAX_PARTIDAS:
                 print("Se supero el maximo de partidas.")
 
         else:
 
-            nro_partida += 1
+            NRO_PARTIDA += 1
 
-            finalizar_partida = False
+            FINALIZAR_PARTIDA = False
 
-            fichas = generador_fichas()
+            fichas = generador_fichas(config)
 
             fichas_ocultas = ocultar_fichas(fichas)
 
@@ -246,13 +250,14 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 def main():
     # generar_interfaz(lista_de_nombres)
+    config = leer_archivo_configuracion()
     juego = Juego()
     generar_interfaz()
-    fichas = generador_fichas()
+    fichas = generador_fichas(config)
     fichas_ocultas = ocultar_fichas(fichas)
     imprimir_asignacion_de_turnos()
     dicc_jugadores = genera_dicc_jugadores()
-    jugada(fichas, fichas_ocultas, dicc_jugadores, juego)
+    jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego)
 
 
 main()
