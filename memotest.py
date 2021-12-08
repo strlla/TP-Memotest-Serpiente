@@ -6,6 +6,8 @@ from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
 from juego import Juego
+import math
+import sys
 
 
 def leer_archivo_configuracion():
@@ -62,13 +64,14 @@ def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
 
 def generador_fichas(config):
     """Genera las 16 fichas principales para dar inicio al juego y las devuelve aleatoriamente
-    Juan Tejada"""
-
-    fichas = ["D", "s"] * ((int(config["CANTIDAD_FICHAS"][0])) // 2)
-
-    shuffle(fichas)
-
-    return fichas
+        Juan Tejada
+    """
+    if int(config["CANTIDAD_FICHAS"][0]) % 2 == 0:
+        fichas = ["D", "s"] * ((int(config["CANTIDAD_FICHAS"][0])) // 2)
+        shuffle(fichas)
+        return fichas
+    else: 
+        sys.exit("Recuerde que la cantidad de fichas debe ser un número par!")    
 
 
 def revisar_fichas(fichas, fichas_ocultas):
@@ -86,18 +89,34 @@ def ocultar_fichas(fichas):
 
     return fichas_ocultas
 
-
 def imprimir_tablero(fichas_ocultas):
     """Imprime el tablero utilizando numpy y pandas
     Estrella Portocarrero
     Juan Tejada"""
     tablero = np.array([fichas_ocultas])
-    tablero_formado = np.reshape(tablero, (4, 4))
+    newshape = obtener_newshape(len(fichas_ocultas))
+    tablero_formado = np.reshape(tablero, newshape)
     print("Fichas y posiciones:\n", pd.DataFrame(tablero_formado))
 
     return
 
-
+def obtener_newshape(cant_fichas):
+    """
+    Se recibe la cantidad de fichas que va a tener el juego y a partir de ese numero se define que forma va a tener el tablero. 
+    Se busca el pare de factores que formen ese número con menor diferencia entre ellos para que el tablero quede lo más parecido a un cuadrado.
+    Estrella Portocarrero
+    """
+    raiz = math.sqrt(cant_fichas)
+    multipliers = (0, cant_fichas)
+    if int(raiz + 0.5) ** 2 == cant_fichas:
+        return (int(raiz), int(raiz))
+    else:
+        for i in range(1, int(pow(cant_fichas, 1 / 2))+1):
+            if cant_fichas % i == 0:
+                if((cant_fichas/i - i) < (multipliers[1] - multipliers[0])):
+                    multipliers = (int(i), int(cant_fichas/i))  
+        return multipliers
+        
 def imprimir_asignacion_de_turnos():
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
