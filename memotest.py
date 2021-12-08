@@ -70,8 +70,8 @@ def generador_fichas(config):
         fichas = ["D", "s"] * ((int(config["CANTIDAD_FICHAS"][0])) // 2)
         shuffle(fichas)
         return fichas
-    else: 
-        sys.exit("Recuerde que la cantidad de fichas debe ser un número par!")    
+    else:
+        sys.exit("Recuerde que la cantidad de fichas debe ser un número par!")
 
 
 def revisar_fichas(fichas, fichas_ocultas):
@@ -89,6 +89,7 @@ def ocultar_fichas(fichas):
 
     return fichas_ocultas
 
+
 def imprimir_tablero(fichas_ocultas):
     """Imprime el tablero utilizando numpy y pandas
     Estrella Portocarrero
@@ -100,9 +101,10 @@ def imprimir_tablero(fichas_ocultas):
 
     return
 
+
 def obtener_newshape(cant_fichas):
     """
-    Se recibe la cantidad de fichas que va a tener el juego y a partir de ese numero se define que forma va a tener el tablero. 
+    Se recibe la cantidad de fichas que va a tener el juego y a partir de ese numero se define que forma va a tener el tablero.
     Se busca el pare de factores que formen ese número con menor diferencia entre ellos para que el tablero quede lo más parecido a un cuadrado.
     Estrella Portocarrero
     """
@@ -111,12 +113,13 @@ def obtener_newshape(cant_fichas):
     if int(raiz + 0.5) ** 2 == cant_fichas:
         return (int(raiz), int(raiz))
     else:
-        for i in range(1, int(pow(cant_fichas, 1 / 2))+1):
+        for i in range(1, int(pow(cant_fichas, 1 / 2)) + 1):
             if cant_fichas % i == 0:
-                if((cant_fichas/i - i) < (multipliers[1] - multipliers[0])):
-                    multipliers = (int(i), int(cant_fichas/i))  
+                if ((cant_fichas / i - i) < (multipliers[1] - multipliers[0])):
+                    multipliers = (int(i), int(cant_fichas / i))
         return multipliers
-        
+
+
 def imprimir_asignacion_de_turnos():
     """Ordena aleatoriamente la lista de jugadores
     para asignar el orden de los turnos al azar.
@@ -155,12 +158,13 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
 
     """
     MAX_PARTIDAS = int(config["MAXIMO_PARTIDAS"][0])
-    REINICIAR_ARCHIVO = bool(config["REINICIAR_ARCHIV0_PARTIDAS"][0])
+    REINICIAR_ARCHIVO = config["REINICIAR_ARCHIV0_PARTIDAS"][0]
     NRO_JUGADOR = 0
-    NRO_PARTIDA = 0
+    NRO_PARTIDA = 1
     FINALIZAR_JUEGO = False
     FINALIZAR_PARTIDA = False
     LISTA_DE_NOMBRES = Registro().obtener_listado_de_nombres()
+    reiniciar_archivo(REINICIAR_ARCHIVO)
 
     while not FINALIZAR_JUEGO:
 
@@ -201,11 +205,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
                 if fichas_descubiertas_totalmente:
                     FINALIZAR_PARTIDA = True
 
-        # if REINICIAR_ARCHIVO is False:
         juego.agregar_partida_terminada(dicc_jugadores)
-        # else:
-        # Reiniciar CSV
-
         partida = juego.generar_ranking()
         dicc_jugadores = genera_dicc_jugadores()
 
@@ -230,7 +230,14 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
 
     juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
     juego.guardar_fecha_partida(datetime.date(datetime.now()))
+    juego.guardar_nro_de_partida(NRO_PARTIDA)
     juego.guardar_partida()
+
+
+def reiniciar_archivo(condicion):
+    if condicion == 'True':
+        archivo = open("partidas.csv", "w")
+        archivo.close()
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
