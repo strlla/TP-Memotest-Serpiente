@@ -19,7 +19,7 @@ class Registro:
         # Estrella Portocarrero"""
         self.jugadores_logueados.append(jugador)
 
-    def guardar_nuevo_usuario(self, usuario):
+    def registrar_usuario(self, usuario, mostrar_empezar_juego):
         """Recibe un usuario y lo agrega al final del archivo
         # Estrella Portocarrero
         """
@@ -29,7 +29,10 @@ class Registro:
             writer.writerow(usuario)
             csvfile.close()
         self.agregar_jugador_logueado(usuario)
-
+        if(len(self.jugadores_logueados) >= 2):
+            mostrar_empezar_juego()
+            print(pd.DataFrame(self.obtener_listado_de_nombres, columns=['Usuario']))
+            
     def obtener_usuarios(self):
         """Retorna un listado con todos los usuarios y sus correspondientes claves del archivo usuarios.csv
         ## Estrella Portocarrero
@@ -60,7 +63,7 @@ class Registro:
         if not usuarioEncontrado:
             mostrar_mensaje("No está registrado", False)
         elif usuarioEncontrado['clave'] == contrasenia:
-            usuarioLogueado = next((x for x in Registro.jugadores_logueados if x["usuario"] == usuario), None)
+            usuarioLogueado = next((x for x in self.jugadores_logueados if x["usuario"] == usuario), None)
             if usuarioLogueado:
                 mostrar_mensaje("Ya está logueado", False)
             else:
@@ -69,7 +72,7 @@ class Registro:
                 self.agregar_jugador_logueado(usuarioEncontrado)
                 if len(self.jugadores_logueados) >= 2:
                     mostrar_empezar_juego()
-                print(pd.DataFrame(Registro().obtener_listado_de_nombres(), columns=['Usuario']))
+                print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
 
         else:
             mostrar_mensaje("Contraseña incorrecta", False)

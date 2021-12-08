@@ -50,7 +50,7 @@ class Juego:
         for partida in self.partidas:
             for jugador in list(partida.keys()):
                 lista_cantidad_de_intentos = [partida[jugador]['intentos'] for partida in self.partidas]
-                partida[jugador]['promedio'] = sum(lista_cantidad_de_intentos) / len(lista_cantidad_de_intentos)
+                partida[jugador]['promedio'] = round(sum(lista_cantidad_de_intentos) / len(lista_cantidad_de_intentos), 2)
 
     def continuar_partida(self):
         return messagebox.askyesno(message="¿Desea jugar otra partida?", title="Memotest")

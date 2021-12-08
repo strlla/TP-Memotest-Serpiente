@@ -21,15 +21,15 @@ class Interfaz:
         self.raiz.destroy()
 
     def mostrar_empezar_juego(self):
-        self.empezarJuegoBotonLogin.place(x=125, y=340, height=30, width=150)
-        self.empezarJuegoBotonRegistro.place(x=130, y=390, height=30, width=150)
+        self.empezarJuegoBotonLogin.place(x=125, y=350, height=30, width=150)
+        self.empezarJuegoBotonRegistro.place(x=130, y=420, height=30, width=150)
 
     def interfaz_registro(self, datos):
         self.registroFrame.pack(side="top", expand=True, fill="both")
 
         self.raiz.title("TP1 - Memotest - Registro")
         self.raiz.resizable(False, False)
-        self.raiz.geometry("400x430")
+        self.raiz.geometry("400x480")
         self.raiz.configure(bg='#FFF')
         titulo = Label(self.registroFrame, text="Ingrese sus datos para registrarse", bg="#FFF",
                        font=("Ubuntu", 14, "bold"),
@@ -115,7 +115,7 @@ class Interfaz:
             if Registro().validar_usuario(usuario) is True and Registro().validar_clave(clave) is True:
 
                 if usuario not in jugadores_registrados and clave == segunda_clave:
-                    Registro().guardar_nuevo_usuario({'usuario': usuario, 'clave': clave})
+                    Registro().registrar_usuario({'usuario': usuario, 'clave': clave}, self.mostrar_empezar_juego)
 
                     usuario_input.delete(0, END)
 
