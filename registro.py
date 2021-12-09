@@ -58,29 +58,30 @@ class Registro:
         #Estrella Portocarrero
         """
         config = Juego().leer_archivo_configuracion()
-        usuarios = self.obtener_usuarios()
-        if not usuario or not contrasenia:
-            mostrar_mensaje("Por favor, complete los dos campos", False)
-            return
-        usuarioEncontrado = next((x for x in usuarios if x["usuario"] == usuario), None)
-        if not usuarioEncontrado:
-            mostrar_mensaje("No está registrado", False)
-        elif usuarioEncontrado['clave'] == contrasenia:
-            usuarioLogueado = next((x for x in self.jugadores_logueados if x["usuario"] == usuario), None)
-            if usuarioLogueado:
-                mostrar_mensaje("Ya está logueado", False)
+        if len(self.jugadores_logueados) + 1 > int(config["MAXIMO_JUGADORES"][0]):
+            mostrar_mensaje("Se alcanzó el número máximo de jugadores", False)
+        else: 
+            usuarios = self.obtener_usuarios()
+            if not usuario or not contrasenia:
+                mostrar_mensaje("Por favor, complete los dos campos", False)
+                return
+            usuarioEncontrado = next((x for x in usuarios if x["usuario"] == usuario), None)
+            if not usuarioEncontrado:
+                mostrar_mensaje("No está registrado", False)
+            elif usuarioEncontrado['clave'] == contrasenia:
+                usuarioLogueado = next((x for x in self.jugadores_logueados if x["usuario"] == usuario), None)
+                if usuarioLogueado:
+                    mostrar_mensaje("Ya está logueado", False)
+                else:
+                    os.system("cls")                    
+                    mostrar_mensaje("Se logueo correctamente", True)
+                    self.agregar_jugador_logueado(usuarioEncontrado)
+                    print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
+                    if len(self.jugadores_logueados) >= 2:
+                        mostrar_empezar_juego()
+
             else:
-                os.system("cls")
-                mostrar_mensaje("Se logueo correctamente", True)
-                self.agregar_jugador_logueado(usuarioEncontrado)
-                if len(self.jugadores_logueados) >= int(config["MAXIMO_JUGADORES"][0]):
-                    mostrar_empezar_juego()
-                    mostrar_mensaje("Se alcanzo el número máximo de jugadores", False)
-
-                print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
-
-        else:
-            mostrar_mensaje("Contraseña incorrecta", False)
+                mostrar_mensaje("Contraseña incorrecta", False)
 
     def validar_usuario(self, usuario):
         """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
