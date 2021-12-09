@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import os
+from juego import Juego
 
 
 class Registro:
@@ -23,16 +24,17 @@ class Registro:
         """Recibe un usuario y lo agrega al final del archivo
         # Estrella Portocarrero
         """
+        config = Juego().leer_archivo_configuracion()
         with open('usuarios.csv', 'a') as csvfile:
             fieldnames = ['usuario', 'clave']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(usuario)
             csvfile.close()
         self.agregar_jugador_logueado(usuario)
-        if(len(self.jugadores_logueados) >= 2):
+        if len(self.jugadores_logueados) >= int(config["MAXIMO_JUGADORES"][0]):
             mostrar_empezar_juego()
             print(pd.DataFrame(self.obtener_listado_de_nombres, columns=['Usuario']))
-            
+
     def obtener_usuarios(self):
         """Retorna un listado con todos los usuarios y sus correspondientes claves del archivo usuarios.csv
         ## Estrella Portocarrero
@@ -55,6 +57,7 @@ class Registro:
         """Valida que se haya ingresado un usuario y contraseña, si ya está logueado o registrado. En caso de que su contraseña sea correcta se agrega al usuario al listado de usuarios logueados
         #Estrella Portocarrero
         """
+        config = Juego().leer_archivo_configuracion()
         usuarios = self.obtener_usuarios()
         if not usuario or not contrasenia:
             mostrar_mensaje("Por favor, complete los dos campos", False)
@@ -70,8 +73,10 @@ class Registro:
                 os.system("cls")
                 mostrar_mensaje("Se logueo correctamente", True)
                 self.agregar_jugador_logueado(usuarioEncontrado)
-                if len(self.jugadores_logueados) >= 2:
+                if len(self.jugadores_logueados) >= int(config["MAXIMO_JUGADORES"][0]):
                     mostrar_empezar_juego()
+                    mostrar_mensaje("Se alcanzo el número máximo de jugadores", False)
+
                 print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
 
         else:
