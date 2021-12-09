@@ -10,48 +10,6 @@ import math
 import sys
 
 
-def leer_archivo_configuracion():
-    """Abre el archivo csv de configuracion, lee linea
-    por linea y modifica los datos del archivo en el diccionario de datos por
-    defecto, indicando con un 0 si es el valor por defecto (no se modifico) y con
-    un 1 si el valor fue modificado por el archivo."""
-
-    archivo = open("configuracion.csv", "r")
-    datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
-             "REINICIAR_ARCHIV0_PARTIDAS": [False, 0]}
-    linea = " "
-    while linea:
-        linea = archivo.readline()
-        lista_de_palabras = lista_de_palabras_por_linea(linea)
-        if len(lista_de_palabras) == 2:
-            clave = lista_de_palabras[0]
-            valor = lista_de_palabras[1]
-            datos[clave][0] = valor
-            datos[clave][1] = 1
-    archivo.close()
-
-    return datos
-
-
-def lista_de_palabras_por_linea(linea):
-    """Toma una linea pasada como parametro y la
-    procesa para devolver una lista con las palabras que hay en esa linea."""
-
-    lista_de_palabras = []
-    palabra = ""
-    for caracter in linea:
-        if caracter == ",":
-            palabra = palabra.replace("\n", "")
-            lista_de_palabras.append(palabra)
-            palabra = ""
-        else:
-            palabra += caracter
-    palabra = palabra.replace("\n", "")
-    lista_de_palabras.append(palabra)
-
-    return lista_de_palabras
-
-
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
     """
     Se encarga guardar los nombres y cerrar la interfaz
@@ -230,7 +188,6 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
 
     juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
     juego.guardar_fecha_partida(datetime.date(datetime.now()))
-    juego.guardar_nro_de_partida(NRO_PARTIDA)
     juego.guardar_partida()
 
 
@@ -302,7 +259,7 @@ def validar_ingreso(posicion, fichas_ocultas):
 
 def main():
     # generar_interfaz(lista_de_nombres)
-    config = leer_archivo_configuracion()
+    config = Juego().leer_archivo_configuracion()
     juego = Juego()
     generar_interfaz()
     fichas = generador_fichas(config)
