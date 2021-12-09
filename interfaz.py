@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from registro import Registro
+from juego import Juego
 import tkinter as tk
 
 
@@ -67,6 +68,10 @@ class Interfaz:
                                           text="Condiciones de registro", bd=0, bg="#47126b", font=("Ubuntu", 12),
                                           fg='#FFF')
         boton_condicion_registro.place(x=110, y=380, height=30, width=180)
+        boton_configuraciones = Button(self.registroFrame, command=lambda: Juego().mostrar_config(),
+                                       text="Configuraciones", bd=0, bg="#47126b", font=("Ubuntu", 12),
+                                       fg='#FFF')
+        boton_configuraciones.place(x=110, y=420, height=30, width=180)
         self.raiz.mainloop()
 
     def interfaz_login(self, datos):
@@ -141,9 +146,8 @@ class Interfaz:
                 self.mostrar_mensaje_registro("Por favor lea las condiciones de registro.", False)
 
                 self.interfaz_registro(datos)
-        else: 
+        else:
             self.mostrar_mensaje_registro("Las contraseñas no coinciden", False)
-
 
     def mostrar_mensaje_login(self, mensaje, correcto):
         self.labelLogin['text'] = mensaje
@@ -160,7 +164,6 @@ class Interfaz:
         else:
             self.labelRegistro['fg'] = "#e64040"
         self.labelRegistro.place(x=60, y=260)
-
 
     def info_usuario_clave(self):
         messagebox.showinfo(
