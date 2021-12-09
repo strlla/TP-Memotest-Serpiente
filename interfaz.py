@@ -68,7 +68,7 @@ class Interfaz:
                                           text="Condiciones de registro", bd=0, bg="#47126b", font=("Ubuntu", 12),
                                           fg='#FFF')
         boton_condicion_registro.place(x=110, y=380, height=30, width=180)
-        boton_configuraciones = Button(self.registroFrame, command=lambda: Juego().mostrar_config(),
+        boton_configuraciones = Button(self.registroFrame, command=lambda: self.info_configuraciones(),
                                        text="Configuraciones", bd=0, bg="#47126b", font=("Ubuntu", 12),
                                        fg='#FFF')
         boton_configuraciones.place(x=110, y=420, height=30, width=180)
@@ -164,6 +164,14 @@ class Interfaz:
         else:
             self.labelRegistro['fg'] = "#e64040"
         self.labelRegistro.place(x=60, y=260)
+
+    def info_configuraciones(self):
+        config = Juego().leer_archivo_configuracion()
+        mensaje = ""
+        for parametro in config:
+            mensaje += f"{parametro}: {config[parametro][0]} \n"
+
+        messagebox.showinfo(message=mensaje, title="Configuraciones")
 
     def info_usuario_clave(self):
         messagebox.showinfo(
