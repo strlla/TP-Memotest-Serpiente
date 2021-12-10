@@ -96,11 +96,6 @@ class Juego:
 
         return lista_de_palabras
 
-    def mostrar_config(self):
-        config = self.leer_archivo_configuracion()
-        for parametro in config:
-            print(parametro, ": ", config[parametro][0], sep="")
-
     def generar_ranking(self):
         self.raiz = tk.Tk()
         self.raiz.title("TP2 - Memotest - Ranking")
