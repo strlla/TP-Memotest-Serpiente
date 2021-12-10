@@ -167,9 +167,19 @@ class Interfaz:
 
     def info_configuraciones(self):
         config = Juego().leer_archivo_configuracion()
+        datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
+                 "REINICIAR_ARCHIV0_PARTIDAS": [False, 0]}
         mensaje = ""
+
         for parametro in config:
-            mensaje += f"{parametro}: {config[parametro][0]} \n"
+
+            if config[parametro][0] == str(datos[parametro][0]):
+
+                mensaje += f"{parametro}: {config[parametro][0]} - Dado por defecto \n"
+
+            else:
+
+                mensaje += f"{parametro}: {config[parametro][0]} - Modificado por configuración \n"
 
         messagebox.showinfo(message=mensaje, title="Configuraciones")
 
