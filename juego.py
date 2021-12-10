@@ -56,6 +56,11 @@ class Juego:
     def continuar_partida(self):
         return messagebox.askyesno(message="¿Desea jugar otra partida?", title="Memotest")
 
+    def reiniciar_archivo(self, condicion):
+        if condicion == 'True':
+            archivo = open("partidas.csv", "w")
+            archivo.close()
+
     def leer_archivo_configuracion(self):
         """Abre el archivo csv de configuracion, lee linea
         por linea y modifica los datos del archivo en el diccionario de datos por
