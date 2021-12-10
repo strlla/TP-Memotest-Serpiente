@@ -122,7 +122,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
     FINALIZAR_JUEGO = False
     FINALIZAR_PARTIDA = False
     LISTA_DE_NOMBRES = Registro().obtener_listado_de_nombres()
-    reiniciar_archivo(REINICIAR_ARCHIVO)
+    Juego().reiniciar_archivo(REINICIAR_ARCHIVO)
 
     while not FINALIZAR_JUEGO:
 
@@ -189,12 +189,6 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
     juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
     juego.guardar_fecha_partida(datetime.date(datetime.now()))
     juego.guardar_partida()
-
-
-def reiniciar_archivo(condicion):
-    if condicion == 'True':
-        archivo = open("partidas.csv", "w")
-        archivo.close()
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
