@@ -107,7 +107,7 @@ class Juego:
         
         if len(misma_cantidad_aciertos) > 1:
             print(misma_cantidad_aciertos)
-            ganador = sorted(misma_cantidad_aciertos, key=lambda x: x['intentos'])[0]
+            ganador = sorted(misma_cantidad_aciertos, key=lambda x: x['promedio'])[0]
             
         return ganador
 
