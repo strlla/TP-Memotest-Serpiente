@@ -164,32 +164,35 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
                     FINALIZAR_PARTIDA = True
 
         juego.agregar_partida_terminada(dicc_jugadores)
-        partida = juego.generar_ranking()
+        
         dicc_jugadores = genera_dicc_jugadores()
 
-        if partida is False or NRO_PARTIDA == MAX_PARTIDAS:
+        if NRO_PARTIDA == MAX_PARTIDAS:
 
             FINALIZAR_JUEGO = True
 
             print("El juego ha finalizado")
 
-            if NRO_PARTIDA == MAX_PARTIDAS:
-                print("Se supero el maximo de partidas.")
+            print("Se supero el maximo de partidas.")
 
         else:
-
             NRO_PARTIDA += 1
-
-            FINALIZAR_PARTIDA = False
-
-            fichas = generador_fichas(config)
-
-            fichas_ocultas = ocultar_fichas(fichas)
+            otraPartida =  juego.continuar_partida()
+            
+            if (otraPartida):
+                FINALIZAR_PARTIDA = False
+                fichas = generador_fichas(config)
+                fichas_ocultas = ocultar_fichas(fichas)
+            else:
+                FINALIZAR_JUEGO = True
+                print("El juego ha finalizado")
 
     juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
     juego.guardar_fecha_partida(datetime.date(datetime.now()))
+    juego.generar_resumen_juego()
     juego.guardar_partida()
-
+    juego.generar_ranking()
+    
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
     """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean
