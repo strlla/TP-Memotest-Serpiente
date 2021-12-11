@@ -8,7 +8,7 @@ from registro import Registro
 from juego import Juego
 import math
 import sys
-
+import time
 
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
     """
@@ -151,6 +151,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
             else:
                 dicc_jugadores[LISTA_DE_NOMBRES[NRO_JUGADOR]]["intentos"] += 1
                 print(f"Fallaste {LISTA_DE_NOMBRES[NRO_JUGADOR]}")
+                time.sleep(1)
                 fichas_ocultas = fichas_originales
                 if NRO_JUGADOR == len(LISTA_DE_NOMBRES) - 1:
 
