@@ -6,6 +6,7 @@ from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
 from juego import Juego
+from prueba2 import Prueba
 import math
 import sys
 import time
@@ -108,7 +109,7 @@ def genera_dicc_jugadores():
     return dicc_jugadores
 
 
-def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
+def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, prueba):
     """La funcion jugada es la funcion principal en la que se lleva a cabo tod el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
@@ -165,13 +166,13 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
                 if fichas_descubiertas_totalmente:
                     FINALIZAR_PARTIDA = True
 
+        prueba.agregar_partida_terminada(dicc_jugadores)
         juego.agregar_partida_terminada(dicc_jugadores)
-
         dicc_jugadores = genera_dicc_jugadores()
 
         if NRO_PARTIDA == MAX_PARTIDAS:
 
-            datos_ranking(juego)
+            prueba_1(prueba)
 
             FINALIZAR_JUEGO = True
 
@@ -179,7 +180,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
 
         else:
             NRO_PARTIDA += 1
-            otraPartida = datos_ranking(juego)
+            otraPartida = prueba_1(prueba)
 
             if otraPartida:
                 FINALIZAR_PARTIDA = False
@@ -190,13 +191,21 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
                 FINALIZAR_JUEGO = True
                 print("El juego ha finalizado")
 
+    datos_ranking(juego)
+
 
 def datos_ranking(juego):
     juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
     juego.guardar_fecha_partida(datetime.date(datetime.now()))
     juego.generar_resumen_juego()
     juego.guardar_partida()
-    partida = juego.generar_ranking()
+
+
+def prueba_1(prueba):
+    prueba.guardar_hora_finalizacion(datetime.time(datetime.now()))
+    prueba.guardar_fecha_partida(datetime.date(datetime.now()))
+    prueba.generar_resumen_juego()
+    partida = prueba.generar_ranking()
 
     return partida
 
@@ -265,12 +274,13 @@ def main():
     # generar_interfaz(lista_de_nombres)
     config = Juego().leer_archivo_configuracion()
     juego = Juego()
+    prueba = Prueba()
     generar_interfaz()
     fichas = generador_fichas(config)
     fichas_ocultas = ocultar_fichas(fichas)
     imprimir_asignacion_de_turnos()
     dicc_jugadores = genera_dicc_jugadores()
-    jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego)
+    jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, prueba)
 
 
 main()
