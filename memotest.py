@@ -6,7 +6,7 @@ from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
 from juego import Juego
-from prueba2 import Partida
+from partida import Partida
 import math
 import sys
 import time
