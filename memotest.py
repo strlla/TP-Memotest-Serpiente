@@ -6,6 +6,7 @@ from tkinter import *
 from interfaz import generar_interfaz
 from registro import Registro
 from juego import Juego
+from prueba2 import Partida
 import math
 import sys
 import time
@@ -74,7 +75,7 @@ def obtener_newshape(cant_fichas):
     else:
         for i in range(1, int(pow(cant_fichas, 1 / 2)) + 1):
             if cant_fichas % i == 0:
-                if ((cant_fichas / i - i) < (multipliers[1] - multipliers[0])):
+                if (cant_fichas / i - i) < (multipliers[1] - multipliers[0]):
                     multipliers = (int(i), int(cant_fichas / i))
         return multipliers
 
@@ -108,7 +109,7 @@ def genera_dicc_jugadores():
     return dicc_jugadores
 
 
-def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
+def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, partida):
     """La funcion jugada es la funcion principal en la que se lleva a cabo tod el juego. Tiene la variable 'nro_jugador'
     que se encarga de los turnos en el bucle. Tambien esta funcion posee el modulo 'time' que se encarga de guardar el tiempo transcurrido
     de la partida.
@@ -123,7 +124,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
     FINALIZAR_JUEGO = False
     FINALIZAR_PARTIDA = False
     LISTA_DE_NOMBRES = Registro().obtener_listado_de_nombres()
-    Juego().reiniciar_archivo(REINICIAR_ARCHIVO)
+    Juego().reiniciar_archivo_juego(REINICIAR_ARCHIVO)
 
     while not FINALIZAR_JUEGO:
 
@@ -165,13 +166,13 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
                 if fichas_descubiertas_totalmente:
                     FINALIZAR_PARTIDA = True
 
-        juego.agregar_partida_terminada(dicc_jugadores)
-
+        partida.agregar_partida_terminada(dicc_jugadores)
+        juego.agregar_juego_terminado(dicc_jugadores)
         dicc_jugadores = genera_dicc_jugadores()
 
         if NRO_PARTIDA == MAX_PARTIDAS:
 
-            datos_ranking(juego)
+            datos_partida(partida)
 
             FINALIZAR_JUEGO = True
 
@@ -179,7 +180,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
 
         else:
             NRO_PARTIDA += 1
-            otraPartida = datos_ranking(juego)
+            otraPartida = datos_partida(partida)
 
             if otraPartida:
                 FINALIZAR_PARTIDA = False
@@ -190,15 +191,23 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
                 FINALIZAR_JUEGO = True
                 print("El juego ha finalizado")
 
+    datos_juego(juego)
 
-def datos_ranking(juego):
-    juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
-    juego.guardar_fecha_partida(datetime.date(datetime.now()))
+
+def datos_juego(juego):
+    juego.guardar_hora_finalizacion_juego(datetime.time(datetime.now()))
+    juego.guardar_fecha_juego(datetime.date(datetime.now()))
     juego.generar_resumen_juego()
-    juego.guardar_partida()
-    partida = juego.generar_ranking()
+    juego.guardar_juego()
 
-    return partida
+
+def datos_partida(partida):
+    partida.guardar_hora_finalizacion_partida(datetime.time(datetime.now()))
+    partida.guardar_fecha_partida(datetime.date(datetime.now()))
+    partida.generar_resumen_partida()
+    ranking = partida.generar_ranking_partida()
+
+    return ranking
 
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
@@ -265,12 +274,13 @@ def main():
     # generar_interfaz(lista_de_nombres)
     config = Juego().leer_archivo_configuracion()
     juego = Juego()
+    prueba = Partida()
     generar_interfaz()
     fichas = generador_fichas(config)
     fichas_ocultas = ocultar_fichas(fichas)
     imprimir_asignacion_de_turnos()
     dicc_jugadores = genera_dicc_jugadores()
-    jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego)
+    jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, prueba)
 
 
 main()
