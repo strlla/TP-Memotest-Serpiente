@@ -274,13 +274,13 @@ def main():
     # generar_interfaz(lista_de_nombres)
     config = Juego().leer_archivo_configuracion()
     juego = Juego()
-    prueba = Partida()
+    partida = Partida()
     generar_interfaz()
     fichas = generador_fichas(config)
     fichas_ocultas = ocultar_fichas(fichas)
     imprimir_asignacion_de_turnos()
     dicc_jugadores = genera_dicc_jugadores()
-    jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, prueba)
+    jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, partida)
 
 
 main()
