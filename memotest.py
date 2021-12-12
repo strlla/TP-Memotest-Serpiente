@@ -10,6 +10,7 @@ import math
 import sys
 import time
 
+
 def obtener_nombres(raiz, primer_input, segundo_input, lista_de_nombres):
     """
     Se encarga guardar los nombres y cerrar la interfaz
@@ -165,35 +166,40 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego):
                     FINALIZAR_PARTIDA = True
 
         juego.agregar_partida_terminada(dicc_jugadores)
-        
+
         dicc_jugadores = genera_dicc_jugadores()
 
         if NRO_PARTIDA == MAX_PARTIDAS:
 
+            datos_ranking(juego)
+
             FINALIZAR_JUEGO = True
 
-            print("El juego ha finalizado")
-
-            print("Se supero el maximo de partidas.")
+            print("El juego ha finalizado, se supero el maximo de partidas.")
 
         else:
             NRO_PARTIDA += 1
-            otraPartida =  juego.continuar_partida()
-            
-            if (otraPartida):
+            otraPartida = datos_ranking(juego)
+
+            if otraPartida:
                 FINALIZAR_PARTIDA = False
                 fichas = generador_fichas(config)
                 fichas_ocultas = ocultar_fichas(fichas)
+
             else:
                 FINALIZAR_JUEGO = True
                 print("El juego ha finalizado")
 
+
+def datos_ranking(juego):
     juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
     juego.guardar_fecha_partida(datetime.date(datetime.now()))
     juego.generar_resumen_juego()
     juego.guardar_partida()
-    juego.generar_ranking()
-    
+    partida = juego.generar_ranking()
+
+    return partida
+
 
 def seleccionar_posiciones(fichas, fichas_ocultas):
     """Funcion que permite el ingreso de las posiciones a descubrir en las fichas y retorna True en caso de que sean
