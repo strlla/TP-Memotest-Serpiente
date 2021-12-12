@@ -9,6 +9,7 @@ class Juego:
     def __init__(self) -> None:
         self.partidas = []
         self.resumen = []
+        self.resumen_partida = []
 
     def guardar_hora_finalizacion(self, hora_finalizacion):
         self.hora_finalizacion = hora_finalizacion
@@ -17,6 +18,23 @@ class Juego:
         self.fecha_partida = fecha_partida
 
     def generar_resumen_juego(self):
+        nombres = set(list(self.partidas[0].keys()))
+
+        for nombre in nombres:
+            aciertos = sum([partida[nombre]['aciertos'] for partida in self.partidas])
+            intentos = sum([partida[nombre]['intentos'] for partida in self.partidas])
+            resumen_juego = {
+                "fecha_partida": self.fecha_partida,
+                "hora_finalizacion": self.hora_finalizacion,
+                "nombre_jugador": nombre,
+                "aciertos": aciertos,
+                "intentos": intentos
+            }
+            self.resumen.append(resumen_juego)
+
+        self.resumen = sorted(self.resumen, key=lambda x: x['aciertos'], reverse=True)
+
+    def generar_resumen_partida(self):
         nombres = set(list(self.partidas[0].keys()))
 
         for nombre in nombres:
@@ -101,14 +119,13 @@ class Juego:
         return lista_de_palabras
 
     def obtener_ganador(self):
-        ganador = self.resumen[0]
-        max_cantidad_aciertos = self.resumen[0]['aciertos']
+        ganador = self.resumen_partida[0]
+        max_cantidad_aciertos = self.resumen_partida[0]['aciertos']
         misma_cantidad_aciertos = [jugador for jugador in self.resumen if jugador['aciertos'] == max_cantidad_aciertos]
-        
+
         if len(misma_cantidad_aciertos) > 1:
-            print(misma_cantidad_aciertos)
-            ganador = sorted(misma_cantidad_aciertos, key=lambda x: x['promedio'])[0]
-            
+            ganador = sorted(misma_cantidad_aciertos, key=lambda x: x['aciertos'])[0]
+
         return ganador
 
     def generar_ranking(self):
@@ -125,9 +142,14 @@ class Juego:
 
         for indexFila in range(len(valores_tabla)):
             fila = valores_tabla[indexFila]
-            
+
             for indexCol in range(len(fila)):
                 esGanador = any(valor == ganador['nombre_jugador'] for valor in fila)
-                Label(self.raiz, text=fila[indexCol], background='#8AFF93' if esGanador else 'white').grid(row=indexFila, column=indexCol, sticky=NSEW)
-    
+                Label(self.raiz, text=fila[indexCol], background='#8AFF93' if esGanador else 'white').grid(
+                    row=indexFila, column=indexCol, sticky=NSEW)
+
+        otraPartida = self.continuar_partida()
+
         self.raiz.mainloop()
+
+        return otraPartida
