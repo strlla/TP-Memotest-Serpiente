@@ -2,11 +2,10 @@ import csv
 
 
 class Juego:
-    partidas = []
-    resumen = []
-    
+
     def __init__(self) -> None:
-        pass
+        self.partidas = []
+        self.resumen = []
 
     def guardar_hora_finalizacion_juego(self, hora_finalizacion_juego):
         self.hora_finalizacion_juego = hora_finalizacion_juego
@@ -32,7 +31,6 @@ class Juego:
         self.resumen = sorted(self.resumen, key=lambda x: x['aciertos'], reverse=True)
 
     def guardar_juego(self):
-        print(self.resumen)
         for jugador in self.resumen:
             with open('partidas.csv', 'a') as csvfile:
                 fieldnames = ["fecha_partida", "hora_finalizacion", "nombre_jugador", "aciertos", "intentos"]
@@ -88,12 +86,13 @@ class Juego:
     def agregar_partida_terminada(self, partida):
         self.partidas.append(partida)
         self.calcular_promedio()
-    
+
     def calcular_promedio(self):
         for partida in self.partidas:
             for jugador in list(partida.keys()):
                 lista_cantidad_de_intentos = [partida[jugador]['intentos'] for partida in self.partidas]
-                partida[jugador]['promedio'] = round(sum(lista_cantidad_de_intentos) / len(lista_cantidad_de_intentos), 2)
-            
+                partida[jugador]['promedio'] = round(sum(lista_cantidad_de_intentos) / len(lista_cantidad_de_intentos),
+                                                     2)
+
     def obtener_ultima_partidas(self):
         return self.partidas[-1]
