@@ -2,11 +2,10 @@ import csv
 
 
 class Juego:
-    partidas = []
-    resumen = []
 
     def __init__(self) -> None:
-        pass
+        self.partidas = []
+        self.resumen = []
 
     def guardar_hora_finalizacion_juego(self, hora_finalizacion_juego):
         self.hora_finalizacion_juego = hora_finalizacion_juego
