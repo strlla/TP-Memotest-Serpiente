@@ -166,8 +166,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, partida):
                 if fichas_descubiertas_totalmente:
                     FINALIZAR_PARTIDA = True
 
-        partida.agregar_partida_terminada(dicc_jugadores)
-        juego.agregar_juego_terminado(dicc_jugadores)
+        juego.agregar_partida_terminada(dicc_jugadores)
         dicc_jugadores = genera_dicc_jugadores()
 
         if NRO_PARTIDA == MAX_PARTIDAS:
@@ -180,9 +179,9 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, partida):
 
         else:
             NRO_PARTIDA += 1
-            otraPartida = datos_partida(partida)
+            otra_partida = datos_partida(partida)
 
-            if otraPartida:
+            if otra_partida:
                 FINALIZAR_PARTIDA = False
                 fichas = generador_fichas(config)
                 fichas_ocultas = ocultar_fichas(fichas)
