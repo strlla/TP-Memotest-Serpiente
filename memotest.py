@@ -71,7 +71,7 @@ def obtener_newshape(cant_fichas):
     raiz = math.sqrt(cant_fichas)
     multipliers = (0, cant_fichas)
     if int(raiz + 0.5) ** 2 == cant_fichas:
-        return (int(raiz), int(raiz))
+        return int(raiz), int(raiz)
     else:
         for i in range(1, int(pow(cant_fichas, 1 / 2)) + 1):
             if cant_fichas % i == 0:
@@ -165,7 +165,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, partida):
 
                 if fichas_descubiertas_totalmente:
                     FINALIZAR_PARTIDA = True
-
+        partida.agregar_partida_terminada(dicc_jugadores)
         juego.agregar_partida_terminada(dicc_jugadores)
         dicc_jugadores = genera_dicc_jugadores()
 
