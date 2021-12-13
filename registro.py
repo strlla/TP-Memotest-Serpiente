@@ -1,11 +1,11 @@
 import csv
+import pandas as pd
+import os
+from juego import Juego
 
 
 class Registro:
     jugadores_logueados = []
-
-    def __init__(self) -> None:
-        pass
 
     def obtener_listado_de_nombres(self):
         """Retorna un listado con los nombres de todos los jugadores registrados
@@ -17,16 +17,20 @@ class Registro:
         # Estrella Portocarrero"""
         self.jugadores_logueados.append(jugador)
 
-    def guardar_nuevo_usuario(self, usuario):
+    def registrar_usuario(self, usuario, mostrar_empezar_juego):
         """Recibe un usuario y lo agrega al final del archivo
         # Estrella Portocarrero
         """
+        config = Juego().leer_archivo_configuracion()
         with open('usuarios.csv', 'a') as csvfile:
             fieldnames = ['usuario', 'clave']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(usuario)
             csvfile.close()
         self.agregar_jugador_logueado(usuario)
+        if len(self.jugadores_logueados) >= int(config["MAXIMO_JUGADORES"][0]):
+            mostrar_empezar_juego()
+            print(pd.DataFrame(self.obtener_listado_de_nombres, columns=['Usuario']))
 
     def obtener_usuarios(self):
         """Retorna un listado con todos los usuarios y sus correspondientes claves del archivo usuarios.csv
@@ -50,24 +54,31 @@ class Registro:
         """Valida que se haya ingresado un usuario y contraseña, si ya está logueado o registrado. En caso de que su contraseña sea correcta se agrega al usuario al listado de usuarios logueados
         #Estrella Portocarrero
         """
-        usuarios = self.obtener_usuarios()
-        if not usuario or not contrasenia:
-            mostrar_mensaje("Por favor, complete los dos campos", False)
-            return
-        usuarioEncontrado = next((x for x in usuarios if x["usuario"] == usuario), None)
-        if not usuarioEncontrado:
-            mostrar_mensaje("No está registrado", False)
-        elif usuarioEncontrado['clave'] == contrasenia:
-            usuarioLogueado = next((x for x in Registro.jugadores_logueados if x["usuario"] == usuario), None)
-            if usuarioLogueado:
-                mostrar_mensaje("Ya está logueado", False)
+        config = Juego().leer_archivo_configuracion()
+        if len(self.jugadores_logueados) + 1 > int(config["MAXIMO_JUGADORES"][0]):
+            mostrar_mensaje("Se alcanzó el número máximo de jugadores", False)
+        else: 
+            usuarios = self.obtener_usuarios()
+            if not usuario or not contrasenia:
+                mostrar_mensaje("Por favor, complete los dos campos", False)
+                return
+            usuarioEncontrado = next((x for x in usuarios if x["usuario"] == usuario), None)
+            if not usuarioEncontrado:
+                mostrar_mensaje("No está registrado", False)
+            elif usuarioEncontrado['clave'] == contrasenia:
+                usuarioLogueado = next((x for x in self.jugadores_logueados if x["usuario"] == usuario), None)
+                if usuarioLogueado:
+                    mostrar_mensaje("Ya está logueado", False)
+                else:
+                    os.system("cls")                    
+                    mostrar_mensaje("Se logueo correctamente", True)
+                    self.agregar_jugador_logueado(usuarioEncontrado)
+                    print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
+                    if len(self.jugadores_logueados) >= 2:
+                        mostrar_empezar_juego()
+
             else:
-                mostrar_mensaje("Se logueo correctamente", True)
-                self.agregar_jugador_logueado(usuarioEncontrado)
-                if len(self.jugadores_logueados) >= 2:
-                    mostrar_empezar_juego()
-        else:
-            mostrar_mensaje("Contraseña incorrecta", False)
+                mostrar_mensaje("Contraseña incorrecta", False)
 
     def validar_usuario(self, usuario):
         """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""

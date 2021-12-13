@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from registro import Registro
+from juego import Juego
 import tkinter as tk
 
 
@@ -21,15 +22,15 @@ class Interfaz:
         self.raiz.destroy()
 
     def mostrar_empezar_juego(self):
-        self.empezarJuegoBotonLogin.place(x=125, y=340, height=30, width=150)
-        self.empezarJuegoBotonRegistro.place(x=130, y=390, height=30, width=150)
+        self.empezarJuegoBotonLogin.place(x=125, y=350, height=30, width=150)
+        self.empezarJuegoBotonRegistro.place(x=130, y=420, height=30, width=150)
 
     def interfaz_registro(self, datos):
         self.registroFrame.pack(side="top", expand=True, fill="both")
 
         self.raiz.title("TP1 - Memotest - Registro")
         self.raiz.resizable(False, False)
-        self.raiz.geometry("400x430")
+        self.raiz.geometry("400x480")
         self.raiz.configure(bg='#FFF')
         titulo = Label(self.registroFrame, text="Ingrese sus datos para registrarse", bg="#FFF",
                        font=("Ubuntu", 14, "bold"),
@@ -67,6 +68,10 @@ class Interfaz:
                                           text="Condiciones de registro", bd=0, bg="#47126b", font=("Ubuntu", 12),
                                           fg='#FFF')
         boton_condicion_registro.place(x=110, y=380, height=30, width=180)
+        boton_configuraciones = Button(self.registroFrame, command=lambda: self.info_configuraciones(),
+                                       text="Configuraciones", bd=0, bg="#47126b", font=("Ubuntu", 12),
+                                       fg='#FFF')
+        boton_configuraciones.place(x=110, y=420, height=30, width=180)
         self.raiz.mainloop()
 
     def interfaz_login(self, datos):
@@ -115,7 +120,7 @@ class Interfaz:
             if Registro().validar_usuario(usuario) is True and Registro().validar_clave(clave) is True:
 
                 if usuario not in jugadores_registrados and clave == segunda_clave:
-                    Registro().guardar_nuevo_usuario({'usuario': usuario, 'clave': clave})
+                    Registro().registrar_usuario({'usuario': usuario, 'clave': clave}, self.mostrar_empezar_juego)
 
                     usuario_input.delete(0, END)
 
@@ -141,9 +146,8 @@ class Interfaz:
                 self.mostrar_mensaje_registro("Por favor lea las condiciones de registro.", False)
 
                 self.interfaz_registro(datos)
-        else: 
+        else:
             self.mostrar_mensaje_registro("Las contraseñas no coinciden", False)
-
 
     def mostrar_mensaje_login(self, mensaje, correcto):
         self.labelLogin['text'] = mensaje
@@ -161,6 +165,23 @@ class Interfaz:
             self.labelRegistro['fg'] = "#e64040"
         self.labelRegistro.place(x=60, y=260)
 
+    def info_configuraciones(self):
+        config = Juego().leer_archivo_configuracion()
+        datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
+                 "REINICIAR_ARCHIV0_PARTIDAS": [False, 0]}
+        mensaje = ""
+
+        for parametro in config:
+
+            if config[parametro][0] == str(datos[parametro][0]):
+
+                mensaje += f"{parametro}: {config[parametro][0]} - Dado por defecto \n"
+
+            else:
+
+                mensaje += f"{parametro}: {config[parametro][0]} - Modificado por configuración \n"
+
+        messagebox.showinfo(message=mensaje, title="Configuraciones")
 
     def info_usuario_clave(self):
         messagebox.showinfo(
