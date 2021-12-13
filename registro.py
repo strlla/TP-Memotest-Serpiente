@@ -30,7 +30,8 @@ class Registro:
         self.agregar_jugador_logueado(usuario)
         if len(self.jugadores_logueados) >= int(config["MAXIMO_JUGADORES"][0]):
             mostrar_empezar_juego()
-            print(pd.DataFrame(self.obtener_listado_de_nombres, columns=['Usuario']))
+            
+        print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
 
     def obtener_usuarios(self):
         """Retorna un listado con todos los usuarios y sus correspondientes claves del archivo usuarios.csv
