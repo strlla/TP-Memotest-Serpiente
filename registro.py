@@ -7,9 +7,6 @@ from juego import Juego
 class Registro:
     jugadores_logueados = []
 
-    def __init__(self) -> None:
-        pass
-
     def obtener_listado_de_nombres(self):
         """Retorna un listado con los nombres de todos los jugadores registrados
         # Estrella Portocarrero"""
