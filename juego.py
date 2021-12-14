@@ -31,12 +31,13 @@ class Juego:
         self.resumen = sorted(self.resumen, key=lambda x: x['aciertos'], reverse=True)
 
     def guardar_juego(self):
-        for jugador in self.resumen:
-            with open('partidas.csv', 'a') as csvfile:
-                fieldnames = ["fecha_partida", "hora_finalizacion", "nombre_jugador", "aciertos", "intentos"]
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        fieldnames = ["fecha_partida", "hora_finalizacion", "nombre_jugador", "aciertos", "intentos"]
+        
+        with open('partidas.csv', 'a') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            for jugador in self.resumen:           
                 writer.writerow(jugador)
-                csvfile.close()
+            csvfile.close()
 
     def reiniciar_archivo(self, condicion):
         if condicion == 'True':

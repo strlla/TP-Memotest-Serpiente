@@ -22,8 +22,8 @@ class Registro:
         # Estrella Portocarrero
         """
         config = Juego().leer_archivo_configuracion()
+        fieldnames = ['usuario', 'clave']
         with open('usuarios.csv', 'a') as csvfile:
-            fieldnames = ['usuario', 'clave']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(usuario)
             csvfile.close()
