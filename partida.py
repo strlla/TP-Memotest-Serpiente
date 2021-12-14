@@ -9,13 +9,13 @@ class Partida:
         self.partidas = []
         self.resumen = []
 
-    def guardar_hora_finalizacion_partida(self, hora_finalizacion):
+    def guardar_hora_finalizacion(self, hora_finalizacion):
         self.hora_finalizacion = hora_finalizacion
 
-    def guardar_fecha_partida(self, fecha_partida):
+    def guardar_fecha(self, fecha_partida):
         self.fecha_partida = fecha_partida
 
-    def generar_resumen_partida(self):
+    def generar_resumen(self):
         nombres = set(list(self.partidas[0].keys()))
 
         for nombre in nombres:
@@ -38,7 +38,7 @@ class Partida:
     def continuar_partida(self):
         return messagebox.askyesno(message="¿Desea jugar otra partida?", title="Memotest")
 
-    def obtener_ganador_partida(self):
+    def obtener_ganador(self):
         ganador = self.resumen[0]
         max_cantidad_aciertos = self.resumen[0]['aciertos']
         misma_cantidad_aciertos = [jugador for jugador in self.resumen if jugador['aciertos'] == max_cantidad_aciertos]
@@ -48,10 +48,10 @@ class Partida:
 
         return ganador
 
-    def generar_ranking_partida(self):
+    def generar_ranking(self):
         self.raiz = tk.Tk()
         self.raiz.title("TP2 - Memotest - Ranking")
-        ganador = self.obtener_ganador_partida()
+        ganador = self.obtener_ganador()
         valores_tabla = [['Jugadores', 'Cantidad de aciertos', 'Total de intentos', 'Promedio de intentos']]
         ultima_partida = self.partidas[-1]
         for jugador in ultima_partida:

@@ -124,7 +124,7 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, partida):
     FINALIZAR_JUEGO = False
     FINALIZAR_PARTIDA = False
     LISTA_DE_NOMBRES = Registro().obtener_listado_de_nombres()
-    Juego().reiniciar_archivo_juego(REINICIAR_ARCHIVO)
+    Juego().reiniciar_archivo(REINICIAR_ARCHIVO)
 
     while not FINALIZAR_JUEGO:
 
@@ -194,17 +194,17 @@ def jugada(fichas, fichas_ocultas, dicc_jugadores, config, juego, partida):
 
 
 def datos_juego(juego):
-    juego.guardar_hora_finalizacion_juego(datetime.time(datetime.now()))
-    juego.guardar_fecha_juego(datetime.date(datetime.now()))
-    juego.generar_resumen_juego()
+    juego.guardar_hora_finalizacion(datetime.time(datetime.now()))
+    juego.guardar_fecha(datetime.date(datetime.now()))
+    juego.generar_resumen()
     juego.guardar_juego()
 
 
 def datos_partida(partida):
-    partida.guardar_hora_finalizacion_partida(datetime.time(datetime.now()))
-    partida.guardar_fecha_partida(datetime.date(datetime.now()))
-    partida.generar_resumen_partida()
-    ranking = partida.generar_ranking_partida()
+    partida.guardar_hora_finalizacion(datetime.time(datetime.now()))
+    partida.guardar_fecha(datetime.date(datetime.now()))
+    partida.generar_resumen()
+    ranking = partida.generar_ranking()
 
     return ranking
 

@@ -7,13 +7,13 @@ class Juego:
         self.partidas = []
         self.resumen = []
 
-    def guardar_hora_finalizacion_juego(self, hora_finalizacion_juego):
+    def guardar_hora_finalizacion(self, hora_finalizacion_juego):
         self.hora_finalizacion_juego = hora_finalizacion_juego
 
-    def guardar_fecha_juego(self, fecha_partida_juego):
+    def guardar_fecha(self, fecha_partida_juego):
         self.fecha_partida_juego = fecha_partida_juego
 
-    def generar_resumen_juego(self):
+    def generar_resumen(self):
         nombres = set(list(self.partidas[0].keys()))
 
         for nombre in nombres:
@@ -38,7 +38,7 @@ class Juego:
                 writer.writerow(jugador)
                 csvfile.close()
 
-    def reiniciar_archivo_juego(self, condicion):
+    def reiniciar_archivo(self, condicion):
         if condicion == 'True':
             archivo = open("partidas.csv", "w")
             archivo.close()
@@ -94,5 +94,5 @@ class Juego:
                 partida[jugador]['promedio'] = round(sum(lista_cantidad_de_intentos) / len(lista_cantidad_de_intentos),
                                                      2)
 
-    def obtener_ultima_partidas(self):
+    def obtener_ultima_partida(self):
         return self.partidas[-1]
