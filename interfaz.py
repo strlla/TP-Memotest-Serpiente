@@ -12,13 +12,13 @@ class Interfaz:
         self.registroFrame = Frame(self.raiz, bg="#FFF")
         self.labelLogin = Label(self.loginFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
         self.labelRegistro = Label(self.registroFrame, text="", bg="#FFF", font=("Ubuntu", 12, "bold"))
-        self.empezarJuegoBotonLogin = Button(self.loginFrame, command=self.cerrar_interfaz, text="Empezar a jugar",
+        self.empezarJuegoBotonLogin = Button(self.loginFrame, command=self.cerrar, text="Empezar a jugar",
                                              bd=0, bg="#06bf78", font=("Ubuntu", 12), fg="#FFF")
-        self.empezarJuegoBotonRegistro = Button(self.registroFrame, command=self.cerrar_interfaz,
+        self.empezarJuegoBotonRegistro = Button(self.registroFrame, command=self.cerrar,
                                                 text="Empezar a jugar", bd=0, bg="#06bf78", font=("Ubuntu", 12),
                                                 fg="#FFF")
 
-    def cerrar_interfaz(self):
+    def cerrar(self):
         """Cierra la interfaz de registro y login
         #Estrella Portocarrero"""
         self.raiz.destroy()
