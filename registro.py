@@ -30,7 +30,7 @@ class Registro:
         self.agregar_jugador_logueado(usuario)
         if len(self.jugadores_logueados) >= int(config["MAXIMO_JUGADORES"][0]):
             mostrar_empezar_juego()
-            
+
         print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
 
     def obtener_usuarios(self):
@@ -52,14 +52,14 @@ class Registro:
         return usuarios[1:len(usuarios)]
 
     def iniciar_sesion(self, usuario, contrasenia, mostrar_mensaje, mostrar_empezar_juego):
-        """Valida que se haya ingresado un usuario y contraseña, si ya está logueado o registrado. 
+        """Valida que se haya ingresado un usuario y contraseña, si ya está logueado o registrado.
         En caso de que su contraseña sea correcta se agrega al usuario al listado de usuarios logueados.
         #Estrella Portocarrero
         """
         config = Juego().leer_archivo_configuracion()
         if len(self.jugadores_logueados) + 1 > int(config["MAXIMO_JUGADORES"][0]):
             mostrar_mensaje("Se alcanzó el número máximo de jugadores", False)
-        else: 
+        else:
             usuarios = self.obtener_usuarios()
             if not usuario or not contrasenia:
                 mostrar_mensaje("Por favor, complete los dos campos", False)
@@ -72,18 +72,19 @@ class Registro:
                 if usuarioLogueado:
                     mostrar_mensaje("Ya está logueado", False)
                 else:
-                    os.system("cls")                    
+                    os.system("cls")
                     mostrar_mensaje("Se logueo correctamente", True)
                     self.agregar_jugador_logueado(usuarioEncontrado)
                     print(pd.DataFrame(self.obtener_listado_de_nombres(), columns=['Usuario']))
-                    if len(self.jugadores_logueados) >= 2:
+                    if len(self.jugadores_logueados) >= int(config["MAXIMO_JUGADORES"][0]):
                         mostrar_empezar_juego()
 
             else:
                 mostrar_mensaje("Contraseña incorrecta", False)
 
     def validar_usuario(self, usuario):
-        """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
+        """Valida el usuario segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False
+        #Juan Tejada"""
 
         caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -106,7 +107,8 @@ class Registro:
         return usuario_valido
 
     def validar_clave(self, clave):
-        """Valida la clave segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False"""
+        """Valida la clave segun las condiciones dadas en el enunciado. Si cumple las condiciones devuelve True de lo contrario False
+        #Juan Tejada"""
         caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-'
         mayus = 0
         minus = 0
