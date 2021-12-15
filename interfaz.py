@@ -19,13 +19,23 @@ class Interfaz:
                                                 fg="#FFF")
 
     def cerrar_interfaz(self):
+        """Cierra la interfaz de registro y login
+        #Estrella Portocarrero"""
         self.raiz.destroy()
 
     def mostrar_empezar_juego(self):
+        """Se ubica un boton en la interfaz del registro y login para empezar el juego
+        # Estrella Portocarrero"""
         self.empezarJuegoBotonLogin.place(x=125, y=350, height=30, width=150)
         self.empezarJuegoBotonRegistro.place(x=130, y=420, height=30, width=150)
 
     def interfaz_registro(self, datos):
+        """ Se genera un interfaz que permite a los jugadores registrarse 
+        ingresando un nuevo usuario y contraseña (dos veces para confirmar)
+        Además esta interfaz cuenta con botones para ver la configuración del juego, 
+        condiciones de registro e iniciar sesión
+        ## Juan Tejada
+        ## Estrella Portocarrero"""
         self.registroFrame.pack(side="top", expand=True, fill="both")
 
         self.raiz.title("TP1 - Memotest - Registro")
@@ -75,6 +85,11 @@ class Interfaz:
         self.raiz.mainloop()
 
     def interfaz_login(self, datos):
+        """Se genera un interfaz que permite a los jugadores iniciar sesión si ya estan registrados 
+        ingresando su usuario y contraseña. Además esta interfaz cuenta con un botón para volver a la
+        interfaz de registro.
+        ## Juan Tejada
+        ## Estrella Portocarrero"""
         self.loginFrame.pack(side="top", expand=True, fill="both")
         self.raiz.title("TP1 - Memotest - Ingreso")
         self.raiz.resizable(False, False)
@@ -110,6 +125,9 @@ class Interfaz:
         boton_iniciar_sesion.place(x=125, y=250, height=30, width=150)
 
     def guardar_datos(self, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
+        """Funcion que valida si el usuario ya está logueado, si está registrado y valida las contraseñas ingresadas.
+        ## Juan Tejada
+        """
         usuario = usuario_input.get()
         clave = primer_contrasena_input.get()
         segunda_clave = segunda_contrasena_input.get()
@@ -149,9 +167,11 @@ class Interfaz:
         else:
             self.mostrar_mensaje_registro("Las contraseñas no coinciden", False)
 
-    def mostrar_mensaje_login(self, mensaje, correcto):
+    def mostrar_mensaje_login(self, mensaje, seLogueo):
+        """Muestra un mensaje recibido como parámetro y el status del mismo (correcto o no)
+        # Estrella Portocarrero"""
         self.labelLogin['text'] = mensaje
-        if correcto:
+        if seLogueo:
             self.labelLogin['fg'] = "green"
         else:
             self.labelLogin['fg'] = "#e64040"
@@ -194,6 +214,3 @@ def generar_interfaz():
     interfaz = Interfaz()
     datos = {}
     interfaz.interfaz_registro(datos)
-    # Registro().guardar_nuevo_usuario(datos)
-
-# generar_interfaz()

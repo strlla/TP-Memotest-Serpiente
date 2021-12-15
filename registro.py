@@ -52,7 +52,8 @@ class Registro:
         return usuarios[1:len(usuarios)]
 
     def iniciar_sesion(self, usuario, contrasenia, mostrar_mensaje, mostrar_empezar_juego):
-        """Valida que se haya ingresado un usuario y contraseña, si ya está logueado o registrado. En caso de que su contraseña sea correcta se agrega al usuario al listado de usuarios logueados
+        """Valida que se haya ingresado un usuario y contraseña, si ya está logueado o registrado. 
+        En caso de que su contraseña sea correcta se agrega al usuario al listado de usuarios logueados.
         #Estrella Portocarrero
         """
         config = Juego().leer_archivo_configuracion()

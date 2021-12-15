@@ -1,21 +1,25 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
-
-
 class Partida:
-
     def __init__(self) -> None:
         self.partidas = []
         self.resumen = []
 
     def guardar_hora_finalizacion(self, hora_finalizacion):
+        """Guarda la hora de finalizacion de una partida
+        # Estrella Portocarrero"""
         self.hora_finalizacion = hora_finalizacion
 
     def guardar_fecha(self, fecha_partida):
+        """Guarda la fecha de finalizacion de una partida
+        # Estrella Portocarrero"""
         self.fecha_partida = fecha_partida
 
     def generar_resumen(self):
+        """Genera un resumen por cada jugador durante la partida. 
+        Se incluye el nombre del jugador, aciertos, intentos, fecha y hora de finalizacion.
+        # Estrella Portocarrero"""
         nombres = set(list(self.partidas[0].keys()))
 
         for nombre in nombres:
@@ -33,12 +37,17 @@ class Partida:
         self.resumen = sorted(self.resumen, key=lambda x: x['aciertos'], reverse=True)
 
     def agregar_partida_terminada(self, partida):
+        """Agrega la ultima partida finalizada al listado de partidas
+        # Estrella Portocarrero"""
         self.partidas.append(partida)
 
     def continuar_partida(self):
         return messagebox.askyesno(message="¿Desea jugar otra partida?", title="Memotest")
 
     def obtener_ganador(self):
+        """Se busca el jugador con mayor cantidad de aciertos, si hubiese mas de uno se busca
+        al que tiene un menor promedio de intentos y se lo retorna
+        # Estrella Portocarrero"""
         ganador = self.resumen[0]
         max_cantidad_aciertos = self.resumen[0]['aciertos']
         misma_cantidad_aciertos = [jugador for jugador in self.resumen if jugador['aciertos'] == max_cantidad_aciertos]
@@ -49,6 +58,11 @@ class Partida:
         return ganador
 
     def generar_ranking(self):
+        """Generar una interfaz de Tkinter para mostrar el resumen de la partida 
+        por jugador en una tabla, resaltando con color al jugador. Luego de mostrarse el ranking
+        se abre una ventana preguntando si se quiere jugar otra partida.
+        ## Estrella Portocarrero
+        ## Juan Tejada"""
         self.raiz = tk.Tk()
         self.raiz.title("TP2 - Memotest - Ranking")
         ganador = self.obtener_ganador()

@@ -31,6 +31,9 @@ class Juego:
         self.resumen = sorted(self.resumen, key=lambda x: x['aciertos'], reverse=True)
 
     def guardar_juego(self):
+        """Abre el archivo csv de partidas y guarda un resumen del juego por jugador
+        Estrella Portocarrero
+        """
         fieldnames = ["fecha_partida", "hora_finalizacion", "nombre_jugador", "aciertos", "intentos"]
         
         with open('partidas.csv', 'a') as csvfile:
@@ -40,6 +43,9 @@ class Juego:
             csvfile.close()
 
     def reiniciar_archivo(self, condicion):
+        """Vacia el archivo de partida
+         Juan Tejada
+        """
         if condicion == 'True':
             archivo = open("partidas.csv", "w")
             archivo.close()
@@ -85,10 +91,16 @@ class Juego:
         return lista_de_palabras
 
     def agregar_partida_terminada(self, partida):
+        """Funcion que agrega al final de una lista la partida finalizada 
+        y luego invoca la funcion para calcular el promedio de intentos por jugador
+        Estrella Portocarrero"""
         self.partidas.append(partida)
         self.calcular_promedio()
 
     def calcular_promedio(self):
+        """Calcula el promedio de intentos de cada jugador 
+        y lo guarda en un campo del diccionario por partida
+        Estrella Portocarrero"""
         for partida in self.partidas:
             for jugador in list(partida.keys()):
                 lista_cantidad_de_intentos = [partida[jugador]['intentos'] for partida in self.partidas]
@@ -96,4 +108,6 @@ class Juego:
                                                      2)
 
     def obtener_ultima_partida(self):
+        """Retorna la ultima partida guardada en el listado
+        Estrella Portocarrero"""
         return self.partidas[-1]
