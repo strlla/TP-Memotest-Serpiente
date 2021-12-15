@@ -46,14 +46,14 @@ class Partida:
 
     def obtener_ganador(self):
         """Se busca el jugador con mayor cantidad de aciertos, si hubiese mas de uno se busca
-        al que tiene un menor promedio de intentos y se lo retorna
+        al que tiene la menor cantidad de intentos.
         # Estrella Portocarrero"""
         ganador = self.resumen[0]
         max_cantidad_aciertos = self.resumen[0]['aciertos']
         misma_cantidad_aciertos = [jugador for jugador in self.resumen if jugador['aciertos'] == max_cantidad_aciertos]
 
         if len(misma_cantidad_aciertos) > 1:
-            ganador = sorted(misma_cantidad_aciertos, key=lambda x: x['aciertos'])[0]
+            ganador = sorted(misma_cantidad_aciertos, key=lambda x: x['intentos'])[0]
 
         return ganador
 
