@@ -35,10 +35,10 @@ class Juego:
         Estrella Portocarrero
         """
         fieldnames = ["fecha_partida", "hora_finalizacion", "nombre_jugador", "aciertos", "intentos"]
-        
+
         with open('partidas.csv', 'a') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            for jugador in self.resumen:           
+            for jugador in self.resumen:
                 writer.writerow(jugador)
             csvfile.close()
 
@@ -53,8 +53,8 @@ class Juego:
     def leer_archivo_configuracion(self):
         """Abre el archivo csv de configuracion, lee linea
         por linea y modifica los datos del archivo en el diccionario de datos por
-        defecto, indicando con un 0 si es el valor por defecto (no se modifico) y con
-        un 1 si el valor fue modificado por el archivo."""
+        defecto
+        Juan Tejada"""
 
         archivo = open("configuracion.csv", "r")
         datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
@@ -74,7 +74,8 @@ class Juego:
 
     def lista_de_palabras_por_linea(self, linea):
         """Toma una linea pasada como parametro y la
-        procesa para devolver una lista con las palabras que hay en esa linea."""
+        procesa para devolver una lista con las palabras que hay en esa linea.
+        Juan Tejada"""
 
         lista_de_palabras = []
         palabra = ""
@@ -91,14 +92,14 @@ class Juego:
         return lista_de_palabras
 
     def agregar_partida_terminada(self, partida):
-        """Funcion que agrega al final de una lista la partida finalizada 
+        """Funcion que agrega al final de una lista la partida finalizada
         y luego invoca la funcion para calcular el promedio de intentos por jugador
         Estrella Portocarrero"""
         self.partidas.append(partida)
         self.calcular_promedio()
 
     def calcular_promedio(self):
-        """Calcula el promedio de intentos de cada jugador 
+        """Calcula el promedio de intentos de cada jugador
         y lo guarda en un campo del diccionario por partida
         Estrella Portocarrero"""
         for partida in self.partidas:
