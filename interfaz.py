@@ -30,9 +30,9 @@ class Interfaz:
         self.empezarJuegoBotonRegistro.place(x=130, y=420, height=30, width=150)
 
     def interfaz_registro(self, datos):
-        """ Se genera un interfaz que permite a los jugadores registrarse 
+        """ Se genera un interfaz que permite a los jugadores registrarse
         ingresando un nuevo usuario y contraseña (dos veces para confirmar)
-        Además esta interfaz cuenta con botones para ver la configuración del juego, 
+        Además esta interfaz cuenta con botones para ver la configuración del juego,
         condiciones de registro e iniciar sesión
         ## Juan Tejada
         ## Estrella Portocarrero"""
@@ -85,7 +85,7 @@ class Interfaz:
         self.raiz.mainloop()
 
     def interfaz_login(self, datos):
-        """Se genera un interfaz que permite a los jugadores iniciar sesión si ya estan registrados 
+        """Se genera un interfaz que permite a los jugadores iniciar sesión si ya estan registrados
         ingresando su usuario y contraseña. Además esta interfaz cuenta con un botón para volver a la
         interfaz de registro.
         ## Juan Tejada
@@ -178,6 +178,8 @@ class Interfaz:
         self.labelLogin.place(x=10, y=200)
 
     def mostrar_mensaje_registro(self, mensaje, seRegistro):
+        """Muestra un mensaje recibido como parámetro y el status del mismo (correcto o no)
+        Juan Tejada"""
         self.labelRegistro['text'] = mensaje
         if seRegistro:
             self.labelRegistro['fg'] = "green"
@@ -186,6 +188,8 @@ class Interfaz:
         self.labelRegistro.place(x=60, y=260)
 
     def info_configuraciones(self):
+        """Muestra la configuracion del juego si fue modificada o dada por defecto
+        Juan Tejada"""
         config = Juego().leer_archivo_configuracion()
         datos = {"CANTIDAD_FICHAS": [16, 0], "MAXIMO_JUGADORES": [2, 0], "MAXIMO_PARTIDAS": [5, 0],
                  "REINICIAR_ARCHIV0_PARTIDAS": [False, 0]}
@@ -204,6 +208,8 @@ class Interfaz:
         messagebox.showinfo(message=mensaje, title="Configuraciones")
 
     def info_usuario_clave(self):
+        """Le muestra al usuario la informacion para obtener un registro de usuario correcto
+        Juan Tejada"""
         messagebox.showinfo(
             message="Su usuario debe tener una longitud entre 4 y 15 caracteres y estar formado sólo por letras, números y el bajo guion ' _ '"
                     "\nSu clave debe tener una longitud de 8 y 12 caraceteres, debe contener una letra mayus, una letra minus, un numero y los siguientes"
