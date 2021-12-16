@@ -124,7 +124,7 @@ class Interfaz:
                                       text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
         boton_iniciar_sesion.place(x=125, y=250, height=30, width=150)
 
-    def guardar_datos(self, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):
+    def guardar_datos(self, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):#
         """Funcion que valida si el usuario ya está logueado, si está registrado y valida las contraseñas ingresadas.
         ## Juan Tejada
         """
@@ -140,12 +140,6 @@ class Interfaz:
                 if usuario not in jugadores_registrados and clave == segunda_clave:
                     Registro().registrar_usuario({'usuario': usuario, 'clave': clave}, self.mostrar_empezar_juego)
 
-                    usuario_input.delete(0, END)
-
-                    primer_contrasena_input.delete(0, END)
-
-                    segunda_contrasena_input.delete(0, END)
-
                     self.mostrar_mensaje_registro("Usuario registrado correctamente", True)
                 else:
                     if usuario in jugadores_registrados:
@@ -154,11 +148,6 @@ class Interfaz:
                     elif usuario in jugadores_logueados:
                         self.mostrar_mensaje_registro("El jugador que intenta registrar ya esta logueado", False)
 
-                    usuario_input.delete(0, END)
-
-                    primer_contrasena_input.delete(0, END)
-
-                    segunda_contrasena_input.delete(0, END)
             else:
 
                 self.mostrar_mensaje_registro("Por favor lea las condiciones de registro.", False)
