@@ -1,6 +1,8 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
+
+
 class Partida:
     def __init__(self) -> None:
         self.partidas = []
@@ -17,7 +19,7 @@ class Partida:
         self.fecha_partida = fecha_partida
 
     def generar_resumen(self):
-        """Genera un resumen por cada jugador durante la partida. 
+        """Genera un resumen por cada jugador durante la partida.
         Se incluye el nombre del jugador, aciertos, intentos, fecha y hora de finalizacion.
         # Estrella Portocarrero"""
         nombres = set(list(self.partidas[0].keys()))
@@ -42,6 +44,8 @@ class Partida:
         self.partidas.append(partida)
 
     def continuar_partida(self):
+        """Le pregunta al usuario si desea continuar partida despues de visualizar el ranking
+        Juan Tejada"""
         return messagebox.askyesno(message="¿Desea jugar otra partida?", title="Memotest")
 
     def obtener_ganador(self):
@@ -58,7 +62,7 @@ class Partida:
         return ganador
 
     def generar_ranking(self):
-        """Generar una interfaz de Tkinter para mostrar el resumen de la partida 
+        """Generar una interfaz de Tkinter para mostrar el resumen de la partida
         por jugador en una tabla, resaltando con color al jugador. Luego de mostrarse el ranking
         se abre una ventana preguntando si se quiere jugar otra partida.
         ## Estrella Portocarrero
