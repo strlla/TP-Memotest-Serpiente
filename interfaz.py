@@ -29,7 +29,7 @@ class Interfaz:
         self.empezarJuegoBotonLogin.place(x=125, y=350, height=30, width=150)
         self.empezarJuegoBotonRegistro.place(x=130, y=420, height=30, width=150)
 
-    def interfaz_registro(self, datos):
+    def interfaz_registro(self):
         """ Se genera un interfaz que permite a los jugadores registrarse
         ingresando un nuevo usuario y contraseña (dos veces para confirmar)
         Además esta interfaz cuenta con botones para ver la configuración del juego,
@@ -61,14 +61,14 @@ class Interfaz:
         segunda_contrasena_input = Entry(self.registroFrame, bd=0, bg="#d1fff4", font=("Ubuntu", 12))
         segunda_contrasena_input.place(x=220, y=200, height=30, width=170)
         boton_registrarse = Button(self.registroFrame,
-                                   command=lambda: self.guardar_datos(datos, usuario_input,
+                                   command=lambda: self.guardar_datos(usuario_input,
                                                                       primer_contrasena_input,
                                                                       segunda_contrasena_input), text="Registrarse",
                                    bd=0, bg="#47126b",
                                    font=("Ubuntu", 12), fg="#FFF")
         boton_registrarse.place(x=150, y=300, height=30, width=100)
         boton_registrado = Button(self.registroFrame,
-                                  command=lambda: [self.registroFrame.pack_forget(), self.interfaz_login(datos)],
+                                  command=lambda: [self.registroFrame.pack_forget(), self.interfaz_login()],
                                   text="Ya estoy registrado",
                                   bd=0,
                                   bg="#47126b",
@@ -84,7 +84,7 @@ class Interfaz:
         boton_configuraciones.place(x=110, y=420, height=30, width=180)
         self.raiz.mainloop()
 
-    def interfaz_login(self, datos):
+    def interfaz_login(self):
         """Se genera un interfaz que permite a los jugadores iniciar sesión si ya estan registrados
         ingresando su usuario y contraseña. Además esta interfaz cuenta con un botón para volver a la
         interfaz de registro.
@@ -110,7 +110,7 @@ class Interfaz:
         primer_contrasena_input = Entry(self.loginFrame, bd=0, bg="#d1fff4", font=("Ubuntu", 12), show="*")
         primer_contrasena_input.place(x=140, y=150, height=30)
         boton_registrado = Button(self.loginFrame,
-                                  command=lambda: [self.loginFrame.pack_forget(), self.interfaz_registro(datos)],
+                                  command=lambda: [self.loginFrame.pack_forget(), self.interfaz_registro()],
                                   text="Registrarme",
                                   bd=0,
                                   bg="#47126b",
@@ -124,7 +124,7 @@ class Interfaz:
                                       text="Iniciar sesion", bd=0, bg="#47126b", font=("Ubuntu", 12), fg="#FFF")
         boton_iniciar_sesion.place(x=125, y=250, height=30, width=150)
 
-    def guardar_datos(self, datos, usuario_input, primer_contrasena_input, segunda_contrasena_input):#
+    def guardar_datos(self, usuario_input, primer_contrasena_input, segunda_contrasena_input):#
         """Funcion que valida si el usuario ya está logueado, si está registrado y valida las contraseñas ingresadas.
         ## Juan Tejada
         """
@@ -152,7 +152,7 @@ class Interfaz:
 
                 self.mostrar_mensaje_registro("Por favor lea las condiciones de registro.", False)
 
-                self.interfaz_registro(datos)
+                self.interfaz_registro()
         else:
             self.mostrar_mensaje_registro("Las contraseñas no coinciden", False)
 
@@ -207,5 +207,4 @@ class Interfaz:
 
 def generar_interfaz():
     interfaz = Interfaz()
-    datos = {}
-    interfaz.interfaz_registro(datos)
+    interfaz.interfaz_registro()
